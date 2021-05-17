@@ -21,6 +21,7 @@
     "@angular/router": "~11.2.0",
     "@angular/service-worker": "~11.2.0",
     "@ionic/angular": "^5.5.2",
+    "@ionic/storage-angular": "^3.0.6",
     "ol": "^6.5.0",
     "rxjs": "~6.6.0",
     "tslib": "^2.0.0",

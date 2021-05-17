@@ -7,6 +7,9 @@
       <ion-button (click)="centerClick()" color="light" *ngIf="mode === 'Free'">
         <ion-icon color="primary" name="locate"></ion-icon>
       </ion-button>
+      <ion-button (click)="mapSettingsClick()" color="light">
+        <ion-icon color="primary" name="map"></ion-icon>
+      </ion-button>
     </div>
     <div #positionMarker class="position-marker"></div>
     <div #map class="map tilted"></div>

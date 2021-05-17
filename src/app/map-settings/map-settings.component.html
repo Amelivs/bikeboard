@@ -1,0 +1,33 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="end">
+      <ion-button (click)="okClick()">Ok</ion-button>
+    </ion-buttons>
+    <ion-title>Map settings</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <ion-radio-group [(ngModel)]="selectedMap">
+      <ion-list-header>
+        <ion-label>Maps</ion-label>
+      </ion-list-header>
+
+      <ion-item *ngFor="let map of maps">
+        <ion-label>{{map.name}}</ion-label>
+        <ion-radio slot="start" [value]="map"></ion-radio>
+      </ion-item>
+
+    </ion-radio-group>
+  </ion-list>
+  <ion-list>
+    <ion-list-header>
+      <ion-label>Paths</ion-label>
+    </ion-list-header>
+    <ion-item *ngFor="let path of paths">
+      <ion-label>{{path.name}}</ion-label>
+      <ion-checkbox slot="start" [checked]="isChecked(path)" (ionChange)="checkedChange(path)"></ion-checkbox>
+    </ion-item>
+  </ion-list>
+</ion-content>

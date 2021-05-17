@@ -11,6 +11,9 @@ import VectorSource from 'ol/source/Vector';
 import GPX from 'ol/format/GPX';
 import { Style, Stroke } from 'ol/style';
 import { Coordinate } from 'ol/coordinate';
+import { ModalController } from '@ionic/angular';
+import { MapSettingsComponent } from '../map-settings/map-settings.component';
+import { MapSettingsService } from '../services/map-settings.service';
 
 
 type TrackingMode = 'Free' | 'Centered';
@@ -36,9 +39,9 @@ export class MapPage implements AfterViewInit {
     return this.geolocation?.getTracking() ? 'navigate' : 'navigate-outline';
   }
 
-  constructor(private zone: NgZone) {  }
+  constructor(private zone: NgZone, public modalController: ModalController, private mapSettings: MapSettingsService) { }
 
-  ngAfterViewInit() {
+  async ngAfterViewInit() {
     this.view = new View({
       center: [843853.0918941167 + 1000, 6039219.2160023255],
       constrainResolution: true,
@@ -76,15 +79,8 @@ export class MapPage implements AfterViewInit {
       }),
     };
 
-    var ev15 = new VectorLayer({
-      source: new VectorSource({
-        url: 'assets/gpx/EuroVelo-5.gpx',
-        format: new GPX(),
-      }),
-      style: function (feature) {
-        return style[feature.getGeometry().getType()];
-      },
-    });
+    var selectedMap = await this.mapSettings.getMap();
+    var selectedPaths = await this.mapSettings.getPaths();
 
     this.map = new Map({
       target: this.mapElement.nativeElement,
@@ -92,13 +88,26 @@ export class MapPage implements AfterViewInit {
       layers: [
         new TileLayer({
           //source: new OSM({ url: 'https://{a-c}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png' }),
-          source: new OSM({ url: 'https://{a-c}.tile-cyclosm.openstreetmap.fr/cyclosm/{z}/{x}/{y}.png' })
-        }),
-      //  ev15
+          source: new OSM({ url: selectedMap.sourceUrl })
+        })
       ],
       view: this.view,
       overlays: [this.positionMarker]
     });
+
+    for (var p of selectedPaths) {
+      var vl = new VectorLayer({
+        source: new VectorSource({
+          url: p.sourceUrl,
+          format: new GPX(),
+        }),
+        style: function (feature) {
+          return style[feature.getGeometry().getType()];
+        },
+      });
+
+      this.map.addLayer(vl);
+    }
 
     this.map.on("pointerdrag", () => this.zone.run(() => this.onMove()));
 
@@ -148,5 +157,12 @@ export class MapPage implements AfterViewInit {
 
   private onMove() {
     this.mode = 'Free';
+  }
+
+  async mapSettingsClick() {
+    const modal = await this.modalController.create({
+      component: MapSettingsComponent,
+    });
+    return await modal.present();
   }
 }
