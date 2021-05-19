@@ -14,6 +14,7 @@ import { Coordinate } from 'ol/coordinate';
 import { ModalController } from '@ionic/angular';
 import { MapSettingsComponent } from '../map-settings/map-settings.component';
 import { MapSettingsService } from '../services/map-settings.service';
+import { ScaleLine, defaults as defaultControls, Rotate } from 'ol/control';
 
 
 type TrackingMode = 'Free' | 'Centered';
@@ -82,9 +83,12 @@ export class MapPage implements AfterViewInit {
     var selectedMap = await this.mapSettings.getMap();
     var selectedPaths = await this.mapSettings.getPaths();
 
+    var control = new ScaleLine();
+    var rotateControl = new Rotate(  {autoHide:false} );
+
     this.map = new Map({
       target: this.mapElement.nativeElement,
-      controls: [],
+      controls: [control, rotateControl],
       layers: [
         new TileLayer({
           //source: new OSM({ url: 'https://{a-c}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png' }),
