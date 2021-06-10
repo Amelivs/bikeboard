@@ -10,11 +10,13 @@ import { MapSettingsService, Layer } from '../services/map-settings.service';
 export class MapSettingsComponent implements OnInit {
 
   private _pathsSelection = new Map<Layer, boolean>();
+  private readonly _durations = [1, 4, 8, 16];
 
   constructor(private modalCtrl: ModalController, private mapSettings: MapSettingsService) { }
 
   async ngOnInit() {
     this.selectedMap = await this.mapSettings.getMap();
+    this.selectedDuration = await this.mapSettings.getTrackingDuration();
     var selectedPaths = await this.mapSettings.getPaths();
 
     for (var p of this.mapSettings.paths) {
@@ -26,6 +28,8 @@ export class MapSettingsComponent implements OnInit {
   maps = this.mapSettings.maps;
   paths: Layer[];
   selectedMap: Layer;
+  allDurations = this._durations;
+  selectedDuration: number;
 
   isChecked(path: Layer) {
     return this._pathsSelection.get(path);
@@ -45,6 +49,7 @@ export class MapSettingsComponent implements OnInit {
       }
     });
     this.mapSettings.setPaths(checkedPaths);
+    this.mapSettings.setTrackingDuration(this.selectedDuration);
     this.modalCtrl.dismiss();
   }
 }

@@ -1,6 +1,6 @@
 import { AfterViewInit, Component, ElementRef, NgZone, ViewChild } from '@angular/core';
 
-import { Map, Overlay, View, Geolocation } from 'ol';
+import { Map, Overlay, View, Geolocation, Collection } from 'ol';
 import { fromLonLat } from 'ol/proj';
 import OverlayPositioning from 'ol/OverlayPositioning';
 import TileLayer from 'ol/layer/Tile';
@@ -14,8 +14,43 @@ import { Coordinate } from 'ol/coordinate';
 import { ModalController } from '@ionic/angular';
 import { MapSettingsComponent } from '../map-settings/map-settings.component';
 import { MapSettingsService } from '../services/map-settings.service';
-import { ScaleLine, defaults as defaultControls, Rotate } from 'ol/control';
+import { ScaleLine, defaults as defaultControls, Rotate, Control } from 'ol/control';
 
+import { CLASS_CONTROL, CLASS_UNSELECTABLE, CLASS_UNSUPPORTED } from 'ol/css';
+import { listen } from 'ol/events';
+import EventType from 'ol/events/EventType';
+import LayerGroup from 'ol/layer/Group';
+
+
+class MyControl extends Control {
+
+  cssClassName: string;
+  button: HTMLButtonElement;
+
+  constructor(opt_options) {
+    const options = opt_options ? opt_options : {};
+    super({
+      element: document.createElement('div'),
+      target: options.target
+    });
+
+    this.button = document.createElement('button');
+    this.button.setAttribute('type', 'button');
+    this.button.innerHTML = '<ion-icon class="ol-compass" name="map"></ion-icon>';
+    listen(this.button, EventType.CLICK, this.handleClick, this);
+
+    this.cssClassName = options.className !== undefined ? options.className : 'ol-rotate';
+    const cssClasses = this.cssClassName + ' ' + CLASS_UNSELECTABLE + ' ' + CLASS_CONTROL;
+    this.element.className = cssClasses;
+    this.element.appendChild(this.button);
+  }
+
+  handleClick(event) {
+    event.preventDefault();
+    alert('Your control is online!');
+    return false;
+  }
+}
 
 type TrackingMode = 'Free' | 'Centered';
 
@@ -28,9 +63,13 @@ export class MapPage implements AfterViewInit {
 
   @ViewChild('map') mapElement: ElementRef;
   @ViewChild('positionMarker') positionMarkerElement: ElementRef;
+  @ViewChild('ff') ff: ElementRef;
 
   private view: View;
   private map: Map;
+  private source = new OSM();
+  private trackingDuration: number;
+  private layergroup = new LayerGroup();
   private positionMarker: Overlay;
   private geolocation: Geolocation;
 
@@ -42,7 +81,40 @@ export class MapPage implements AfterViewInit {
 
   constructor(private zone: NgZone, public modalController: ModalController, private mapSettings: MapSettingsService) { }
 
+  private async loadSettings() {
+    var selectedMap = await this.mapSettings.getMap();
+    this.source.setUrl(selectedMap.sourceUrl);
+    this.trackingDuration = await this.mapSettings.getTrackingDuration();
+
+    var style = {
+      'MultiLineString': new Style({
+        stroke: new Stroke({
+          color: 'rgba(0,49,148,0.7)',
+          width: 6,
+        }),
+      }),
+    };
+
+    var selectedPaths = await this.mapSettings.getPaths();
+    var layers: VectorLayer[] = [];
+    for (var path of selectedPaths) {
+      var layer = new VectorLayer({
+        source: new VectorSource({
+          url: path.sourceUrl,
+          format: new GPX(),
+        }),
+        style: function (feature) {
+          return style[feature.getGeometry().getType()];
+        },
+      });
+      layers.push(layer);
+    }
+    this.layergroup.setLayers(new Collection(layers));
+  }
+
   async ngAfterViewInit() {
+    await this.loadSettings();
+
     this.view = new View({
       center: [843853.0918941167 + 1000, 6039219.2160023255],
       constrainResolution: true,
@@ -71,20 +143,8 @@ export class MapPage implements AfterViewInit {
       stopEvent: false,
     });
 
-    var style = {
-      'MultiLineString': new Style({
-        stroke: new Stroke({
-          color: 'rgba(0,49,148,0.7)',
-          width: 6,
-        }),
-      }),
-    };
-
-    var selectedMap = await this.mapSettings.getMap();
-    var selectedPaths = await this.mapSettings.getPaths();
-
     var control = new ScaleLine();
-    var rotateControl = new Rotate(  {autoHide:false} );
+    var rotateControl = new Rotate({ autoHide: false });
 
     this.map = new Map({
       target: this.mapElement.nativeElement,
@@ -92,26 +152,13 @@ export class MapPage implements AfterViewInit {
       layers: [
         new TileLayer({
           //source: new OSM({ url: 'https://{a-c}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png' }),
-          source: new OSM({ url: selectedMap.sourceUrl })
-        })
+          source: this.source
+        }),
+        this.layergroup
       ],
       view: this.view,
       overlays: [this.positionMarker]
     });
-
-    for (var p of selectedPaths) {
-      var vl = new VectorLayer({
-        source: new VectorSource({
-          url: p.sourceUrl,
-          format: new GPX(),
-        }),
-        style: function (feature) {
-          return style[feature.getGeometry().getType()];
-        },
-      });
-
-      this.map.addLayer(vl);
-    }
 
     this.map.on("pointerdrag", () => this.zone.run(() => this.onMove()));
 
@@ -134,7 +181,7 @@ export class MapPage implements AfterViewInit {
       this.geolocation.setTracking(true);
       this.trackingTimeout = setTimeout(() => {
         this.geolocation.setTracking(false);
-      }, 8 * 60 * 1000);
+      }, this.trackingDuration * 60 * 1000);
     }
   }
 
@@ -167,6 +214,8 @@ export class MapPage implements AfterViewInit {
     const modal = await this.modalController.create({
       component: MapSettingsComponent,
     });
-    return await modal.present();
+    await modal.present();
+    await modal.onDidDismiss();
+    await this.loadSettings();
   }
 }

@@ -20,6 +20,8 @@ export class MapSettingsService {
         { id: 'ev15', name: 'EuroVelo 15', sourceUrl: 'assets/gpx/EuroVelo-15.gpx' }
     ];
 
+    readonly defaultTrackingDuration = 4;
+
     private _storage: Promise<Storage>;
 
     constructor(private storage: Storage) {
@@ -54,5 +56,19 @@ export class MapSettingsService {
     async setPaths(paths: Layer[]) {
         let storage = await this._storage;
         await storage.set('MapSettings.pathIds', paths.map(p => p.id));
+    }
+
+    async setTrackingDuration(duration: number) {
+        let storage = await this._storage;
+        await storage.set('MapSettings.trackingDuration', duration);
+    }
+
+    async getTrackingDuration() {
+        let storage = await this._storage;
+        var value: number = await storage.get("MapSettings.trackingDuration");
+        if (value == null) {
+            value = this.defaultTrackingDuration;
+        }
+        return value;
     }
 }

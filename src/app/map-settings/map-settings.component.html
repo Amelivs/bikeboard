@@ -30,4 +30,15 @@
       <ion-checkbox slot="start" [checked]="isChecked(path)" (ionChange)="checkedChange(path)"></ion-checkbox>
     </ion-item>
   </ion-list>
+  <ion-list>
+    <ion-list-header>
+      <ion-label>Settings</ion-label>
+    </ion-list-header>
+    <ion-item>
+      <ion-label>Tracking duration (m)</ion-label>
+      <ion-select [(ngModel)]="selectedDuration">
+        <ion-select-option [value]="d" *ngFor="let d of allDurations">{{d}}</ion-select-option>
+      </ion-select>
+    </ion-item>
+  </ion-list>
 </ion-content>
