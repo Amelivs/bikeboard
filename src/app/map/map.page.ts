@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, NgZone, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, HostListener, NgZone, ViewChild } from '@angular/core';
 
 import { Map, Overlay, View, Geolocation, Collection } from 'ol';
 import { fromLonLat } from 'ol/proj';
@@ -9,6 +9,7 @@ import XYZ from 'ol/source/XYZ';
 import OSM from 'ol/source/OSM';
 import VectorSource from 'ol/source/Vector';
 import GPX from 'ol/format/GPX';
+import { toRadians } from 'ol/math';
 import { Style, Stroke } from 'ol/style';
 import { Coordinate } from 'ol/coordinate';
 import { ModalController } from '@ionic/angular';
@@ -203,6 +204,17 @@ export class MapPage implements AfterViewInit {
     this.positionMarker.setPosition(coordinates);
     if (this.trackingMode === 'Centered') {
       this.view.setCenter(coordinates);
+    }
+  }
+
+  @HostListener('window:deviceorientation', ['$event'])
+  private onOrientationChange(event: DeviceOrientationEvent) {
+    if (this.isTracking || this.navigationMode === NavigationMode.FixedOrientation) {
+      return;
+    }
+    if (this.trackingMode === 'Centered') {
+      var heading = toRadians(event.alpha);
+      this.view.setRotation(heading);
     }
   }
 
