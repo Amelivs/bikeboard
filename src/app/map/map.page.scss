@@ -29,6 +29,14 @@
   display: block;
 }
 
+.position-marker.disabled {
+  background-color: rgba(126, 126, 126, 0.2);
+}
+
+.position-marker.disabled:after {
+  background-color: rgb(126, 126, 126);
+}
+
 .map-buttons {
   position: absolute;
   bottom: 0;

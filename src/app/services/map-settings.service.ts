@@ -6,6 +6,8 @@ export interface Layer {
     id: string, name: string, sourceUrl: string
 }
 
+export enum NavigationMode { LiveOrientation, FixedOrientation };
+
 @Injectable({ providedIn: 'root' })
 export class MapSettingsService {
 
@@ -20,7 +22,8 @@ export class MapSettingsService {
         { id: 'ev15', name: 'EuroVelo 15', sourceUrl: 'assets/gpx/EuroVelo-15.gpx' }
     ];
 
-    readonly defaultTrackingDuration = 4;
+    readonly defaultTrackingDuration = 5;
+    readonly defaultNavigationMode = NavigationMode.LiveOrientation;
 
     private _storage: Promise<Storage>;
 
@@ -70,5 +73,19 @@ export class MapSettingsService {
             value = this.defaultTrackingDuration;
         }
         return value;
+    }
+
+    async getMode() {
+        let storage = await this._storage;
+        var value: NavigationMode = await storage.get("MapSettings.navigationMode");
+        if (value == null) {
+            value = this.defaultNavigationMode;
+        }
+        return value;
+    }
+
+    async setMode(mode: NavigationMode) {
+        let storage = await this._storage;
+        await storage.set('MapSettings.navigationMode', mode);
     }
 }

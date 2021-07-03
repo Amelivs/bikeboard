@@ -1,1 +1,1 @@
-az storage blob directory upload -c '$web' -s './www/*' -d . --recursive --connection-string 'DefaultEndpointsProtocol=https;AccountName=bikeboard;AccountKey=lsFtn8M+DgxsSBb/C14a/Pplhm7Wc+oNQh5MrSDIO8TDQH9ZsUG2Vb92IztgETjaL8/X45fjru97sBKtqWWZPg==;EndpointSuffix=core.windows.net'
+az storage blob directory upload -c '$web' -s './www/*' -d . --recursive --connection-string 'DefaultEndpointsProtocol=https;AccountName=bikeboard;AccountKey=KkTdDHkxpxYcran0V/rqKUe2g1+XF6BkqZAkjeCm6fovQsq0MoIJVsCgmcu7wVWfxmBIAs/O23XRvOTS8iiWFw==;EndpointSuffix=core.windows.net'

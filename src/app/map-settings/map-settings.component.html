@@ -9,6 +9,23 @@
 
 <ion-content>
   <ion-list>
+    <ion-list-header>
+      <ion-label>Settings</ion-label>
+    </ion-list-header>
+    <ion-item>
+      <ion-label>Navigation mode</ion-label>
+      <ion-select [(ngModel)]="selectedMode">
+        <ion-select-option [value]="m.value" *ngFor="let m of allModes">{{m.label}}</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <ion-item>
+      <ion-label>Tracking duration</ion-label>
+      <ion-select [(ngModel)]="selectedDuration">
+        <ion-select-option [value]="d" *ngFor="let d of allDurations">{{d + ' min'}}</ion-select-option>
+      </ion-select>
+    </ion-item>
+  </ion-list>
+  <ion-list>
     <ion-radio-group [(ngModel)]="selectedMap">
       <ion-list-header>
         <ion-label>Maps</ion-label>
@@ -28,17 +45,6 @@
     <ion-item *ngFor="let path of paths">
       <ion-label>{{path.name}}</ion-label>
       <ion-checkbox slot="start" [checked]="isChecked(path)" (ionChange)="checkedChange(path)"></ion-checkbox>
-    </ion-item>
-  </ion-list>
-  <ion-list>
-    <ion-list-header>
-      <ion-label>Settings</ion-label>
-    </ion-list-header>
-    <ion-item>
-      <ion-label>Tracking duration (m)</ion-label>
-      <ion-select [(ngModel)]="selectedDuration">
-        <ion-select-option [value]="d" *ngFor="let d of allDurations">{{d}}</ion-select-option>
-      </ion-select>
     </ion-item>
   </ion-list>
 </ion-content>

@@ -13,7 +13,7 @@ import { Style, Stroke } from 'ol/style';
 import { Coordinate } from 'ol/coordinate';
 import { ModalController } from '@ionic/angular';
 import { MapSettingsComponent } from '../map-settings/map-settings.component';
-import { MapSettingsService } from '../services/map-settings.service';
+import { MapSettingsService, NavigationMode } from '../services/map-settings.service';
 import { ScaleLine, defaults as defaultControls, Rotate, Control } from 'ol/control';
 
 import { CLASS_CONTROL, CLASS_UNSELECTABLE, CLASS_UNSUPPORTED } from 'ol/css';
@@ -67,16 +67,22 @@ export class MapPage implements AfterViewInit {
 
   private view: View;
   private map: Map;
+  private readonly initialPosition = [7.360836658509982, 48.07617984027771];
   private source = new OSM();
   private trackingDuration: number;
+  private navigationMode: NavigationMode;
   private layergroup = new LayerGroup();
   private positionMarker: Overlay;
   private geolocation: Geolocation;
 
-  public mode: TrackingMode = 'Free';
+  public trackingMode: TrackingMode = 'Free';
 
   public get navIcon() {
     return this.geolocation?.getTracking() ? 'navigate' : 'navigate-outline';
+  }
+
+  public get isTracking() {
+    return !this.geolocation?.getTracking();
   }
 
   constructor(private zone: NgZone, public modalController: ModalController, private mapSettings: MapSettingsService) { }
@@ -85,6 +91,7 @@ export class MapPage implements AfterViewInit {
     var selectedMap = await this.mapSettings.getMap();
     this.source.setUrl(selectedMap.sourceUrl);
     this.trackingDuration = await this.mapSettings.getTrackingDuration();
+    this.navigationMode = await this.mapSettings.getMode();
 
     var style = {
       'MultiLineString': new Style({
@@ -116,13 +123,14 @@ export class MapPage implements AfterViewInit {
     await this.loadSettings();
 
     this.view = new View({
-      center: [843853.0918941167 + 1000, 6039219.2160023255],
       constrainResolution: true,
-      zoom: 17,
-      minZoom: 8,
+      zoom: 12,
+      minZoom: 4,
       maxZoom: 18,
       rotation: 0
-    })
+    });
+
+    this.view.setCenter(fromLonLat(this.initialPosition, this.view.getProjection()));
 
     this.geolocation = new Geolocation({
       projection: this.view.getProjection(),
@@ -137,7 +145,7 @@ export class MapPage implements AfterViewInit {
     this.geolocation.on('change:heading', () => this.onHeadingChange());
 
     this.positionMarker = new Overlay({
-      position: fromLonLat([0, 0]),
+      position: fromLonLat(this.initialPosition, this.view.getProjection()),
       positioning: OverlayPositioning.CENTER_CENTER,
       element: this.positionMarkerElement.nativeElement,
       stopEvent: false,
@@ -164,9 +172,8 @@ export class MapPage implements AfterViewInit {
 
     setTimeout(() => {
       this.map.updateSize();
+      this.navigateClick();
     }, 500);
-
-    this.navigateClick();
   }
 
   private trackingTimeout: any;
@@ -188,26 +195,29 @@ export class MapPage implements AfterViewInit {
   public centerClick() {
     var lastPosition = this.positionMarker.getPosition();
     this.view.setCenter(lastPosition);
-    this.mode = 'Centered';
+    this.trackingMode = 'Centered';
   }
 
   private onPositionChange() {
     var coordinates = this.geolocation.getPosition();
     this.positionMarker.setPosition(coordinates);
-    if (this.mode === 'Centered') {
+    if (this.trackingMode === 'Centered') {
       this.view.setCenter(coordinates);
     }
   }
 
   private onHeadingChange() {
+    if (this.navigationMode === NavigationMode.FixedOrientation) {
+      return;
+    }
     var heading = this.geolocation.getHeading();
-    if (this.mode === 'Centered') {
+    if (this.trackingMode === 'Centered') {
       this.view.setRotation(-heading);
     }
   }
 
   private onMove() {
-    this.mode = 'Free';
+    this.trackingMode = 'Free';
   }
 
   async mapSettingsClick() {
