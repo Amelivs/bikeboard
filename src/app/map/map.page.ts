@@ -21,6 +21,7 @@ import { CLASS_CONTROL, CLASS_UNSELECTABLE, CLASS_UNSUPPORTED } from 'ol/css';
 import { listen } from 'ol/events';
 import EventType from 'ol/events/EventType';
 import LayerGroup from 'ol/layer/Group';
+import { OrientationService } from '../services/orientation.service';
 
 
 class MyControl extends Control {
@@ -64,7 +65,6 @@ export class MapPage implements AfterViewInit {
 
   @ViewChild('map') mapElement: ElementRef;
   @ViewChild('positionMarker') positionMarkerElement: ElementRef;
-  @ViewChild('ff') ff: ElementRef;
 
   private view: View;
   private map: Map;
@@ -86,7 +86,13 @@ export class MapPage implements AfterViewInit {
     return !this.geolocation?.getTracking();
   }
 
-  constructor(private zone: NgZone, public modalController: ModalController, private mapSettings: MapSettingsService) { }
+  async requestPermission() {
+    await this.orientationService.startTracking();
+  }
+
+  constructor(private zone: NgZone, public modalController: ModalController, private mapSettings: MapSettingsService, private orientationService: OrientationService) {
+    this.orientationService.heading.subscribe(alpha => this.onOrientationChange(alpha));
+  }
 
   private async loadSettings() {
     var selectedMap = await this.mapSettings.getMap();
@@ -207,13 +213,12 @@ export class MapPage implements AfterViewInit {
     }
   }
 
-  @HostListener('window:deviceorientation', ['$event'])
-  private onOrientationChange(event: DeviceOrientationEvent) {
+  private onOrientationChange(alpha: number) {
     if (this.isTracking || this.navigationMode === NavigationMode.FixedOrientation) {
       return;
     }
     if (this.trackingMode === 'Centered') {
-      var heading = toRadians(event.alpha);
+      var heading = toRadians(alpha);
       this.view.setRotation(heading);
     }
   }

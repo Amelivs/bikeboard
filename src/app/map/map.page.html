@@ -11,7 +11,10 @@
         <ion-icon color="primary" name="map"></ion-icon>
       </ion-button>
     </div>
-    <div #positionMarker class="position-marker" [ngClass]="{ 'disabled': isTracking }"></div>
+    <div #positionMarker class="position-marker" [ngClass]="{ 'disabled': !isTracking }"></div>
     <div #map class="map"></div>
+  </div>
+  <div class="rp">
+    <button (click)="requestPermission()">Track alpha</button>
   </div>
 </ion-content>
