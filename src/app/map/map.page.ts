@@ -54,7 +54,7 @@ class MyControl extends Control {
   }
 }
 
-type TrackingMode = 'Free' | 'Centered';
+type TrackingMode = 'Free' | 'Centered' | 'Navigation';
 
 @Component({
   selector: 'app-map',
@@ -79,15 +79,19 @@ export class MapPage implements AfterViewInit {
   public trackingMode: TrackingMode = 'Free';
 
   public get navIcon() {
-    return this.geolocation?.getTracking() ? 'navigate' : 'navigate-outline';
+    if (this.trackingMode === 'Free') {
+      return 'navigate-outline';
+    }
+    if (this.trackingMode === 'Centered') {
+      return 'navigate';
+    }
+    if (this.trackingMode === 'Navigation') {
+      return 'compass';
+    }
   }
 
   public get isTracking() {
-    return !this.geolocation?.getTracking();
-  }
-
-  async requestPermission() {
-    await this.orientationService.startTracking();
+    return this.geolocation?.getTracking();
   }
 
   constructor(private zone: NgZone, public modalController: ModalController, private mapSettings: MapSettingsService, private orientationService: OrientationService) {
@@ -149,7 +153,7 @@ export class MapPage implements AfterViewInit {
     });
 
     this.geolocation.on('change:position', () => this.onPositionChange());
-    this.geolocation.on('change:heading', () => this.onHeadingChange());
+    //this.geolocation.on('change:heading', () => this.onHeadingChange());
 
     this.positionMarker = new Overlay({
       position: fromLonLat(this.initialPosition, this.view.getProjection()),
@@ -179,61 +183,77 @@ export class MapPage implements AfterViewInit {
 
     setTimeout(() => {
       this.map.updateSize();
-      this.navigateClick();
     }, 500);
   }
 
   private trackingTimeout: any;
 
-  public navigateClick() {
-    if (this.geolocation.getTracking()) {
-      clearTimeout(this.trackingTimeout);
-      this.geolocation.setTracking(false);
-    }
-    else {
-      this.centerClick();
+  public async navigateClick() {
+    if (this.trackingMode === 'Free') {
       this.geolocation.setTracking(true);
-      this.trackingTimeout = setTimeout(() => {
-        this.geolocation.setTracking(false);
-      }, this.trackingDuration * 60 * 1000);
+      var lastPosition = this.positionMarker.getPosition();
+      this.view.setCenter(lastPosition);
+      this.trackingMode = 'Centered';
+      return;
     }
-  }
+    if (this.trackingMode === 'Centered') {
+      this.view.setZoom(17);
+      await this.orientationService.startTracking();
+      this.trackingMode = 'Navigation';
+      return;
+    }
+    if (this.trackingMode === 'Navigation') {
+      await this.orientationService.stopTracking();
+      this.view.setZoom(15);
+      this.view.setRotation(0);
+      this.trackingMode = 'Centered';
+      return;
+    }
 
-  public centerClick() {
-    var lastPosition = this.positionMarker.getPosition();
-    this.view.setCenter(lastPosition);
-    this.trackingMode = 'Centered';
+    /*  if (this.geolocation.getTracking()) {
+        clearTimeout(this.trackingTimeout);
+        this.geolocation.setTracking(false);
+      }
+      else {
+        this.centerClick();
+        this.geolocation.setTracking(true);
+        this.trackingTimeout = setTimeout(() => {
+          this.geolocation.setTracking(false);
+        }, this.trackingDuration * 60 * 1000);
+      }*/
+
   }
 
   private onPositionChange() {
     var coordinates = this.geolocation.getPosition();
     this.positionMarker.setPosition(coordinates);
-    if (this.trackingMode === 'Centered') {
+    if (this.trackingMode === 'Centered' || this.trackingMode === 'Navigation') {
       this.view.setCenter(coordinates);
     }
   }
 
   private onOrientationChange(alpha: number) {
-    if (this.isTracking || this.navigationMode === NavigationMode.FixedOrientation) {
+    if (!this.isTracking/* || this.navigationMode === NavigationMode.FixedOrientation*/) {
       return;
     }
-    if (this.trackingMode === 'Centered') {
+    if (this.trackingMode === 'Navigation') {
       var heading = toRadians(alpha);
       this.view.setRotation(heading);
     }
   }
-
+/*
   private onHeadingChange() {
     if (this.navigationMode === NavigationMode.FixedOrientation) {
       return;
     }
     var heading = this.geolocation.getHeading();
-    if (this.trackingMode === 'Centered') {
+    if (this.trackingMode === 'Navigation') {
       this.view.setRotation(-heading);
     }
-  }
+  }*/
 
   private onMove() {
+    this.geolocation.setTracking(false);
     this.trackingMode = 'Free';
   }
 
