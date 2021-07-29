@@ -1,18 +1,29 @@
 import { Injectable } from "@angular/core";
-import { ReplaySubject } from "rxjs";
+import { Platform } from "@ionic/angular";
+import { fromEvent, ReplaySubject, Subscription } from "rxjs";
 
-@Injectable({ providedIn: 'root' })
+@Injectable({
+    providedIn: 'root'
+})
 export class OrientationService {
 
     private hasPermission = false;
-
     private readonly $heading = new ReplaySubject<number>(1);
+    private orientationSubscription: Subscription;
 
-    private orientationChangeHandler = (event: DeviceOrientationEvent) => {
-        this.onOrientationChange(event);
-    };
+    private get orientationEvent() {
+        if (this.platform.is('desktop')) {
+            return 'deviceorientation';
+        }
+        if ('ondeviceorientationabsolute' in window) {
+            return 'deviceorientationabsolute';
+        }
+        if ('ondeviceorientation' in window) {
+            return 'deviceorientation';
+        }
+    }
 
-    public constructor() { }
+    public constructor(private platform: Platform) { }
 
     public readonly heading = this.$heading.asObservable();
 
@@ -33,36 +44,23 @@ export class OrientationService {
         if (!this.hasPermission) {
             return;
         }
-        if ('ondeviceorientationabsolute' in window) {
-            window.addEventListener('deviceorientationabsolute', this.orientationChangeHandler);
-        }
-        else if ('ondeviceorientation' in window) {
-            window.addEventListener('deviceorientation', this.orientationChangeHandler);
-        }
+        this.orientationSubscription = fromEvent<DeviceOrientationEvent>(window, this.orientationEvent)
+            .subscribe(event => this.onOrientationChange(event));
     }
 
     public stopTracking() {
-        if ('ondeviceorientationabsolute' in window) {
-            window.addEventListener('deviceorientationabsolute', this.orientationChangeHandler);
-        }
-        else if ('ondeviceorientation' in window) {
-            window.removeEventListener('deviceorientation', this.orientationChangeHandler);
-        }
+        this.orientationSubscription?.unsubscribe();
     }
 
     private onOrientationChange(event: DeviceOrientationEvent) {
-        var alpha: number = null;
-        if (event.absolute) {
-            alpha = event.alpha;
+        if ((event.absolute || this.platform.is('desktop')) && event.alpha != null) {
+            this.$heading.next(event.alpha);
+            return;
         }
-        else {
-            var heading = event['webkitCompassHeading'] as number;
-            if (heading != null) {
-                alpha = -1 * heading;
-            }
-        }
-        if (alpha != null) {
-            this.$heading.next(alpha);
+        var heading = event['webkitCompassHeading'] as number;
+        if (heading != null) {
+            this.$heading.next(-1 * heading);
+            return;
         }
     }
 }

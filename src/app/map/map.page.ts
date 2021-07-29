@@ -107,8 +107,8 @@ export class MapPage implements AfterViewInit {
     var style = {
       'MultiLineString': new Style({
         stroke: new Stroke({
-          color: 'rgba(0,49,148,0.7)',
-          width: 6,
+          color: 'rgba(205, 61, 0, 0.8)',
+          width: 8,
         }),
       }),
     };
