@@ -221,9 +221,6 @@ export class MapPage implements AfterViewInit {
   }
 
   private onOrientationChange(alpha: number) {
-    if (!this.isTracking/* || this.navigationMode === NavigationMode.FixedOrientation*/) {
-      return;
-    }
     if (this.trackingMode === 'Navigation') {
       var heading = toRadians(alpha);
       this.view.setRotation(heading);

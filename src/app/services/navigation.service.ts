@@ -1,11 +1,12 @@
 import { Injectable } from "@angular/core";
 import { Subject, Subscription } from "rxjs";
-import { bufferCount, bufferTime, map } from "rxjs/operators";
+import { bufferCount, bufferTime, map, mergeMap, mergeMapTo, takeUntil, timeout, timeoutWith } from "rxjs/operators";
 import { Geolocation } from 'ol';
 import { Coordinate } from "ol/coordinate";
-import { ProjectionLike } from "ol/proj";
+import { getTransformFromProjections, ProjectionLike, get as getProjection, transform } from "ol/proj";
 import { ListenerFunction } from "ol/events";
 import { CompassService } from "./compass.service";
+import { LocationService } from "./location.service";
 
 @Injectable({
     providedIn: 'root'
@@ -13,29 +14,38 @@ import { CompassService } from "./compass.service";
 export class NavigationService {
 
     private readonly $position = new Subject<Coordinate>();
-    private readonly $speed = new Subject<number>();
     private readonly $heading = new Subject<number>();
 
-    private readonly geolocation = new Geolocation({
-        tracking: false,
-        trackingOptions: {
-            enableHighAccuracy: true,
-            maximumAge: 6000
-        }
-    });
+    private readonly unsubscribeLocation = new Subject<void>();
+    private readonly unsubscribeHeading = new Subject<void>();
 
-    private headingStrategy: HeadingStrategy;
+    private isCompassHeading: boolean;
 
-    public constructor(private orientation: CompassService) {
-        this.geolocation.on('change:position', event => {
-            this.$position.next(this.geolocation.getPosition())
+    public constructor(private location: LocationService, private compass: CompassService) { }
+
+    public readonly position = this.$position.asObservable();
+    public readonly heading = this.$heading.asObservable();
+
+    public startTracking(proj: ProjectionLike) {
+
+        this.compass.requestPermission().then(ok => { });
+
+        this.stopTracking();
+
+        var transform = getTransformFromProjections(
+            getProjection('EPSG:4326'),
+            getProjection(proj)
+        );
+
+        this.location.getLocation().pipe(takeUntil(this.unsubscribeLocation)).subscribe(pos => {
+            this.$position.next(transform(pos));
+        }, err => {
+            this.$position.error(err);
+            console.error(err);
         });
-        this.geolocation.on('change:speed', event => {
-            this.$speed.next(this.geolocation.getSpeed())
-        });
-        this.useCompassHeading();
 
-        this.$speed
+        this.location.getSpeed()
+            .pipe(takeUntil(this.unsubscribeLocation))
             .pipe(bufferTime(3000))
             .pipe(map(values => {
                 if (values.length == 0) {
@@ -52,102 +62,59 @@ export class NavigationService {
                     this.useGpsHeading();
                 }
                 this.startHeadingTracking();
+            }, err => {
+                console.error(err);
             });
-    }
 
-    public readonly position = this.$position.asObservable();
-    public readonly heading = this.$heading.asObservable();
-
-    public startTracking(proj: ProjectionLike) {
-        this.geolocation.setProjection(proj);
-        this.geolocation.setTracking(true);
+        this.useCompassHeading();
     }
 
     public stopTracking() {
-        this.geolocation.setTracking(false);
+        this.unsubscribeLocation.next();
+        this.unsubscribeHeading.next();
+        this.isCompassHeading = null;
     }
 
     public getTracking() {
-        return this.geolocation.getTracking();
+
+        return true;
+        //  return this.geolocation.getTracking();
     }
 
     public startHeadingTracking() {
-        this.headingStrategy?.start();
+        //   this.headingStrategy?.start();
     }
 
     public stoptHeadingTracking() {
-        this.headingStrategy?.stop();
+        this.unsubscribeHeading.next();
+        this.isCompassHeading = null;
     }
 
-    public useGpsHeading() {
-        if (this.headingStrategy instanceof GpsHeading) {
+    private useGpsHeading() {
+        if (this.isCompassHeading === false) {
             return;
         }
-        if (this.headingStrategy) {
-            this.headingStrategy.stop();
-        }
-        this.headingStrategy = new GpsHeading(this.geolocation, this.$heading);
-    }
-
-    public useCompassHeading() {
-        if (this.headingStrategy instanceof CompassHeading) {
-            return;
-        }
-        if (this.headingStrategy) {
-            this.headingStrategy.stop();
-        }
-        this.headingStrategy = new CompassHeading(this.orientation, this.$heading);
-    }
-}
-
-
-export interface HeadingStrategy {
-    start(): void;
-    stop(): void;
-}
-
-export class GpsHeading implements HeadingStrategy {
-
-    private listener: ListenerFunction;
-
-    constructor(private geolocation: Geolocation, private $heading: Subject<number>) { }
-
-    start() {
-        if (this.listener) {
-            return;
-        }
-        this.listener = this.geolocation.on('change:heading', event => {
-            this.$heading.next(-1 * this.geolocation.getHeading() * 180 / Math.PI);
-        }).listener;
-    }
-
-    stop() {
-        if (this.listener) {
-            this.geolocation.un('change:heading', this.listener);
-            this.listener = null;
-        }
-    }
-}
-
-export class CompassHeading implements HeadingStrategy {
-
-    private subscription: Subscription;
-
-    constructor(private orientation: CompassService, private $heading: Subject<number>) { }
-
-    start() {
-        if (this.subscription) {
-            return;
-        }
-        this.subscription = this.orientation.heading.subscribe(heading => {
-            this.$heading.next(heading);
+        this.stoptHeadingTracking();
+        this.location.getHeading().pipe(takeUntil(this.unsubscribeHeading)).subscribe(value => {
+            this.$heading.next(value);
+        }, err => {
+            this.$heading.error(err);
+            console.error(err);
         });
-        this.orientation.startTracking().then(_ => { });
+        this.isCompassHeading = false;
     }
 
-    stop() {
-        this.orientation.stopTracking();
-        this.subscription?.unsubscribe();
-        this.subscription = null;
+    private useCompassHeading() {
+        if (this.isCompassHeading === true) {
+            return;
+        }
+        this.stoptHeadingTracking();
+        this.compass.getHeading().pipe(takeUntil(this.unsubscribeHeading)).subscribe(value => {
+            this.$heading.next(value);
+        }, err => {
+            this.$heading.error(err);
+            console.error(err);
+        });
+        this.isCompassHeading = true;
     }
 }
