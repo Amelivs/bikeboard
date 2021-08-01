@@ -5,7 +5,7 @@ import { fromEvent, ReplaySubject, Subscription } from "rxjs";
 @Injectable({
     providedIn: 'root'
 })
-export class OrientationService {
+export class CompassService {
 
     private hasPermission = false;
     private readonly $heading = new ReplaySubject<number>(1);
