@@ -26,7 +26,7 @@ export class CompassService {
         return fromEvent<DeviceOrientationEvent>(window, this.orientationEvent)
             .pipe(map(event => {
                 if ((event.absolute || this.platform.is('desktop')) && event.alpha != null) {
-                    return 360 - event.alpha;
+                    return (360 - event.alpha) % 360;
                 }
                 var heading = event['webkitCompassHeading'] as number;
                 if (heading != null) {

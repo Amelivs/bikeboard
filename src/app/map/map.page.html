@@ -1,15 +1,17 @@
 <ion-content [fullscreen]="true">
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-    <ion-fab-button (click)="navigateClick()" color="light">
+    <ion-fab-button (click)="navigateClick()" color="light" class="btn-navigate">
       <ion-icon color="primary" [name]="navIcon"></ion-icon>
     </ion-fab-button>
   </ion-fab>
+
+  <ion-fab vertical="top" horizontal="start" slot="fixed">
+    <ion-fab-button (click)="mapSettingsClick()" color="light" class="btn-settings">
+      <ion-icon color="primary" name="layers-outline"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
   <div class="map-container">
-    <div class="map-buttons">
-      <ion-button (click)="mapSettingsClick()" color="light">
-        <ion-icon color="primary" name="layers-outline"></ion-icon>
-      </ion-button>
-    </div>
     <div #positionMarker class="position-marker" [ngClass]="{ 'disabled': !isTracking }"></div>
     <div #map class="map"></div>
   </div>

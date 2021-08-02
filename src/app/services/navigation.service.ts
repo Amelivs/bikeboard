@@ -1,8 +1,8 @@
 import { Injectable } from "@angular/core";
-import { asyncScheduler, EMPTY, merge, of, race, Subject } from "rxjs";
-import { buffer, bufferCount, bufferTime, debounce, debounceTime, delay, filter, map, mergeMap, mergeMapTo, subscribeOn, switchMap, takeUntil, throttle, throttleTime, timeout, timeoutWith } from "rxjs/operators";
+import { merge, of, Subject } from "rxjs";
+import { bufferCount, filter, map, switchMap, takeUntil } from "rxjs/operators";
 import { Coordinate } from "ol/coordinate";
-import { getTransformFromProjections, ProjectionLike, get as getProjection, transform } from "ol/proj";
+import { getTransformFromProjections, ProjectionLike, get as getProjection } from "ol/proj";
 import { CompassService } from "./compass.service";
 import { LocationService } from "./location.service";
 import { toRadians } from 'ol/math';
@@ -18,15 +18,14 @@ export class NavigationService {
     private readonly unsubscribeLocation = new Subject<void>();
     private readonly unsubscribeHeading = new Subject<void>();
 
+    private isTracking = false;
+
     public constructor(private locationSrv: LocationService, private compassSrv: CompassService) { }
 
     public readonly position = this.$position.asObservable();
     public readonly rotation = this.$rotation.asObservable();
 
     public startTracking(proj: ProjectionLike) {
-
-        this.compassSrv.requestPermission().then(ok => { });
-
         this.stopTracking();
 
         var transform = getTransformFromProjections(
@@ -34,11 +33,14 @@ export class NavigationService {
             getProjection(proj)
         );
 
+        this.isTracking = true;
         this.locationSrv.location.pipe(takeUntil(this.unsubscribeLocation)).subscribe(pos => {
             this.$position.next(transform(pos));
         }, err => {
             this.$position.error(err);
             console.error(err);
+        }, () => {
+            this.isTracking = false;
         });
     }
 
@@ -48,18 +50,23 @@ export class NavigationService {
     }
 
     public getTracking() {
-        return true;
+        return this.isTracking;
     }
 
-    public startRotationTracking() {
+    public async startRotationTracking() {
         this.stoptRotationTracking();
+
+        var granted = await this.compassSrv.requestPermission();
+        if (!granted) {
+            this.$rotation.error(new Error('User denied orientation'));
+            return;
+        }
 
         var previousSpeed: number = null;
 
         merge(this.locationSrv.speed
-            .pipe(takeUntil(this.unsubscribeHeading))
-            .pipe(map(speed => isNaN(speed) || speed == null ? 10 : speed))
-            .pipe(bufferTime(3000)), of([]))
+            .pipe(map(speed => isNaN(speed) || speed == null ? 0 : speed))
+            .pipe(bufferCount(3)), of([]))
             .pipe(map(values => {
                 if (values.length == 0) {
                     return 0;
@@ -88,8 +95,9 @@ export class NavigationService {
                     return this.locationSrv.heading;
                 }
             }))
+            .pipe(takeUntil(this.unsubscribeHeading))
             .subscribe(heading => {
-                this.$rotation.next(toRadians(360 - heading));
+                this.$rotation.next(toRadians((360 - heading) % 360));
             }, err => {
                 console.error(err);
             });

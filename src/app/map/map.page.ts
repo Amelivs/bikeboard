@@ -1,5 +1,5 @@
-import { AfterViewInit, Component, ElementRef, HostListener, NgZone, ViewChild } from '@angular/core';
-
+import { AfterViewInit, Component, ElementRef, NgZone, ViewChild } from '@angular/core';
+import { ModalController } from '@ionic/angular';
 import { Map, Overlay, View, Collection } from 'ol';
 import { fromLonLat } from 'ol/proj';
 import OverlayPositioning from 'ol/OverlayPositioning';
@@ -11,47 +11,12 @@ import VectorSource from 'ol/source/Vector';
 import GPX from 'ol/format/GPX';
 import { Style, Stroke } from 'ol/style';
 import { Coordinate } from 'ol/coordinate';
-import { ModalController } from '@ionic/angular';
+import { ScaleLine, Rotate, } from 'ol/control';
+import LayerGroup from 'ol/layer/Group';
+
 import { MapSettingsComponent } from '../map-settings/map-settings.component';
 import { MapSettingsService, NavigationMode } from '../services/map-settings.service';
-import { ScaleLine, defaults as defaultControls, Rotate, Control } from 'ol/control';
-
-import { CLASS_CONTROL, CLASS_UNSELECTABLE, CLASS_UNSUPPORTED } from 'ol/css';
-import { listen } from 'ol/events';
-import EventType from 'ol/events/EventType';
-import LayerGroup from 'ol/layer/Group';
 import { NavigationService } from '../services/navigation.service';
-
-
-class MyControl extends Control {
-
-  cssClassName: string;
-  button: HTMLButtonElement;
-
-  constructor(opt_options) {
-    const options = opt_options ? opt_options : {};
-    super({
-      element: document.createElement('div'),
-      target: options.target
-    });
-
-    this.button = document.createElement('button');
-    this.button.setAttribute('type', 'button');
-    this.button.innerHTML = '<ion-icon class="ol-compass" name="map"></ion-icon>';
-    listen(this.button, EventType.CLICK, this.handleClick, this);
-
-    this.cssClassName = options.className !== undefined ? options.className : 'ol-rotate';
-    const cssClasses = this.cssClassName + ' ' + CLASS_UNSELECTABLE + ' ' + CLASS_CONTROL;
-    this.element.className = cssClasses;
-    this.element.appendChild(this.button);
-  }
-
-  handleClick(event) {
-    event.preventDefault();
-    alert('Your control is online!');
-    return false;
-  }
-}
 
 type TrackingMode = 'Free' | 'Centered' | 'Navigation';
 
@@ -93,8 +58,8 @@ export class MapPage implements AfterViewInit {
   }
 
   constructor(private zone: NgZone, public modalController: ModalController, private mapSettings: MapSettingsService, private navService: NavigationService) {
-    this.navService.position.subscribe(position => this.onPositionChange(position));
-    this.navService.rotation.subscribe(rotation => this.onRotationChange(rotation));
+    this.navService.position.subscribe(position => this.onPositionChange(position), err => { this.onError(err) });
+    this.navService.rotation.subscribe(rotation => this.onRotationChange(rotation), err => { this.onError(err) });
   }
 
   private async loadSettings() {
@@ -134,6 +99,7 @@ export class MapPage implements AfterViewInit {
 
     this.view = new View({
       constrainResolution: true,
+      constrainRotation: false,
       zoom: 12,
       minZoom: 4,
       maxZoom: 18,
@@ -166,14 +132,12 @@ export class MapPage implements AfterViewInit {
       overlays: [this.positionMarker]
     });
 
-    this.map.on("pointerdrag", () => this.zone.run(() => this.onMove()));
+    this.map.on("pointerdrag", () => this.zone.run(() => this.onMapDrag()));
 
     setTimeout(() => {
       this.map.updateSize();
     }, 500);
   }
-
-  private trackingTimeout: any;
 
   public async navigateClick() {
     if (this.trackingMode === 'Free') {
@@ -184,13 +148,13 @@ export class MapPage implements AfterViewInit {
       return;
     }
     if (this.trackingMode === 'Centered') {
-      this.view.setZoom(17);
       await this.navService.startRotationTracking();
+      this.view.setZoom(17);
       this.trackingMode = 'Navigation';
       return;
     }
     if (this.trackingMode === 'Navigation') {
-      await this.navService.stoptRotationTracking();
+      this.navService.stoptRotationTracking();
       this.view.setZoom(15);
       this.view.setRotation(0);
       this.trackingMode = 'Centered';
@@ -213,28 +177,19 @@ export class MapPage implements AfterViewInit {
 
   private onPositionChange(position: Coordinate) {
     this.positionMarker.setPosition(position);
-    if (this.trackingMode === 'Centered' || this.trackingMode === 'Navigation') {
-      this.view.setCenter(position);
-    }
+    this.view.setCenter(position);
   }
 
   private onRotationChange(rotation: number) {
-    if (this.trackingMode === 'Navigation') {
-      this.view.setRotation(rotation);
-    }
+    this.view.setRotation(rotation);
   }
-  /*
-    private onHeadingChange() {
-      if (this.navigationMode === NavigationMode.FixedOrientation) {
-        return;
-      }
-      var heading = this.geolocation.getHeading();
-      if (this.trackingMode === 'Navigation') {
-        this.view.setRotation(-heading);
-      }
-    }*/
 
-  private onMove() {
+  private onError(err: any) {
+    console.error(err);
+    alert(err.message);
+  }
+
+  private onMapDrag() {
     this.navService.stopTracking();
     this.trackingMode = 'Free';
   }
