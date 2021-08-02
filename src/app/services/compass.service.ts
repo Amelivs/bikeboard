@@ -1,12 +1,14 @@
 import { Injectable } from "@angular/core";
 import { Platform } from "@ionic/angular";
-import { fromEvent } from "rxjs";
-import { map } from "rxjs/operators";
+import { fromEvent, Observable } from "rxjs";
+import { map, share } from "rxjs/operators";
 
 @Injectable({
     providedIn: 'root'
 })
 export class CompassService {
+
+    public readonly heading: Observable<number>;
 
     private get orientationEvent() {
         if (this.platform.is('desktop')) {
@@ -20,7 +22,23 @@ export class CompassService {
         }
     }
 
-    public constructor(private platform: Platform) { }
+    private createObservable() {
+        return fromEvent<DeviceOrientationEvent>(window, this.orientationEvent)
+            .pipe(map(event => {
+                if ((event.absolute || this.platform.is('desktop')) && event.alpha != null) {
+                    return 360 - event.alpha;
+                }
+                var heading = event['webkitCompassHeading'] as number;
+                if (heading != null) {
+                    return heading;
+                }
+                return 0;
+            }));
+    }
+
+    public constructor(private platform: Platform) {
+        this.heading = this.createObservable().pipe(share());
+    }
 
     public async requestPermission() {
         if (typeof DeviceOrientationEvent.requestPermission === 'function') {
@@ -28,19 +46,5 @@ export class CompassService {
             return permissionState !== 'denied';
         };
         return true;
-    }
-
-    public getHeading() {
-        return fromEvent<DeviceOrientationEvent>(window, this.orientationEvent)
-            .pipe(map(event => {
-                if ((event.absolute || this.platform.is('desktop')) && event.alpha != null) {
-                    return event.alpha;
-                }
-                var heading = event['webkitCompassHeading'] as number;
-                if (heading != null) {
-                    return (-1 * heading);
-                }
-                return 0;
-            }));
     }
 }

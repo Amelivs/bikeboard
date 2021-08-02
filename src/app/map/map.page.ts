@@ -1,6 +1,6 @@
 import { AfterViewInit, Component, ElementRef, HostListener, NgZone, ViewChild } from '@angular/core';
 
-import { Map, Overlay, View, Geolocation, Collection } from 'ol';
+import { Map, Overlay, View, Collection } from 'ol';
 import { fromLonLat } from 'ol/proj';
 import OverlayPositioning from 'ol/OverlayPositioning';
 import TileLayer from 'ol/layer/Tile';
@@ -9,7 +9,6 @@ import XYZ from 'ol/source/XYZ';
 import OSM from 'ol/source/OSM';
 import VectorSource from 'ol/source/Vector';
 import GPX from 'ol/format/GPX';
-import { toRadians } from 'ol/math';
 import { Style, Stroke } from 'ol/style';
 import { Coordinate } from 'ol/coordinate';
 import { ModalController } from '@ionic/angular';
@@ -21,7 +20,6 @@ import { CLASS_CONTROL, CLASS_UNSELECTABLE, CLASS_UNSUPPORTED } from 'ol/css';
 import { listen } from 'ol/events';
 import EventType from 'ol/events/EventType';
 import LayerGroup from 'ol/layer/Group';
-import { CompassService } from '../services/compass.service';
 import { NavigationService } from '../services/navigation.service';
 
 
@@ -96,7 +94,7 @@ export class MapPage implements AfterViewInit {
 
   constructor(private zone: NgZone, public modalController: ModalController, private mapSettings: MapSettingsService, private navService: NavigationService) {
     this.navService.position.subscribe(position => this.onPositionChange(position));
-    this.navService.heading.subscribe(alpha => this.onOrientationChange(alpha));
+    this.navService.rotation.subscribe(rotation => this.onRotationChange(rotation));
   }
 
   private async loadSettings() {
@@ -187,12 +185,12 @@ export class MapPage implements AfterViewInit {
     }
     if (this.trackingMode === 'Centered') {
       this.view.setZoom(17);
-      await this.navService.startHeadingTracking();
+      await this.navService.startRotationTracking();
       this.trackingMode = 'Navigation';
       return;
     }
     if (this.trackingMode === 'Navigation') {
-      await this.navService.stoptHeadingTracking();
+      await this.navService.stoptRotationTracking();
       this.view.setZoom(15);
       this.view.setRotation(0);
       this.trackingMode = 'Centered';
@@ -220,10 +218,9 @@ export class MapPage implements AfterViewInit {
     }
   }
 
-  private onOrientationChange(alpha: number) {
+  private onRotationChange(rotation: number) {
     if (this.trackingMode === 'Navigation') {
-      var heading = toRadians(alpha);
-      this.view.setRotation(heading);
+      this.view.setRotation(rotation);
     }
   }
   /*

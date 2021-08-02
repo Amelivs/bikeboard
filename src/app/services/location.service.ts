@@ -30,17 +30,12 @@ export class LocationService {
 
     public constructor() {
         this.position$ = this.createObservable().pipe(share());
+        this.location = this.position$.pipe(map(coords => [coords.longitude, coords.latitude]));
+        this.speed = this.position$.pipe(map(coords => coords.speed));
+        this.heading = this.position$.pipe(map(coords => coords.heading));
     }
 
-    public getLocation() {
-        return this.position$.pipe(map(coords => [coords.longitude, coords.latitude]));
-    }
-
-    public getSpeed() {
-        return this.position$.pipe(map(coords => coords.speed));
-    }
-
-    public getHeading() {
-        return this.position$.pipe(map(coords => coords.heading));
-    }
+    public readonly location: Observable<number[]>;
+    public readonly speed: Observable<number>;
+    public readonly heading: Observable<number>;
 }
