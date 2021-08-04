@@ -17,6 +17,7 @@ import LayerGroup from 'ol/layer/Group';
 import { MapSettingsComponent } from '../map-settings/map-settings.component';
 import { MapSettingsService, NavigationMode } from '../services/map-settings.service';
 import { NavigationService } from '../services/navigation.service';
+import { LastPositionService } from '../services/last-position.service';
 
 type TrackingMode = 'Free' | 'Centered' | 'Navigation';
 
@@ -32,7 +33,6 @@ export class MapPage implements AfterViewInit {
 
   private view: View;
   private map: Map;
-  private readonly initialPosition = [7.360836658509982, 48.07617984027771];
   private source = new OSM();
   private trackingDuration: number;
   private navigationMode: NavigationMode;
@@ -57,19 +57,24 @@ export class MapPage implements AfterViewInit {
     return this.navService.getTracking();
   }
 
-  constructor(private zone: NgZone, public modalController: ModalController, private mapSettings: MapSettingsService, private navService: NavigationService) {
-    this.navService.position.subscribe(position => this.onPositionChange(position), err => { this.onError(err) });
-    this.navService.rotation.subscribe(rotation => this.onRotationChange(rotation), err => { this.onError(err) });
+  constructor(
+    private zone: NgZone,
+    private modalController: ModalController,
+    private mapSettings: MapSettingsService,
+    private navService: NavigationService,
+    private lastPositionSrv: LastPositionService) {
+    this.navService.position.subscribe(position => this.onPositionChange(position), err => { this.onError(err); });
+    this.navService.rotation.subscribe(rotation => this.onRotationChange(rotation), err => { this.onError(err); });
   }
 
   private async loadSettings() {
-    var selectedMap = await this.mapSettings.getMap();
+    let selectedMap = await this.mapSettings.getMap();
     this.source.setUrl(selectedMap.sourceUrl);
     this.trackingDuration = await this.mapSettings.getTrackingDuration();
     this.navigationMode = await this.mapSettings.getMode();
 
-    var style = {
-      'MultiLineString': new Style({
+    let style = {
+      MultiLineString: new Style({
         stroke: new Stroke({
           color: 'rgba(205, 61, 0, 0.8)',
           width: 8,
@@ -77,15 +82,15 @@ export class MapPage implements AfterViewInit {
       }),
     };
 
-    var selectedPaths = await this.mapSettings.getPaths();
-    var layers: VectorLayer[] = [];
-    for (var path of selectedPaths) {
-      var layer = new VectorLayer({
+    let selectedPaths = await this.mapSettings.getPaths();
+    let layers: VectorLayer[] = [];
+    for (let path of selectedPaths) {
+      let layer = new VectorLayer({
         source: new VectorSource({
           url: path.sourceUrl,
           format: new GPX(),
         }),
-        style: function (feature) {
+        style(feature) {
           return style[feature.getGeometry().getType()];
         },
       });
@@ -106,17 +111,19 @@ export class MapPage implements AfterViewInit {
       rotation: 0
     });
 
-    this.view.setCenter(fromLonLat(this.initialPosition, this.view.getProjection()));
+    let lastPosition = await this.lastPositionSrv.getLastPosition();
+
+    this.view.setCenter(fromLonLat(lastPosition, this.view.getProjection()));
 
     this.positionMarker = new Overlay({
-      position: fromLonLat(this.initialPosition, this.view.getProjection()),
+      position: fromLonLat(lastPosition, this.view.getProjection()),
       positioning: OverlayPositioning.CENTER_CENTER,
       element: this.positionMarkerElement.nativeElement,
       stopEvent: false,
     });
 
-    var control = new ScaleLine();
-    var rotateControl = new Rotate({ autoHide: false });
+    let control = new ScaleLine();
+    let rotateControl = new Rotate({ autoHide: false });
 
     this.map = new Map({
       target: this.mapElement.nativeElement,
@@ -132,7 +139,7 @@ export class MapPage implements AfterViewInit {
       overlays: [this.positionMarker]
     });
 
-    this.map.on("pointerdrag", () => this.zone.run(() => this.onMapDrag()));
+    this.map.on('pointerdrag', () => this.zone.run(() => this.onMapDrag()));
 
     setTimeout(() => {
       this.map.updateSize();
@@ -142,7 +149,7 @@ export class MapPage implements AfterViewInit {
   public async navigateClick() {
     if (this.trackingMode === 'Free') {
       this.navService.startTracking(this.view.getProjection());
-      var lastPosition = this.positionMarker.getPosition();
+      let lastPosition = this.positionMarker.getPosition();
       this.view.setCenter(lastPosition);
       this.trackingMode = 'Centered';
       return;

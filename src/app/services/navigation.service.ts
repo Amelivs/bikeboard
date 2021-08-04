@@ -1,11 +1,12 @@
-import { Injectable } from "@angular/core";
-import { merge, of, Subject } from "rxjs";
-import { bufferCount, filter, map, switchMap, takeUntil } from "rxjs/operators";
-import { Coordinate } from "ol/coordinate";
-import { getTransformFromProjections, ProjectionLike, get as getProjection } from "ol/proj";
-import { CompassService } from "./compass.service";
-import { LocationService } from "./location.service";
+import { Injectable } from '@angular/core';
+import { merge, of, Subject } from 'rxjs';
+import { bufferCount, filter, first, last, map, switchMap, takeUntil } from 'rxjs/operators';
+import { Coordinate } from 'ol/coordinate';
+import { getTransformFromProjections, ProjectionLike, get as getProjection } from 'ol/proj';
+import { CompassService } from './compass.service';
+import { LocationService } from './location.service';
 import { toRadians } from 'ol/math';
+import { LastPositionService } from './last-position.service';
 
 @Injectable({
     providedIn: 'root'
@@ -20,7 +21,7 @@ export class NavigationService {
 
     private isTracking = false;
 
-    public constructor(private locationSrv: LocationService, private compassSrv: CompassService) { }
+    public constructor(private locationSrv: LocationService, private compassSrv: CompassService, private lastPositionSrv: LastPositionService) { }
 
     public readonly position = this.$position.asObservable();
     public readonly rotation = this.$rotation.asObservable();
@@ -28,13 +29,21 @@ export class NavigationService {
     public startTracking(proj: ProjectionLike) {
         this.stopTracking();
 
-        var transform = getTransformFromProjections(
+        let transform = getTransformFromProjections(
             getProjection('EPSG:4326'),
             getProjection(proj)
         );
 
+        let location = this.locationSrv.location.pipe(takeUntil(this.unsubscribeLocation));
+
+        // Track first and last position
+        merge(location.pipe(first()), location.pipe(last()))
+            .subscribe(position => {
+                this.lastPositionSrv.setLastPosition(position);
+            });
+
         this.isTracking = true;
-        this.locationSrv.location.pipe(takeUntil(this.unsubscribeLocation)).subscribe(pos => {
+        location.subscribe(pos => {
             this.$position.next(transform(pos));
         }, err => {
             this.$position.error(err);
@@ -56,13 +65,13 @@ export class NavigationService {
     public async startRotationTracking() {
         this.stoptRotationTracking();
 
-        var granted = await this.compassSrv.requestPermission();
+        let granted = await this.compassSrv.requestPermission();
         if (!granted) {
             this.$rotation.error(new Error('User denied orientation'));
             return;
         }
 
-        var previousSpeed: number = null;
+        let previousSpeed: number = null;
 
         merge(this.locationSrv.speed
             .pipe(map(speed => isNaN(speed) || speed == null ? 0 : speed))
