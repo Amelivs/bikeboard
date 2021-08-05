@@ -2,22 +2,20 @@ import { AfterViewInit, Component, ElementRef, NgZone, ViewChild } from '@angula
 import { ModalController } from '@ionic/angular';
 import { Map, Overlay, View, Collection } from 'ol';
 import { fromLonLat } from 'ol/proj';
+import { Style, Stroke } from 'ol/style';
+import { ScaleLine, Rotate, } from 'ol/control';
 import OverlayPositioning from 'ol/OverlayPositioning';
 import TileLayer from 'ol/layer/Tile';
 import VectorLayer from 'ol/layer/Vector';
-import XYZ from 'ol/source/XYZ';
+import LayerGroup from 'ol/layer/Group';
 import OSM from 'ol/source/OSM';
 import VectorSource from 'ol/source/Vector';
 import GPX from 'ol/format/GPX';
-import { Style, Stroke } from 'ol/style';
-import { Coordinate } from 'ol/coordinate';
-import { ScaleLine, Rotate, } from 'ol/control';
-import LayerGroup from 'ol/layer/Group';
-
 import { MapSettingsComponent } from '../map-settings/map-settings.component';
 import { MapSettingsService, NavigationMode } from '../services/map-settings.service';
 import { NavigationService } from '../services/navigation.service';
 import { LastPositionService } from '../services/last-position.service';
+import { toRadians } from 'ol/math';
 
 type TrackingMode = 'Free' | 'Centered' | 'Navigation';
 
@@ -64,7 +62,7 @@ export class MapPage implements AfterViewInit {
     private navService: NavigationService,
     private lastPositionSrv: LastPositionService) {
     this.navService.position.subscribe(position => this.onPositionChange(position), err => { this.onError(err); });
-    this.navService.rotation.subscribe(rotation => this.onRotationChange(rotation), err => { this.onError(err); });
+    this.navService.heading.subscribe(rotation => this.onHeadingChange(rotation), err => { this.onError(err); });
   }
 
   private async loadSettings() {
@@ -105,7 +103,7 @@ export class MapPage implements AfterViewInit {
     this.view = new View({
       constrainResolution: true,
       constrainRotation: false,
-      zoom: 12,
+      zoom: 14,
       minZoom: 4,
       maxZoom: 18,
       rotation: 0
@@ -130,7 +128,6 @@ export class MapPage implements AfterViewInit {
       controls: [control, rotateControl],
       layers: [
         new TileLayer({
-          //source: new OSM({ url: 'https://{a-c}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png' }),
           source: this.source
         }),
         this.layergroup
@@ -148,46 +145,35 @@ export class MapPage implements AfterViewInit {
 
   public async navigateClick() {
     if (this.trackingMode === 'Free') {
-      this.navService.startTracking(this.view.getProjection());
+      this.navService.startTracking();
       let lastPosition = this.positionMarker.getPosition();
       this.view.setCenter(lastPosition);
       this.trackingMode = 'Centered';
       return;
     }
     if (this.trackingMode === 'Centered') {
-      await this.navService.startRotationTracking();
+      await this.navService.startHeadingTracking();
       this.view.setZoom(17);
       this.trackingMode = 'Navigation';
       return;
     }
     if (this.trackingMode === 'Navigation') {
-      this.navService.stoptRotationTracking();
+      this.navService.stoptHeadingTracking();
       this.view.setZoom(15);
       this.view.setRotation(0);
       this.trackingMode = 'Centered';
       return;
     }
-
-    /*  if (this.geolocation.getTracking()) {
-        clearTimeout(this.trackingTimeout);
-        this.geolocation.setTracking(false);
-      }
-      else {
-        this.centerClick();
-        this.geolocation.setTracking(true);
-        this.trackingTimeout = setTimeout(() => {
-          this.geolocation.setTracking(false);
-        }, this.trackingDuration * 60 * 1000);
-      }*/
-
   }
 
-  private onPositionChange(position: Coordinate) {
-    this.positionMarker.setPosition(position);
-    this.view.setCenter(position);
+  private onPositionChange(position: number[]) {
+    var coords = fromLonLat(position, this.view.getProjection());
+    this.positionMarker.setPosition(coords);
+    this.view.setCenter(coords);
   }
 
-  private onRotationChange(rotation: number) {
+  private onHeadingChange(heading: number) {
+    let rotation = toRadians((360 - heading) % 360)
     this.view.setRotation(rotation);
   }
 

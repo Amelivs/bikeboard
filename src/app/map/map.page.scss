@@ -37,17 +37,6 @@
   background-color: rgb(126, 126, 126);
 }
 
-.map-buttons {
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: 9999;
-  padding: 10px;
-  ion-button {
-    display: block;
-  }
-}
-
 .btn-navigate ion-icon {
   transform: scale(1.2);
 }
