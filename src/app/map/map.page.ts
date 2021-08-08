@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, NgZone, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, HostListener, NgZone, ViewChild } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { Map, Overlay, View, Collection } from 'ol';
 import { fromLonLat } from 'ol/proj';
@@ -63,6 +63,17 @@ export class MapPage implements AfterViewInit {
     private lastPositionSrv: LastPositionService) {
     this.navService.position.subscribe(position => this.onPositionChange(position), err => { this.onError(err); });
     this.navService.heading.subscribe(rotation => this.onHeadingChange(rotation), err => { this.onError(err); });
+  }
+
+  @HostListener('window:blur')
+  onBlur() {
+    this.zone.run(() => {
+      console.debug('Handling window:blur event');
+      if (this.trackingMode !== 'Free') {
+        this.navService.stopTracking();
+        this.trackingMode = 'Free';
+      }
+    });
   }
 
   private async loadSettings() {
