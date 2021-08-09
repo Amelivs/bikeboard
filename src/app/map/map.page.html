@@ -11,6 +11,12 @@
     </ion-fab-button>
   </ion-fab>
 
+  <ion-fab vertical="center" horizontal="end" slot="fixed">
+    <ion-fab-button (click)="bellClick()" color="danger">
+      <ion-icon name="notifications"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
   <div class="map-container">
     <div #positionMarker class="position-marker" [ngClass]="{ 'disabled': !isTracking }"></div>
     <div #map class="map"></div>

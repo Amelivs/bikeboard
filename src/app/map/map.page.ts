@@ -16,6 +16,7 @@ import { MapSettingsService, NavigationMode } from '../services/map-settings.ser
 import { NavigationService } from '../services/navigation.service';
 import { LastPositionService } from '../services/last-position.service';
 import { toRadians } from 'ol/math';
+import { BellService } from '../services/bell.service';
 
 type TrackingMode = 'Free' | 'Centered' | 'Navigation';
 
@@ -60,6 +61,7 @@ export class MapPage implements AfterViewInit {
     private modalController: ModalController,
     private mapSettings: MapSettingsService,
     private navService: NavigationService,
+    private bellService: BellService,
     private lastPositionSrv: LastPositionService) {
     this.navService.position.subscribe(position => this.onPositionChange(position), err => { this.onError(err); });
     this.navService.heading.subscribe(rotation => this.onHeadingChange(rotation), err => { this.onError(err); });
@@ -175,6 +177,10 @@ export class MapPage implements AfterViewInit {
       this.trackingMode = 'Centered';
       return;
     }
+  }
+
+  public bellClick() {
+    this.bellService.honk();
   }
 
   private onPositionChange(position: number[]) {
