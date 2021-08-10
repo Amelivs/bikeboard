@@ -12,7 +12,7 @@
   </ion-fab>
 
   <ion-fab vertical="center" horizontal="end" slot="fixed">
-    <ion-fab-button (click)="bellClick()" color="danger">
+    <ion-fab-button (touchstart)="bellClick($event)" (click)="bellClick()" color="danger">
       <ion-icon name="notifications"></ion-icon>
     </ion-fab-button>
   </ion-fab>

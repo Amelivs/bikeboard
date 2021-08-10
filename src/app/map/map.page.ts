@@ -179,8 +179,9 @@ export class MapPage implements AfterViewInit {
     }
   }
 
-  public bellClick() {
+  public bellClick(event?: Event) {
     this.bellService.honk();
+    event?.preventDefault();
   }
 
   private onPositionChange(position: number[]) {

@@ -27,8 +27,14 @@ export class BellService {
             .connect(this.audioContext.destination);
     }
 
-    public honk() {
+    public async honk() {
         this.setupContext();
-        this.audioElement.play();
+        try {
+            await this.audioElement.play();
+        }
+        catch (err) {
+            this.audioElement = null;
+            throw err;
+        }
     }
 }
