@@ -21,9 +21,34 @@
       "updateMode": "prefetch",
       "resources": {
         "files": [
-          "/assets/**",
-          "/svg/**",
+          "/assets/icons/**",
+          "/assets/audio/**",
           "/*.(eot|svg|cur|jpg|png|webp|gif|otf|ttf|woff|woff2|ani)"
+        ]
+      }
+    },
+    {
+      "name": "icons",
+      "installMode": "prefetch",
+      "updateMode": "prefetch",
+      "resources": {
+        "files": [
+          "/svg/layers-outline.svg",
+          "/svg/navigate-outline.svg",
+          "/svg/navigate.svg",
+          "/svg/compass.svg",
+          "/svg/notifications.svg",
+          "/svg/close.svg"
+        ]
+      }
+    },
+    {
+      "name": "traces",
+      "installMode": "lazy",
+      "updateMode": "lazy",
+      "resources": {
+        "files": [
+          "/assets/gpx/**"
         ]
       }
     },
@@ -31,7 +56,8 @@
       "name": "openstreetmap",
       "resources": {
         "urls": [
-          "https://*.tile.openstreetmap.fr/osmfr/(17|18)/**"
+          "https://*.tile.openstreetmap.fr/osmfr/**",
+          "https://*.tile-cyclosm.openstreetmap.fr/cyclosm/**"
         ]
       }
     }
