@@ -45,3 +45,21 @@
   width: 40px;
   height: 40px;
 }
+
+ion-footer ion-button {
+  text-transform: none;
+  height: 64px;
+  width: 110px;
+  overflow: hidden;
+}
+
+.btn-content {
+  .btn-value {
+    font-family: monospace, "Courier New", Courier;
+    font-size: 2em;
+  }
+  .btn-text {
+    margin-top: 0.2em;
+    font-size: 0.8em;
+  }
+}

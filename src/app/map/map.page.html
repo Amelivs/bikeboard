@@ -1,5 +1,5 @@
 <ion-content [fullscreen]="true">
-  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed" edge>
     <ion-fab-button (click)="navigateClick()" color="light" class="btn-navigate">
       <ion-icon color="primary" [name]="navIcon"></ion-icon>
     </ion-fab-button>
@@ -22,3 +22,22 @@
     <div #map class="map"></div>
   </div>
 </ion-content>
+
+<ion-footer>
+  <ion-toolbar color="black">
+    <ion-buttons slot="start">
+      <ion-button>
+        <div class="btn-content">
+          <div class="btn-value">{{currentSpeed}}</div>
+          <div class="btn-text">Speed</div>
+        </div>
+      </ion-button>
+      <ion-button>
+        <div class="btn-content">
+          <div class="btn-value">{{currentAltitude}}</div>
+          <div class="btn-text">Altitude</div>
+        </div>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-footer>

@@ -33,9 +33,11 @@ export class LocationService {
         this.location = this.position$.pipe(map(coords => [coords.longitude, coords.latitude]));
         this.speed = this.position$.pipe(map(coords => coords.speed));
         this.heading = this.position$.pipe(map(coords => coords.heading));
+        this.altitude = this.position$.pipe(map(coords => coords.altitude));
     }
 
     public readonly location: Observable<number[]>;
     public readonly speed: Observable<number>;
     public readonly heading: Observable<number>;
+    public readonly altitude: Observable<number>;
 }

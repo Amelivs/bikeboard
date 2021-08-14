@@ -38,6 +38,9 @@ export class MapPage implements AfterViewInit {
   private layergroup = new LayerGroup();
   private positionMarker: Overlay;
 
+  public currentSpeed = '0.0';
+  public currentAltitude = '0';
+
   public trackingMode: TrackingMode = 'Free';
 
   public get navIcon() {
@@ -65,6 +68,8 @@ export class MapPage implements AfterViewInit {
     private lastPositionSrv: LastPositionService) {
     this.navService.position.subscribe(position => this.onPositionChange(position), err => { this.onError(err); });
     this.navService.heading.subscribe(rotation => this.onHeadingChange(rotation), err => { this.onError(err); });
+    this.navService.speed.subscribe(speed => { this.currentSpeed = speed?.toFixed(1) || '0.0' }, err => { this.onError(err); });
+    this.navService.altitude.subscribe(alt => { this.currentAltitude = alt?.toFixed(0) || '0' }, err => { this.onError(err); });
   }
 
   @HostListener('window:blur')

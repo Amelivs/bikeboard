@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { merge, of, Subject } from 'rxjs';
-import { bufferCount, filter, first, last, map, switchMap, takeUntil } from 'rxjs/operators';
+import { bufferCount, bufferTime, defaultIfEmpty, filter, first, last, map, switchMap, takeLast, takeUntil } from 'rxjs/operators';
 import { CompassService } from './compass.service';
 import { LocationService } from './location.service';
 import { LastPositionService } from './last-position.service';
@@ -12,6 +12,8 @@ export class NavigationService {
 
     private readonly $position = new Subject<number[]>();
     private readonly $heading = new Subject<number>();
+    private readonly $speed = new Subject<number>();
+    private readonly $altitude = new Subject<number>();
 
     private readonly unsubscribeLocation = new Subject<void>();
     private readonly unsubscribeHeading = new Subject<void>();
@@ -22,11 +24,56 @@ export class NavigationService {
 
     public readonly position = this.$position.asObservable();
     public readonly heading = this.$heading.asObservable();
+    public readonly speed = this.$speed.asObservable();
+    public readonly altitude = this.$altitude.asObservable();
 
     public startTracking() {
         this.stopTracking();
 
         let location = this.locationSrv.location.pipe(takeUntil(this.unsubscribeLocation));
+        let speed = this.locationSrv.speed.pipe(takeUntil(this.unsubscribeLocation));
+        let altitude = this.locationSrv.altitude.pipe(takeUntil(this.unsubscribeLocation));
+
+        speed
+            .pipe(filter(value => typeof (value) === 'number' && !isNaN(value)))
+            .pipe(bufferTime(6000, null, 1))
+            .pipe(map(values => {
+                if (values.length == 0) {
+                    return 0;
+                }
+                return 3.6 * values[0];
+            }))
+            .subscribe(speed => {
+                this.$speed.next(speed);
+            }, err => {
+                this.$speed.error(err);
+                console.error(err);
+            }, () => {
+                this.$speed.next(null);
+            });
+
+        var alt = altitude
+            .pipe(filter(value => typeof (value) === 'number' && !isNaN(value)));
+
+        alt.pipe(defaultIfEmpty(null), first()).subscribe(first => {
+            this.$altitude.next(first);
+        });
+
+        alt.pipe(bufferTime(6000, null, 6))
+            .pipe(map(values => {
+                if (values.length == 0) {
+                    return 0;
+                }
+                return values.reduce((prev, curr) => prev + curr, 0) / values.length;
+            }))
+            .subscribe(altitude => {
+                this.$altitude.next(altitude);
+            }, err => {
+                this.$altitude.error(err);
+                console.error(err);
+            }, () => {
+                this.$altitude.next(null);
+            });
 
         // Track first and last position
         merge(location.pipe(first()), location.pipe(last()))
