@@ -1,4 +1,4 @@
-<ion-content [fullscreen]="true">
+<ion-content [fullscreen]="true" [scrollY]="false">
   <ion-fab vertical="bottom" horizontal="end" slot="fixed" edge>
     <ion-fab-button (click)="navigateClick()" color="light" class="btn-navigate">
       <ion-icon color="primary" [name]="navIcon"></ion-icon>
@@ -17,10 +17,8 @@
     </ion-fab-button>
   </ion-fab>
 
-  <div class="map-container">
-    <div #positionMarker class="position-marker" [ngClass]="{ 'disabled': !isTracking }"></div>
-    <div #map class="map"></div>
-  </div>
+  <div #positionMarker class="position-marker" [ngClass]="{ 'disabled': !isTracking }"></div>
+  <div #map class="map"></div>
 </ion-content>
 
 <ion-footer>
