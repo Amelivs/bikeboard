@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, HostListener, NgZone, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, NgZone, ViewChild } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { Map, Overlay, View, Collection } from 'ol';
 import { fromLonLat } from 'ol/proj';
@@ -17,6 +17,7 @@ import { NavigationService } from '../services/navigation.service';
 import { LastPositionService } from '../services/last-position.service';
 import { toRadians } from 'ol/math';
 import { BellService } from '../services/bell.service';
+import { ScreenService } from '../services/pause.service';
 
 type TrackingMode = 'Free' | 'Centered' | 'Navigation';
 
@@ -65,17 +66,18 @@ export class MapPage implements AfterViewInit {
     private mapSettings: MapSettingsService,
     private navService: NavigationService,
     private bellService: BellService,
+    private screenService: ScreenService,
     private lastPositionSrv: LastPositionService) {
     this.navService.position.subscribe(position => this.onPositionChange(position), err => { this.onError(err); });
     this.navService.heading.subscribe(rotation => this.onHeadingChange(rotation), err => { this.onError(err); });
     this.navService.speed.subscribe(speed => { this.currentSpeed = speed?.toFixed(1) || '0.0' }, err => { this.onError(err); });
     this.navService.altitude.subscribe(alt => { this.currentAltitude = alt?.toFixed(0) || '0' }, err => { this.onError(err); });
+    this.screenService.off.subscribe(() => { this.onScreenOff(); });
   }
 
-  @HostListener('window:blur')
-  onBlur() {
+  private onScreenOff() {
     this.zone.run(() => {
-      console.debug('Handling window:blur event');
+      console.debug('Handling screen off event');
       if (this.trackingMode !== 'Free') {
         this.navService.stopTracking();
         this.trackingMode = 'Free';
