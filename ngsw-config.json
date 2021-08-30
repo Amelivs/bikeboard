@@ -51,16 +51,20 @@
           "/assets/gpx/**"
         ]
       }
-    },
+    }
+  ],
+  "dataGroups": [
     {
-      "name": "openstreetmap",
-      "resources": {
-        "urls": [
-          "https://*.tile.openstreetmap.fr/osmfr/**",
-          "https://*.tile-cyclosm.openstreetmap.fr/cyclosm/**",
-          "https://wxs.ign.fr/**"
-        ]
-      }
+      "name": "tiles",
+      "cacheConfig": {
+        "maxAge": "90d",
+        "maxSize": 100000,
+        "strategy": "performance"
+      },
+      "urls": [
+        "https://*.openstreetmap.fr/**",
+        "https://wxs.ign.fr/**"
+      ]
     }
   ]
 }
