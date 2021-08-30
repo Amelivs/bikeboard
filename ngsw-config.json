@@ -57,7 +57,8 @@
       "resources": {
         "urls": [
           "https://*.tile.openstreetmap.fr/osmfr/**",
-          "https://*.tile-cyclosm.openstreetmap.fr/cyclosm/**"
+          "https://*.tile-cyclosm.openstreetmap.fr/cyclosm/**",
+          "https://wxs.ign.fr/**"
         ]
       }
     }

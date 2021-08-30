@@ -18,6 +18,7 @@ import { LastPositionService } from '../services/last-position.service';
 import { toRadians } from 'ol/math';
 import { BellService } from '../services/bell.service';
 import { ScreenService } from '../services/pause.service';
+import Layer from 'ol/layer/Layer';
 
 type TrackingMode = 'Free' | 'Centered' | 'Navigation';
 
@@ -33,9 +34,9 @@ export class MapPage implements AfterViewInit {
 
   private view: View;
   private map: Map;
-  private source = new OSM();
   private trackingDuration: number;
   private navigationMode: NavigationMode;
+  private tileLayerGroup = new LayerGroup();
   private layergroup = new LayerGroup();
   private positionMarker: Overlay;
 
@@ -87,7 +88,10 @@ export class MapPage implements AfterViewInit {
 
   private async loadSettings() {
     let selectedMap = await this.mapSettings.getMap();
-    this.source.setUrl(selectedMap.sourceUrl);
+
+    var osmLayers = selectedMap.sourceUrls.map(url => new TileLayer({ source: new OSM({ url, opaque:false }) }));
+    this.tileLayerGroup.setLayers(new Collection(osmLayers));
+
     this.trackingDuration = await this.mapSettings.getTrackingDuration();
     this.navigationMode = await this.mapSettings.getMode();
 
@@ -105,7 +109,7 @@ export class MapPage implements AfterViewInit {
     for (let path of selectedPaths) {
       let layer = new VectorLayer({
         source: new VectorSource({
-          url: path.sourceUrl,
+          url: path.sourceUrls[0],
           format: new GPX(),
         }),
         style(feature) {
@@ -147,9 +151,7 @@ export class MapPage implements AfterViewInit {
       target: this.mapElement.nativeElement,
       controls: [control, rotateControl],
       layers: [
-        new TileLayer({
-          source: this.source
-        }),
+        this.tileLayerGroup,
         this.layergroup
       ],
       view: this.view,
