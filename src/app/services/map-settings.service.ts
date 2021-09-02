@@ -38,7 +38,7 @@ export class MapSettingsService {
                 }),
             ]
         },
-        // { id: 'ignscan25', name: 'Plan IGN Rando', sourceUrls: ['https://wxs.ign.fr/an7nvfzojv5wa96dsga5nk8w/geoportail/wmts?layer=GEOGRAPHICALGRIDSYSTEMS.MAPS.SCAN25TOUR&style=normal&tilematrixset=PM&Service=WMTS&Request=GetTile&Version=1.0.0&Format=image%2Fjpeg&TileMatrix={z}&TileCol={x}&TileRow={y}'] },
+        { id: 'ignscan25', name: 'Plan IGN Rando', sourceUrls: ['https://wxs.ign.fr/an7nvfzojv5wa96dsga5nk8w/geoportail/wmts?layer=GEOGRAPHICALGRIDSYSTEMS.MAPS.SCAN25TOUR&style=normal&tilematrixset=PM&Service=WMTS&Request=GetTile&Version=1.0.0&Format=image%2Fjpeg&TileMatrix={z}&TileCol={x}&TileRow={y}'] },
         { id: 'ignaerien', name: 'Plan IGN aérien', sourceUrls: ['https://wxs.ign.fr/decouverte/geoportail/wmts?gp-ol-ext=3.1.0&layer=ORTHOIMAGERY.ORTHOPHOTOS&style=normal&tilematrixset=PM&Service=WMTS&Request=GetTile&Version=1.0.0&Format=image%2Fjpeg&TileMatrix={z}&TileCol={x}&TileRow={y}'] },
         {
             id: 'cadastre', name: 'Cadastre', sourceUrls: [

@@ -1,16 +1,5 @@
-import { AfterViewInit, Component, ElementRef, NgZone, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ViewChild } from '@angular/core';
 import { ModalController } from '@ionic/angular';
-import { Map, Overlay, View, Collection } from 'ol';
-import { fromLonLat } from 'ol/proj';
-import { Style, Stroke } from 'ol/style';
-import { ScaleLine, Rotate, } from 'ol/control';
-import OverlayPositioning from 'ol/OverlayPositioning';
-import TileLayer from 'ol/layer/Tile';
-import VectorLayer from 'ol/layer/Vector';
-import LayerGroup from 'ol/layer/Group';
-import OSM from 'ol/source/OSM';
-import VectorSource from 'ol/source/Vector';
-import GPX from 'ol/format/GPX';
 import { MapSettingsComponent } from '../map-settings/map-settings.component';
 import { MapSettingsService, NavigationMode } from '../services/map-settings.service';
 import { NavigationService } from '../services/navigation.service';
@@ -18,27 +7,20 @@ import { LastPositionService } from '../services/last-position.service';
 import { toRadians } from 'ol/math';
 import { BellService } from '../services/bell.service';
 import { ScreenService } from '../services/pause.service';
-import Layer from 'ol/layer/Layer';
+import { MapComponent } from '../components/map/map.component';
 
 type TrackingMode = 'Free' | 'Centered' | 'Navigation';
 
 @Component({
-  selector: 'app-map',
   templateUrl: './map.page.html',
   styleUrls: ['./map.page.scss'],
 })
 export class MapPage implements AfterViewInit {
 
-  @ViewChild('map') mapElement: ElementRef;
-  @ViewChild('positionMarker') positionMarkerElement: ElementRef;
+  @ViewChild('map') map: MapComponent;
 
-  private view: View;
-  private map: Map;
   private trackingDuration: number;
   private navigationMode: NavigationMode;
-  private tileLayerGroup = new LayerGroup();
-  private layergroup = new LayerGroup();
-  private positionMarker: Overlay;
 
   public currentSpeed = '0.0';
   public currentAltitude = '0';
@@ -58,11 +40,10 @@ export class MapPage implements AfterViewInit {
   }
 
   public get isTracking() {
-    return this.navService.getTracking();
+    return !this.navService.getTracking();
   }
 
   constructor(
-    private zone: NgZone,
     private modalController: ModalController,
     private mapSettings: MapSettingsService,
     private navService: NavigationService,
@@ -77,112 +58,47 @@ export class MapPage implements AfterViewInit {
   }
 
   private onScreenOff() {
-    this.zone.run(() => {
-      console.debug('Handling screen off event');
-      if (this.trackingMode !== 'Free') {
-        this.navService.stopTracking();
-        this.trackingMode = 'Free';
-      }
-    });
+    console.debug('Handling screen off event');
+    if (this.trackingMode !== 'Free') {
+      this.navService.stopTracking();
+      this.trackingMode = 'Free';
+    }
   }
 
   private async loadSettings() {
-    let selectedMap = await this.mapSettings.getMap();
-
-    var osmLayers = selectedMap.sourceUrls.map(url => new TileLayer({ source: new OSM({ url, opaque:false }) }));
-    this.tileLayerGroup.setLayers(new Collection(osmLayers));
-
     this.trackingDuration = await this.mapSettings.getTrackingDuration();
     this.navigationMode = await this.mapSettings.getMode();
 
-    let style = {
-      MultiLineString: new Style({
-        stroke: new Stroke({
-          color: 'rgba(205, 61, 0, 0.8)',
-          width: 8,
-        }),
-      }),
-    };
+    let selectedMap = await this.mapSettings.getMap();
+    this.map.setXyzSources(selectedMap.sourceUrls);
 
     let selectedPaths = await this.mapSettings.getPaths();
-    let layers: VectorLayer[] = [];
-    for (let path of selectedPaths) {
-      let layer = new VectorLayer({
-        source: new VectorSource({
-          url: path.sourceUrls[0],
-          format: new GPX(),
-        }),
-        style(feature) {
-          return style[feature.getGeometry().getType()];
-        },
-      });
-      layers.push(layer);
-    }
-    this.layergroup.setLayers(new Collection(layers));
+    this.map.setGpxSources(selectedPaths);
   }
 
   async ngAfterViewInit() {
     await this.loadSettings();
 
-    this.view = new View({
-      constrainResolution: true,
-      constrainRotation: false,
-      zoom: 14,
-      minZoom: 4,
-      maxZoom: 18,
-      rotation: 0
-    });
-
     let lastPosition = await this.lastPositionSrv.getLastPosition();
-
-    this.view.setCenter(fromLonLat(lastPosition, this.view.getProjection()));
-
-    this.positionMarker = new Overlay({
-      position: fromLonLat(lastPosition, this.view.getProjection()),
-      positioning: OverlayPositioning.CENTER_CENTER,
-      element: this.positionMarkerElement.nativeElement,
-      stopEvent: false,
-    });
-
-    let control = new ScaleLine();
-    let rotateControl = new Rotate({ autoHide: false });
-
-    this.map = new Map({
-      target: this.mapElement.nativeElement,
-      controls: [control, rotateControl],
-      layers: [
-        this.tileLayerGroup,
-        this.layergroup
-      ],
-      view: this.view,
-      overlays: [this.positionMarker]
-    });
-
-    this.map.on('pointerdrag', () => this.zone.run(() => this.onMapDrag()));
-
-    setTimeout(() => {
-      this.map.updateSize();
-    }, 500);
+    this.map.setPosition(lastPosition);
   }
 
   public async navigateClick() {
     if (this.trackingMode === 'Free') {
       this.navService.startTracking();
-      let lastPosition = this.positionMarker.getPosition();
-      this.view.setCenter(lastPosition);
+      let lastPosition = this.map.getPosition();
+      this.map.setCenter(lastPosition);
       this.trackingMode = 'Centered';
       return;
     }
     if (this.trackingMode === 'Centered') {
       await this.navService.startHeadingTracking();
-      this.view.setZoom(17);
       this.trackingMode = 'Navigation';
       return;
     }
     if (this.trackingMode === 'Navigation') {
       this.navService.stoptHeadingTracking();
-      this.view.setZoom(15);
-      this.view.setRotation(0);
+      this.map.setRotation(0);
       this.trackingMode = 'Centered';
       return;
     }
@@ -193,25 +109,24 @@ export class MapPage implements AfterViewInit {
     event?.preventDefault();
   }
 
+  public onMapDrag() {
+    this.navService.stopTracking();
+    this.trackingMode = 'Free';
+  }
+
   private onPositionChange(position: number[]) {
-    var coords = fromLonLat(position, this.view.getProjection());
-    this.positionMarker.setPosition(coords);
-    this.view.setCenter(coords);
+    this.map.setPosition(position);
+    this.map.setCenter(position);
   }
 
   private onHeadingChange(heading: number) {
     let rotation = toRadians((360 - heading) % 360)
-    this.view.setRotation(rotation);
+    this.map.setRotation(rotation);
   }
 
   private onError(err: any) {
     console.error(err);
     alert(err.message);
-  }
-
-  private onMapDrag() {
-    this.navService.stopTracking();
-    this.trackingMode = 'Free';
   }
 
   async mapSettingsClick() {

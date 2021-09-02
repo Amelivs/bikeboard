@@ -51,20 +51,17 @@
           "/assets/gpx/**"
         ]
       }
-    }
-  ],
-  "dataGroups": [
+    },
     {
       "name": "tiles",
-      "cacheConfig": {
-        "maxAge": "90d",
-        "maxSize": 100000,
-        "strategy": "performance"
-      },
-      "urls": [
-        "https://*.openstreetmap.fr/**",
-        "https://wxs.ign.fr/**"
-      ]
+      "installMode": "lazy",
+      "updateMode": "lazy",
+      "resources": {
+        "urls": [
+          "https://*.openstreetmap.fr/**",
+          "https://wxs.ign.fr/**"
+        ]
+      }
     }
   ]
 }

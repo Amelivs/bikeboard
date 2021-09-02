@@ -17,8 +17,7 @@
     </ion-fab-button>
   </ion-fab>
 
-  <div #positionMarker class="position-marker" [ngClass]="{ 'disabled': !isTracking }"></div>
-  <div #map class="map"></div>
+  <app-map #map [markerDisabled]="isTracking" (mapMove)="onMapDrag()"></app-map>
 </ion-content>
 
 <ion-footer>
