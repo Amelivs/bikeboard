@@ -52,7 +52,7 @@ export class NavigationService {
                 this.$speed.next(null);
             });
 
-        var alt = altitude
+        let alt = altitude
             .pipe(filter(value => typeof (value) === 'number' && !isNaN(value)));
 
         alt.pipe(defaultIfEmpty(null), first()).subscribe(first => {

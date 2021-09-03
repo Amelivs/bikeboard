@@ -21,12 +21,12 @@ export class MapSettingsComponent implements OnInit {
     this.selectedMap = await this.mapSettings.getMap();
     this.selectedDuration = await this.mapSettings.getTrackingDuration();
     this.selectedMode = await this.mapSettings.getMode();
-    var selectedPaths = await this.mapSettings.getPaths();
+    let selectedPaths = await this.mapSettings.getPaths();
 
-    for (var p of this.mapSettings.paths) {
+    for (let p of this.mapSettings.paths) {
       this._pathsSelection.set(p, selectedPaths.indexOf(p) > -1);
     }
-    this.paths = this.mapSettings.paths
+    this.paths = this.mapSettings.paths;
   }
 
   maps = this.mapSettings.maps;
@@ -42,13 +42,13 @@ export class MapSettingsComponent implements OnInit {
   }
 
   checkedChange(path: Layer) {
-    var previous = this._pathsSelection.get(path);
+    let previous = this._pathsSelection.get(path);
     this._pathsSelection.set(path, !previous);
   }
 
   okClick() {
     this.mapSettings.setMap(this.selectedMap);
-    var checkedPaths: Layer[] = [];
+    let checkedPaths: Layer[] = [];
     this._pathsSelection.forEach((checked, path) => {
       if (checked) {
         checkedPaths.push(path);

@@ -1,9 +1,9 @@
-import { Injectable } from "@angular/core";
+import { Injectable } from '@angular/core';
 import { Storage } from '@ionic/storage-angular';
 
 
 export interface Layer {
-    id: string, name: string, sourceUrls: string[]
+    id: string; name: string; sourceUrls: string[];
 }
 
 export enum NavigationMode { LiveOrientation, FixedOrientation };
@@ -12,8 +12,8 @@ export enum NavigationMode { LiveOrientation, FixedOrientation };
 export class MapSettingsService {
 
     buildUrl(base: string, params: { [key: string]: string }) {
-        var url = new URL(base);
-        for (var key in params) {
+        let url = new URL(base);
+        for (let key in params) {
             url.searchParams.append(key, params[key]);
         }
         return url.href.replace('TILE_X', '{x}').replace('TILE_ZOOM', '{z}').replace('TILE_Y', '{y}');
@@ -25,16 +25,16 @@ export class MapSettingsService {
         {
             id: 'planign', name: 'Plan IGN', sourceUrls: [
                 this.buildUrl('https://wxs.ign.fr/decouverte/geoportail/wmts', {
-                    'layer': 'GEOGRAPHICALGRIDSYSTEMS.PLANIGNV2',
-                    'style': 'normal',
-                    'tilematrixset': 'PM',
-                    'Service': 'WMTS',
-                    'Request': 'GetTile',
-                    'Version': '1.0.0',
-                    'Format': 'image/png',
-                    'TileMatrix': 'TILE_ZOOM',
-                    'TileCol': 'TILE_X',
-                    'TileRow': 'TILE_Y'
+                    layer: 'GEOGRAPHICALGRIDSYSTEMS.PLANIGNV2',
+                    style: 'normal',
+                    tilematrixset: 'PM',
+                    Service: 'WMTS',
+                    Request: 'GetTile',
+                    Version: '1.0.0',
+                    Format: 'image/png',
+                    TileMatrix: 'TILE_ZOOM',
+                    TileCol: 'TILE_X',
+                    TileRow: 'TILE_Y'
                 }),
             ]
         },
@@ -71,8 +71,8 @@ export class MapSettingsService {
 
     async getMap() {
         let storage = await this._storage;
-        var mapId: string = await storage.get('MapSettings.mapId');
-        var map = this.maps.find(m => m.id === mapId);
+        let mapId: string = await storage.get('MapSettings.mapId');
+        let map = this.maps.find(m => m.id === mapId);
         if (map == null) {
             return this.maps[0];
         }
@@ -86,11 +86,11 @@ export class MapSettingsService {
 
     async getPaths() {
         let storage = await this._storage;
-        var pathIds: Array<string> = await storage.get('MapSettings.pathIds');
+        let pathIds: Array<string> = await storage.get('MapSettings.pathIds');
         if (pathIds == null) {
             return [];
         }
-        var paths = this.paths.filter(p => pathIds.indexOf(p.id) > -1);
+        let paths = this.paths.filter(p => pathIds.indexOf(p.id) > -1);
         return paths;
     }
 
@@ -106,7 +106,7 @@ export class MapSettingsService {
 
     async getTrackingDuration() {
         let storage = await this._storage;
-        var value: number = await storage.get("MapSettings.trackingDuration");
+        let value: number = await storage.get('MapSettings.trackingDuration');
         if (value == null) {
             value = this.defaultTrackingDuration;
         }
@@ -115,7 +115,7 @@ export class MapSettingsService {
 
     async getMode() {
         let storage = await this._storage;
-        var value: NavigationMode = await storage.get("MapSettings.navigationMode");
+        let value: NavigationMode = await storage.get('MapSettings.navigationMode');
         if (value == null) {
             value = this.defaultNavigationMode;
         }

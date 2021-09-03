@@ -52,8 +52,8 @@ export class MapPage implements AfterViewInit {
     private lastPositionSrv: LastPositionService) {
     this.navService.position.subscribe(position => this.onPositionChange(position), err => { this.onError(err); });
     this.navService.heading.subscribe(rotation => this.onHeadingChange(rotation), err => { this.onError(err); });
-    this.navService.speed.subscribe(speed => { this.currentSpeed = speed?.toFixed(1) || '0.0' }, err => { this.onError(err); });
-    this.navService.altitude.subscribe(alt => { this.currentAltitude = alt?.toFixed(0) || '0' }, err => { this.onError(err); });
+    this.navService.speed.subscribe(speed => { this.currentSpeed = speed?.toFixed(1) || '0.0'; }, err => { this.onError(err); });
+    this.navService.altitude.subscribe(alt => { this.currentAltitude = alt?.toFixed(0) || '0'; }, err => { this.onError(err); });
     this.screenService.off.subscribe(() => { this.onScreenOff(); });
   }
 
@@ -120,7 +120,7 @@ export class MapPage implements AfterViewInit {
   }
 
   private onHeadingChange(heading: number) {
-    let rotation = toRadians((360 - heading) % 360)
+    let rotation = toRadians((360 - heading) % 360);
     this.map.setRotation(rotation);
   }
 

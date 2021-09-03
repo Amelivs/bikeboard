@@ -88,13 +88,13 @@ export class MapComponent implements OnInit, AfterViewInit {
   }
 
   public setPosition(position: number[]) {
-    var projectedPosition = fromLonLat(position, this.view.getProjection());
+    let projectedPosition = fromLonLat(position, this.view.getProjection());
     this.view.setCenter(projectedPosition);
     this.positionMarker.setPosition(projectedPosition);
   }
 
   public setCenter(position: number[]) {
-    var projectedPosition = fromLonLat(position, this.view.getProjection());
+    let projectedPosition = fromLonLat(position, this.view.getProjection());
     this.view.setCenter(projectedPosition);
   }
 
@@ -107,7 +107,7 @@ export class MapComponent implements OnInit, AfterViewInit {
   }
 
   public setXyzSources(sources: string[]) {
-    var layers = sources.map(url => new TileLayer({
+    let layers = sources.map(url => new TileLayer({
       source: new XYZ({
         crossOrigin: 'anonymous',
         url,
@@ -118,16 +118,14 @@ export class MapComponent implements OnInit, AfterViewInit {
   }
 
   public setGpxSources(sources: Layer[]) {
-    var layers: BaseLayer[] = [];
+    let layers: BaseLayer[] = [];
     for (let path of sources) {
       let layer = new VectorLayer({
         source: new VectorSource({
           url: path.sourceUrls[0],
           format: new GPX(),
         }),
-        style: feature => {
-          return this.gpxStyle[feature.getGeometry().getType()];
-        },
+        style: feature => this.gpxStyle[feature.getGeometry().getType()],
       });
       layers.push(layer);
     }

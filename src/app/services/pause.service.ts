@@ -1,4 +1,4 @@
-import { Injectable } from "@angular/core";
+import { Injectable } from '@angular/core';
 import { fromEvent, of } from 'rxjs';
 import { filter, map, switchMap, take, timeoutWith } from 'rxjs/operators';
 

@@ -1,6 +1,6 @@
-import { Injectable } from "@angular/core";
-import { Observable } from "rxjs";
-import { map, share } from "rxjs/operators";
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import { map, share } from 'rxjs/operators';
 
 @Injectable({
     providedIn: 'root'
@@ -24,7 +24,7 @@ export class LocationService {
             return () => {
                 navigator.geolocation.clearWatch(watchId);
                 console.info('watchPosition cleared  with id', watchId);
-            }
+            };
         });
     }
 

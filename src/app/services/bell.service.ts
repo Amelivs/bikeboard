@@ -1,4 +1,4 @@
-import { Injectable } from "@angular/core";
+import { Injectable } from '@angular/core';
 
 @Injectable({
     providedIn: 'root'
@@ -15,10 +15,10 @@ export class BellService {
 
         this.audioElement = new Audio('assets/audio/bell.aac');
 
-        var AudioContext = window.AudioContext || window['webkitAudioContext'];
+        let AudioContext = window.AudioContext || (window as any).webkitAudioContext;
         this.audioContext = new AudioContext();
 
-        var gainNode = this.audioContext.createGain();
+        let gainNode = this.audioContext.createGain();
         gainNode.gain.value = 5.0;
 
         this.audioContext

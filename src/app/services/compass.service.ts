@@ -1,7 +1,7 @@
-import { Injectable } from "@angular/core";
-import { Platform } from "@ionic/angular";
-import { fromEvent, Observable } from "rxjs";
-import { map, share } from "rxjs/operators";
+import { Injectable } from '@angular/core';
+import { Platform } from '@ionic/angular';
+import { fromEvent, Observable } from 'rxjs';
+import { map, share } from 'rxjs/operators';
 
 @Injectable({
     providedIn: 'root'
@@ -28,7 +28,7 @@ export class CompassService {
                 if ((event.absolute || this.platform.is('desktop')) && event.alpha != null) {
                     return (360 - event.alpha) % 360;
                 }
-                var heading = event['webkitCompassHeading'] as number;
+                let heading = (event as any).webkitCompassHeading as number;
                 if (heading != null) {
                     return heading;
                 }
@@ -42,7 +42,7 @@ export class CompassService {
 
     public async requestPermission() {
         if (typeof DeviceOrientationEvent.requestPermission === 'function') {
-            var permissionState = await DeviceOrientationEvent.requestPermission();
+            let permissionState = await DeviceOrientationEvent.requestPermission();
             return permissionState !== 'denied';
         };
         return true;
