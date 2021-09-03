@@ -1,5 +1,4 @@
-/// <reference types="resize-observer-browser" />
-import { AfterViewInit, Component, ElementRef, EventEmitter, HostListener, Input, NgZone, OnInit, Output, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, EventEmitter, Input, NgZone, OnInit, Output, ViewChild } from '@angular/core';
 import { Map, Overlay, View, Collection } from 'ol';
 import { fromLonLat } from 'ol/proj';
 import { Style, Stroke } from 'ol/style';
@@ -110,6 +109,7 @@ export class MapComponent implements OnInit, AfterViewInit {
   public setXyzSources(sources: string[]) {
     var layers = sources.map(url => new TileLayer({
       source: new XYZ({
+        crossOrigin: 'anonymous',
         url,
         opaque: false
       })

@@ -7,10 +7,10 @@ import { map, share } from "rxjs/operators";
 })
 export class LocationService {
 
-    private readonly position$: Observable<Coordinates>;
+    private readonly position$: Observable<GeolocationCoordinates>;
 
     private createObservable() {
-        return new Observable<Coordinates>(observer => {
+        return new Observable<GeolocationCoordinates>(observer => {
             let watchId = navigator.geolocation.watchPosition(position => {
                 observer.next(position.coords);
                 console.debug('watchPosition: received coords ', position.coords);

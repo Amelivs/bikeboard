@@ -14,6 +14,6 @@ export class UpdateService {
 
     private promptUser() {
         console.info('updating to new version');
-        this.updates.activateUpdate().then(() => document.location.reload());
+        this.updates.activateUpdate().then(() => window.location.reload());
     }
 }
