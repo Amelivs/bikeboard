@@ -70,7 +70,7 @@ export class MapPage implements AfterViewInit {
     this.navigationMode = await this.mapSettings.getMode();
 
     let selectedMap = await this.mapSettings.getMap();
-    this.map.setXyzSources(selectedMap.sourceUrls);
+    this.map.setXyzSources(selectedMap.sourceUrls, selectedMap.maxZoom);
 
     let selectedPaths = await this.mapSettings.getPaths();
     this.map.setGpxSources(selectedPaths);

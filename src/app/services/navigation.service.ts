@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { merge, of, Subject } from 'rxjs';
-import { bufferCount, bufferTime, defaultIfEmpty, filter, first, last, map, switchMap, takeUntil } from 'rxjs/operators';
+import { merge, Subject } from 'rxjs';
+import { bufferCount, bufferTime, defaultIfEmpty, filter, first, last, map, startWith, switchMap, takeUntil } from 'rxjs/operators';
 import { CompassService } from './compass.service';
 import { LocationService } from './location.service';
 import { LastPositionService } from './last-position.service';
@@ -9,6 +9,8 @@ import { LastPositionService } from './last-position.service';
     providedIn: 'root'
 })
 export class NavigationService {
+    /** 9km/h */
+    private readonly speedThreshold = 2.5;
 
     private readonly $position = new Subject<number[]>();
     private readonly $heading = new Subject<number>();
@@ -112,9 +114,10 @@ export class NavigationService {
 
         let previousSpeed: number = null;
 
-        merge(this.locationSrv.speed
+        this.locationSrv.speed
             .pipe(map(speed => isNaN(speed) || speed == null ? 0 : speed))
-            .pipe(bufferCount(3)), of([]))
+            .pipe(bufferCount(3))
+            .pipe(startWith<number[]>([]))
             .pipe(map(values => {
                 if (values.length == 0) {
                     return 0;
@@ -122,11 +125,11 @@ export class NavigationService {
                 return values.reduce((prev, curr) => prev + curr, 0) / values.length;
             }))
             .pipe(filter(speed => {
-                if (speed < 1.0 && previousSpeed != null && previousSpeed < 1.0) {
+                if (speed < this.speedThreshold && previousSpeed != null && previousSpeed < this.speedThreshold) {
                     console.debug('Keeping compass heading');
                     return false;
                 }
-                if (speed >= 1.0 && previousSpeed != null && previousSpeed >= 1.0) {
+                if (speed >= this.speedThreshold && previousSpeed != null && previousSpeed >= this.speedThreshold) {
                     console.debug('Keeping GPS heading');
                     return false;
                 }
@@ -134,7 +137,7 @@ export class NavigationService {
                 return true;
             }))
             .pipe(switchMap(speed => {
-                if (speed < 1.0) {
+                if (speed < this.speedThreshold) {
                     console.debug('Switching to compass heading');
                     return this.compassSrv.heading;
                 }

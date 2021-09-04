@@ -106,7 +106,7 @@ export class MapComponent implements OnInit, AfterViewInit {
     this.view.setRotation(rotation);
   }
 
-  public setXyzSources(sources: string[]) {
+  public setXyzSources(sources: string[], maxZoom = 18) {
     let layers = sources.map(url => new TileLayer({
       source: new XYZ({
         crossOrigin: 'anonymous',
@@ -115,6 +115,7 @@ export class MapComponent implements OnInit, AfterViewInit {
       })
     }));
     this.layers.setLayers(new Collection(layers));
+    this.view.setMaxZoom(maxZoom);
   }
 
   public setGpxSources(sources: Layer[]) {
