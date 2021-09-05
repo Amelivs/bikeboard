@@ -8,6 +8,7 @@ import { MapPageRoutingModule } from './map-routing.module';
 
 import { MapPage } from './map.page';
 import { MapComponent } from '../components/map/map.component';
+import { LongPressDirective } from '../directives/longPress';
 
 @NgModule({
   imports: [
@@ -16,6 +17,6 @@ import { MapComponent } from '../components/map/map.component';
     IonicModule,
     MapPageRoutingModule
   ],
-  declarations: [MapComponent, MapPage]
+  declarations: [MapComponent, MapPage, LongPressDirective]
 })
 export class MapPageModule { }

@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, ViewChild } from '@angular/core';
-import { ModalController } from '@ionic/angular';
+import { ActionSheetController, ModalController } from '@ionic/angular';
 import { MapSettingsComponent } from '../map-settings/map-settings.component';
 import { MapSettingsService, NavigationMode } from '../services/map-settings.service';
 import { NavigationService } from '../services/navigation.service';
@@ -49,6 +49,7 @@ export class MapPage implements AfterViewInit {
     private navService: NavigationService,
     private bellService: BellService,
     private screenService: ScreenService,
+    public actionSheetController: ActionSheetController,
     private lastPositionSrv: LastPositionService) {
     this.navService.position.subscribe(position => this.onPositionChange(position), err => { this.onError(err); });
     this.navService.heading.subscribe(rotation => this.onHeadingChange(rotation), err => { this.onError(err); });
@@ -129,6 +130,52 @@ export class MapPage implements AfterViewInit {
     alert(err.message);
   }
 
+  public async onContext(coords: number[]) {
+    let role = await this.presentActionSheet();
+    if (role === 'save') {
+      await this.storeClick();
+    }
+    if (role === 'itineraryTo') {
+      this.fetchItinerary(coords);
+    }
+    if (role === 'clear') {
+      this.map.setWkt(null);
+    }
+  }
+
+  async storeClick() {
+    var urls = this.map.getBoundingBoxTileUrls();
+    console.dir(urls);
+    if (urls.length > 250) {
+      alert('Zone is too large')
+      return;
+    }
+    var fetchTasks = urls.map(url => fetch(url, { mode: 'cors' }));
+    try {
+      await Promise.all(fetchTasks);
+    }
+    catch (err) {
+      console.error(err);
+      alert(err);
+    }
+  }
+
+  async presentActionSheet() {
+    const actionSheet = await this.actionSheetController.create({
+      header: 'Map',
+      buttons: [
+        { role: 'save', text: 'Save map for offline use', icon: 'cloud-offline-outline' },
+        { role: 'itineraryTo', text: 'Itinerary to this point', icon: 'map-outline' },
+        { role: 'clear', text: 'Clear itinerary', icon: 'trash-outline' },
+        { role: 'cancel', text: 'Cancel', icon: 'close', }
+      ]
+    });
+    await actionSheet.present();
+
+    const { role } = await actionSheet.onDidDismiss();
+    return role;
+  }
+
   async mapSettingsClick() {
     const modal = await this.modalController.create({
       component: MapSettingsComponent,
@@ -136,5 +183,14 @@ export class MapPage implements AfterViewInit {
     await modal.present();
     await modal.onDidDismiss();
     await this.loadSettings();
+  }
+
+  fetchItinerary(toCoords: number[]) {
+    var fromCoords = this.map.getGeographicPosition();
+    fetch(`https://wxs.ign.fr/essentiels/itineraire/rest/route.json?origin=${fromCoords[0]},${fromCoords[1]}&destination=${toCoords[0]},${toCoords[1]}&&method=DISTANCE&graphName=Pieton`)
+      .then(res => res.json())
+      .then(r => {
+        this.map.setWkt(r['geometryWkt']);
+      })
   }
 }

@@ -1,6 +1,6 @@
 import { AfterViewInit, Component, ElementRef, EventEmitter, Input, NgZone, OnInit, Output, ViewChild } from '@angular/core';
 import { Map, Overlay, View, Collection } from 'ol';
-import { fromLonLat } from 'ol/proj';
+import { fromLonLat, toLonLat } from 'ol/proj';
 import { Style, Stroke } from 'ol/style';
 import { ScaleLine, Rotate, } from 'ol/control';
 import OverlayPositioning from 'ol/OverlayPositioning';
@@ -8,10 +8,13 @@ import TileLayer from 'ol/layer/Tile';
 import VectorLayer from 'ol/layer/Vector';
 import LayerGroup from 'ol/layer/Group';
 import VectorSource from 'ol/source/Vector';
+import WKT from 'ol/format/WKT';
 import GPX from 'ol/format/GPX';
 import XYZ from 'ol/source/XYZ';
 import BaseLayer from 'ol/layer/Base';
+import TileDebug from 'ol/source/TileDebug';
 import { Layer } from '../../services/map-settings.service';
+import { ActionSheetController } from '@ionic/angular';
 
 
 @Component({
@@ -26,6 +29,7 @@ export class MapComponent implements OnInit, AfterViewInit {
 
   @Input() markerDisabled = true;
   @Output() mapMove = new EventEmitter<void>();
+  @Output() context = new EventEmitter<number[]>();
 
   private readonly positionMarker = new Overlay({
     positioning: OverlayPositioning.CENTER_CENTER,
@@ -47,11 +51,18 @@ export class MapComponent implements OnInit, AfterViewInit {
 
   private readonly layers = new LayerGroup();
   private readonly gpxLayers = new LayerGroup();
+  private readonly wktLayers = new LayerGroup();
 
   private readonly gpxStyle = {
     MultiLineString: new Style({
       stroke: new Stroke({
         color: 'rgba(205, 61, 0, 0.8)',
+        width: 8,
+      }),
+    }),
+    LineString: new Style({
+      stroke: new Stroke({
+        color: 'rgba(0, 50, 120, 0.8)',
         width: 8,
       }),
     }),
@@ -73,6 +84,7 @@ export class MapComponent implements OnInit, AfterViewInit {
     this.map.setView(this.view);
     this.map.addLayer(this.layers);
     this.map.addLayer(this.gpxLayers);
+    this.map.addLayer(this.wktLayers);
     this.map.addOverlay(this.positionMarker);
     this.map.on('pointerdrag', () => this.zone.run(() => this.onMapDrag()));
   }
@@ -85,6 +97,11 @@ export class MapComponent implements OnInit, AfterViewInit {
 
   public getPosition() {
     return this.positionMarker.getPosition();
+  }
+
+  public getGeographicPosition() {
+    var coordinates = this.positionMarker.getPosition();
+    return toLonLat(coordinates, this.view.getProjection());
   }
 
   public setPosition(position: number[]) {
@@ -130,7 +147,59 @@ export class MapComponent implements OnInit, AfterViewInit {
       });
       layers.push(layer);
     }
-
     this.gpxLayers.setLayers(new Collection(layers));
+  }
+
+  public setWkt(wkt: string) {
+    let layers: BaseLayer[] = [];
+
+    if (wkt == null) {
+      this.wktLayers.setLayers(new Collection(layers));
+      return;
+    }
+
+    const format = new WKT();
+
+    const feature = format.readFeature(wkt, {
+      dataProjection: 'EPSG:4326',
+      featureProjection: 'EPSG:3857',
+    });
+
+    const vector = new VectorLayer({
+      source: new VectorSource({
+        features: [feature],
+      }),
+      style: feature => this.gpxStyle[feature.getGeometry().getType()],
+    });
+
+    layers.push(vector)
+    this.wktLayers.setLayers(new Collection(layers));
+  }
+
+  public getBoundingBoxTileUrls(zoom = 15) {
+    var layer = this.layers.getLayers().getArray()[0] as TileLayer;
+    var source = layer.getSource();
+    var tileGrid = source.getTileGrid();
+    var urlFunc = (source as TileDebug).getTileUrlFunction();
+    var tileURLs = [];
+    var extent = this.view.calculateExtent(this.map.getSize());
+    tileGrid.forEachTileCoord(extent, zoom, function (tileCoord) {
+      var url = urlFunc(tileCoord, 1, source.getProjection());
+      tileURLs.push(url);
+    });
+    return tileURLs;
+  }
+
+  public onLongPress(event: MouseEvent | TouchEvent) {
+    var pixelCoords: number[];
+    if (event instanceof MouseEvent) {
+      pixelCoords = [event.x, event.y];
+    }
+    else {
+      pixelCoords = [event.touches.item(0).clientX, event.touches.item(0).clientY];
+    }
+    var coordinates = this.map.getCoordinateFromPixel(pixelCoords);
+    var geoCoords = toLonLat(coordinates, this.view.getProjection());
+    this.context.emit(geoCoords);
   }
 }
