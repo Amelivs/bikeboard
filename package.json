@@ -6,7 +6,9 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
+    "start:sw": "ng build && http-server -p 4200 -c-1 www",
     "build": "ng build --configuration production",
+    "deploy": "npm run build && npx firebase deploy",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
@@ -48,6 +50,7 @@
     "eslint-plugin-import": "2.22.1",
     "eslint-plugin-jsdoc": "30.7.6",
     "eslint-plugin-prefer-arrow": "1.2.2",
+    "firebase-tools": "^9.18.0",
     "http-server": "^13.0.1",
     "jasmine-core": "~3.8.0",
     "jasmine-spec-reporter": "~5.0.0",
