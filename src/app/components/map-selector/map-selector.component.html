@@ -1,0 +1,14 @@
+<ion-list>
+  <ion-radio-group [(ngModel)]="selectedMap" (ionChange)="selectionChange()">
+    <ion-item-divider>
+      <ion-label>
+        Available maps
+      </ion-label>
+    </ion-item-divider>
+    <ion-item *ngFor="let map of maps">
+      <ion-label>{{map.name}}</ion-label>
+      <ion-radio slot="end" [value]="map"></ion-radio>
+    </ion-item>
+
+  </ion-radio-group>
+</ion-list>

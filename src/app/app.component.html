@@ -1,3 +1,22 @@
 <ion-app>
+  <ion-menu contentId="main-content" type="overlay">
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>Bikeboard</ion-title>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content>
+      <app-map-selector></app-map-selector>
+    </ion-content>
+    <ion-footer>
+      <ion-toolbar>
+        <ion-buttons slot="start">
+          <ion-button>
+            <ion-icon name="settings-outline" slot="icon-only"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-footer>
+  </ion-menu>
   <ion-router-outlet id="main-content"></ion-router-outlet>
 </ion-app>

@@ -47,7 +47,7 @@ export class MapSettingsService {
             ]
         },
         {
-            id: 'drone', name: 'Zones de restrictions pour drones', sourceUrls: [
+            id: 'drone', name: 'Zones de restrictions drones', sourceUrls: [
                 'https://{a-c}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png',
                 'https://wxs.ign.fr/transports/geoportail/wmts?layer=TRANSPORTS.DRONES.RESTRICTIONS&style=normal&tilematrixset=PM&Service=WMTS&Request=GetTile&Version=1.0.0&Format=image%2Fpng&TileMatrix={z}&TileCol={x}&TileRow={y}'
             ]

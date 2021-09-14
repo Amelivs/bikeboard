@@ -1,4 +1,4 @@
-<ion-content [fullscreen]="true" [scrollY]="false">
+<ion-content [scrollY]="false">
   <ion-fab vertical="bottom" horizontal="end" slot="fixed" edge>
     <ion-fab-button (click)="navigateClick()" color="light" class="btn-navigate">
       <ion-icon color="primary" [name]="navIcon"></ion-icon>
@@ -35,6 +35,9 @@
           <div class="btn-text">Altitude</div>
         </div>
       </ion-button>
+    </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-button></ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-footer>

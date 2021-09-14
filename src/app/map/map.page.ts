@@ -1,13 +1,14 @@
 import { AfterViewInit, Component, ViewChild } from '@angular/core';
 import { ActionSheetController, ModalController } from '@ionic/angular';
 import { MapSettingsComponent } from '../map-settings/map-settings.component';
-import { MapSettingsService, NavigationMode } from '../services/map-settings.service';
+import { Layer, MapSettingsService, NavigationMode } from '../services/map-settings.service';
 import { NavigationService } from '../services/navigation.service';
 import { LastPositionService } from '../services/last-position.service';
 import { toRadians } from 'ol/math';
 import { BellService } from '../services/bell.service';
 import { ScreenService } from '../services/pause.service';
 import { MapComponent } from '../components/map/map.component';
+import { MapSelectorService } from '../components/map-selector/map-selector.service';
 
 type TrackingMode = 'Free' | 'Centered' | 'Navigation';
 
@@ -50,6 +51,7 @@ export class MapPage implements AfterViewInit {
     private bellService: BellService,
     private screenService: ScreenService,
     public actionSheetController: ActionSheetController,
+    public mapSelectorService: MapSelectorService,
     private lastPositionSrv: LastPositionService) {
     this.navService.position.subscribe(position => this.onPositionChange(position), err => { this.onError(err); });
     this.navService.heading.subscribe(rotation => this.onHeadingChange(rotation), err => { this.onError(err); });
@@ -66,18 +68,20 @@ export class MapPage implements AfterViewInit {
     }
   }
 
+  private onMapChange(map: Layer) {
+    this.map.setXyzSources(map.sourceUrls, map.maxZoom);
+  }
+
   private async loadSettings() {
     this.trackingDuration = await this.mapSettings.getTrackingDuration();
     this.navigationMode = await this.mapSettings.getMode();
-
-    let selectedMap = await this.mapSettings.getMap();
-    this.map.setXyzSources(selectedMap.sourceUrls, selectedMap.maxZoom);
-
     let selectedPaths = await this.mapSettings.getPaths();
     this.map.setGpxSources(selectedPaths);
   }
 
   async ngAfterViewInit() {
+    this.mapSelectorService.activeMap.subscribe(map => this.onMapChange(map));
+
     await this.loadSettings();
 
     let lastPosition = await this.lastPositionSrv.getLastPosition();

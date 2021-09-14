@@ -12,11 +12,13 @@ import { environment } from '../environments/environment';
 
 import { MapSettingsComponent } from './map-settings/map-settings.component';
 import { FormsModule } from '@angular/forms';
+import { MapSelectorComponent } from './components/map-selector/map-selector.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
+    MapSelectorComponent,
     MapSettingsComponent
   ],
   entryComponents: [

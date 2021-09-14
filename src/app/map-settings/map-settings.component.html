@@ -24,19 +24,14 @@
         <ion-select-option [value]="d" *ngFor="let d of allDurations">{{d + ' min'}}</ion-select-option>
       </ion-select>
     </ion-item>
-  </ion-list>
-  <ion-list>
-    <ion-radio-group [(ngModel)]="selectedMap">
-      <ion-list-header>
-        <ion-label>Maps</ion-label>
-      </ion-list-header>
-
-      <ion-item *ngFor="let map of maps">
-        <ion-label>{{map.name}}</ion-label>
-        <ion-radio slot="start" [value]="map"></ion-radio>
-      </ion-item>
-
-    </ion-radio-group>
+    <ion-item>
+      <ion-label>Storage usage (Mb)</ion-label>
+      <ion-text slot="end">{{storageUsage | async}}</ion-text>
+    </ion-item>
+    <ion-item>
+      <ion-label>Tiles in cache</ion-label>
+      <ion-text slot="end">{{cacheLength}}</ion-text>
+    </ion-item>
   </ion-list>
   <ion-list>
     <ion-list-header>
