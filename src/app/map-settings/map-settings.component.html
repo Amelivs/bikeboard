@@ -13,12 +13,6 @@
       <ion-label>Settings</ion-label>
     </ion-list-header>
     <ion-item>
-      <ion-label>Navigation mode</ion-label>
-      <ion-select [(ngModel)]="selectedMode">
-        <ion-select-option [value]="m.value" *ngFor="let m of allModes">{{m.label}}</ion-select-option>
-      </ion-select>
-    </ion-item>
-    <ion-item>
       <ion-label>Tracking duration</ion-label>
       <ion-select [(ngModel)]="selectedDuration">
         <ion-select-option [value]="d" *ngFor="let d of allDurations">{{d + ' min'}}</ion-select-option>

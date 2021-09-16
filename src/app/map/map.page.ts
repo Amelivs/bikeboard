@@ -1,7 +1,7 @@
 import { AfterViewInit, Component, ViewChild } from '@angular/core';
 import { ActionSheetController, ModalController } from '@ionic/angular';
 import { MapSettingsComponent } from '../map-settings/map-settings.component';
-import { Layer, MapSettingsService, NavigationMode } from '../services/map-settings.service';
+import { Layer, MapSettingsService } from '../services/map-settings.service';
 import { NavigationService } from '../services/navigation.service';
 import { LastPositionService } from '../services/last-position.service';
 import { toRadians } from 'ol/math';
@@ -21,7 +21,6 @@ export class MapPage implements AfterViewInit {
   @ViewChild('map') map: MapComponent;
 
   private trackingDuration: number;
-  private navigationMode: NavigationMode;
 
   public currentSpeed = '0.0';
   public currentAltitude = '0';
@@ -74,7 +73,6 @@ export class MapPage implements AfterViewInit {
 
   private async loadSettings() {
     this.trackingDuration = await this.mapSettings.getTrackingDuration();
-    this.navigationMode = await this.mapSettings.getMode();
     let selectedPaths = await this.mapSettings.getPaths();
     this.map.setGpxSources(selectedPaths);
   }

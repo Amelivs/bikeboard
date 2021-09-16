@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
-import { MapSettingsService, Layer, NavigationMode } from '../services/map-settings.service';
+import { MapSettingsService, Layer } from '../services/map-settings.service';
 import { StorageManagerService } from '../services/storage-manager.service';
 
 @Component({
@@ -12,15 +12,11 @@ export class MapSettingsComponent implements OnInit {
 
   private _pathsSelection = new Map<Layer, boolean>();
   private readonly _durations = [1, 2, 5, 10, 15];
-  private readonly _modes = [
-    { label: 'Live orientation', value: NavigationMode.LiveOrientation },
-    { label: 'Fixed orientation', value: NavigationMode.FixedOrientation }];
 
   constructor(private modalCtrl: ModalController, private mapSettings: MapSettingsService, private storageService: StorageManagerService) { }
 
   async ngOnInit() {
     this.selectedDuration = await this.mapSettings.getTrackingDuration();
-    this.selectedMode = await this.mapSettings.getMode();
     let selectedPaths = await this.mapSettings.getPaths();
     this.storageUsage = this.storageService.estimate()
       .then((estimation) => `${estimation.usage} / ${estimation.quota}`);
@@ -35,8 +31,6 @@ export class MapSettingsComponent implements OnInit {
   paths: Layer[];
   allDurations = this._durations;
   selectedDuration: number;
-  allModes = this._modes;
-  selectedMode: NavigationMode;
   storageUsage: Promise<string>;
   cacheLength: number;
 
@@ -58,7 +52,6 @@ export class MapSettingsComponent implements OnInit {
     });
     this.mapSettings.setPaths(checkedPaths);
     this.mapSettings.setTrackingDuration(this.selectedDuration);
-    this.mapSettings.setMode(this.selectedMode);
     this.modalCtrl.dismiss();
   }
 }

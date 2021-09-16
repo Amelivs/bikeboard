@@ -6,8 +6,6 @@ export interface Layer {
     id: string; name: string; sourceUrls: string[]; maxZoom?: number;
 }
 
-export enum NavigationMode { LiveOrientation, FixedOrientation };
-
 @Injectable({ providedIn: 'root' })
 export class MapSettingsService {
 
@@ -61,7 +59,6 @@ export class MapSettingsService {
     ];
 
     readonly defaultTrackingDuration = 5;
-    readonly defaultNavigationMode = NavigationMode.LiveOrientation;
 
     private _storage: Promise<Storage>;
 
@@ -111,19 +108,5 @@ export class MapSettingsService {
             value = this.defaultTrackingDuration;
         }
         return value;
-    }
-
-    async getMode() {
-        let storage = await this._storage;
-        let value: NavigationMode = await storage.get('MapSettings.navigationMode');
-        if (value == null) {
-            value = this.defaultNavigationMode;
-        }
-        return value;
-    }
-
-    async setMode(mode: NavigationMode) {
-        let storage = await this._storage;
-        await storage.set('MapSettings.navigationMode', mode);
     }
 }
