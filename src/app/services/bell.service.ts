@@ -9,10 +9,6 @@ export class BellService {
     private audioContext: AudioContext;
 
     private setupContext() {
-        if (this.audioElement != null) {
-            return;
-        }
-
         this.audioElement = new Audio('assets/audio/bell.aac');
 
         let AudioContext = window.AudioContext || (window as any).webkitAudioContext;

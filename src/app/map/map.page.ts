@@ -117,6 +117,12 @@ export class MapPage implements AfterViewInit {
     this.trackingMode = 'Free';
   }
 
+  public async onMapDblClick() {
+    this.navService.startTracking();
+    await this.navService.startHeadingTracking();
+    this.trackingMode = 'Navigation';
+  }
+
   private onPositionChange(position: number[]) {
     this.map.setPosition(position);
     this.map.setCenter(position);

@@ -3,6 +3,7 @@ import { Map, Overlay, View, Collection } from 'ol';
 import { fromLonLat, toLonLat } from 'ol/proj';
 import { Style, Stroke } from 'ol/style';
 import { ScaleLine, Rotate, } from 'ol/control';
+import { defaults as defaultInteractions } from 'ol/interaction';
 import OverlayPositioning from 'ol/OverlayPositioning';
 import TileLayer from 'ol/layer/Tile';
 import VectorLayer from 'ol/layer/Vector';
@@ -14,7 +15,6 @@ import XYZ from 'ol/source/XYZ';
 import BaseLayer from 'ol/layer/Base';
 import TileDebug from 'ol/source/TileDebug';
 import { Layer } from '../../services/map-settings.service';
-import { ActionSheetController } from '@ionic/angular';
 
 
 @Component({
@@ -29,6 +29,7 @@ export class MapComponent implements OnInit, AfterViewInit {
 
   @Input() markerDisabled = true;
   @Output() mapMove = new EventEmitter<void>();
+  @Output() mapDblClick = new EventEmitter<void>();
   @Output() context = new EventEmitter<number[]>();
 
   private readonly positionMarker = new Overlay({
@@ -46,7 +47,8 @@ export class MapComponent implements OnInit, AfterViewInit {
   });
 
   private readonly map = new Map({
-    controls: [new ScaleLine(), new Rotate({ autoHide: false })]
+    controls: [new ScaleLine(), new Rotate({ autoHide: false })],
+    interactions: defaultInteractions({ doubleClickZoom: false })
   });
 
   private readonly layers = new LayerGroup();
@@ -74,6 +76,10 @@ export class MapComponent implements OnInit, AfterViewInit {
     this.mapMove.emit();
   }
 
+  private onMapDblClick() {
+    this.mapDblClick.emit();
+  }
+
   private onResize() {
     this.map.updateSize();
   }
@@ -87,6 +93,7 @@ export class MapComponent implements OnInit, AfterViewInit {
     this.map.addLayer(this.wktLayers);
     this.map.addOverlay(this.positionMarker);
     this.map.on('pointerdrag', () => this.zone.run(() => this.onMapDrag()));
+    this.map.on('dblclick', () => this.zone.run(() => this.onMapDblClick()));
   }
 
   public ngAfterViewInit() {
