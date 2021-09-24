@@ -1,14 +1,14 @@
 import { AfterViewInit, Component, ViewChild } from '@angular/core';
 import { ActionSheetController, ModalController } from '@ionic/angular';
-import { MapSettingsComponent } from '../map-settings/map-settings.component';
-import { Layer, MapSettingsService } from '../services/map-settings.service';
-import { NavigationService } from '../services/navigation.service';
-import { LastPositionService } from '../services/last-position.service';
+import { MapSettingsComponent } from '../../core/components/map-settings/map-settings.component';
+import { Layer, MapSettingsService } from '../../core/services/map-settings.service';
+import { NavigationService } from '../../core/services/navigation.service';
+import { LastPositionService } from '../../core/services/last-position.service';
 import { toRadians } from 'ol/math';
-import { BellService } from '../services/bell.service';
-import { ScreenService } from '../services/pause.service';
-import { MapComponent } from '../components/map/map.component';
-import { MapSelectorService } from '../components/map-selector/map-selector.service';
+import { BellService } from '../../core/services/bell.service';
+import { ScreenService } from '../../core/services/pause.service';
+import { MapComponent } from '../../core/components/map/map.component';
+import { MapSelectorService } from '../../core/components/map-selector/map-selector.service';
 
 type TrackingMode = 'Free' | 'Centered' | 'Navigation';
 

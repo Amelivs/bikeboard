@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MenuController } from '@ionic/angular';
-import { Layer } from 'src/app/services/map-settings.service';
+import { Layer } from 'src/app/core/services/map-settings.service';
 import { MapSelectorService } from './map-selector.service';
 
 @Component({

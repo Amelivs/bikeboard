@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ReplaySubject } from 'rxjs';
-import { Layer, MapSettingsService } from 'src/app/services/map-settings.service';
+import { Layer, MapSettingsService } from 'src/app/core/services/map-settings.service';
 
 @Injectable({
     providedIn: 'root'

@@ -10,9 +10,9 @@ import { AppRoutingModule } from './app-routing.module';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 
-import { MapSettingsComponent } from './map-settings/map-settings.component';
+import { MapSettingsComponent } from './core/components/map-settings/map-settings.component';
 import { FormsModule } from '@angular/forms';
-import { MapSelectorComponent } from './components/map-selector/map-selector.component';
+import { MapSelectorComponent } from './core/components/map-selector/map-selector.component';
 
 
 @NgModule({
