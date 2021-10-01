@@ -27,13 +27,4 @@
       <ion-text slot="end">{{cacheLength}}</ion-text>
     </ion-item>
   </ion-list>
-  <ion-list>
-    <ion-list-header>
-      <ion-label>Paths</ion-label>
-    </ion-list-header>
-    <ion-item *ngFor="let path of paths">
-      <ion-label>{{path.name}}</ion-label>
-      <ion-checkbox slot="start" [checked]="isChecked(path)" (ionChange)="checkedChange(path)"></ion-checkbox>
-    </ion-item>
-  </ion-list>
 </ion-content>

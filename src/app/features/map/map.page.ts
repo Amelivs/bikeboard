@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, ViewChild } from '@angular/core';
-import { ActionSheetController, ModalController } from '@ionic/angular';
+import { ActionSheetController, MenuController, ModalController } from '@ionic/angular';
 import { MapSettingsComponent } from '../../core/components/map-settings/map-settings.component';
 import { Layer, MapSettingsService } from '../../core/services/map-settings.service';
 import { NavigationService } from '../../core/services/navigation.service';
@@ -44,8 +44,8 @@ export class MapPage implements AfterViewInit {
   }
 
   constructor(
-    private modalController: ModalController,
     private mapSettings: MapSettingsService,
+    private menu: MenuController,
     private navService: NavigationService,
     private bellService: BellService,
     private screenService: ScreenService,
@@ -71,19 +71,20 @@ export class MapPage implements AfterViewInit {
     this.map.setXyzSources(map.sourceUrls, map.maxZoom);
   }
 
-  private async loadSettings() {
-    this.trackingDuration = await this.mapSettings.getTrackingDuration();
-    let selectedPaths = await this.mapSettings.getPaths();
-    this.map.setGpxSources(selectedPaths);
+  private onPathsChange(paths: Layer[]) {
+    this.map.setGpxSources(paths);
   }
 
   async ngAfterViewInit() {
     this.mapSelectorService.activeMap.subscribe(map => this.onMapChange(map));
-
-    await this.loadSettings();
+    this.mapSelectorService.activePaths.subscribe(paths => this.onPathsChange(paths));
 
     let lastPosition = await this.lastPositionSrv.getLastPosition();
     this.map.setPosition(lastPosition);
+  }
+
+  public menuClick() {
+    this.menu.open();
   }
 
   public async navigateClick() {
@@ -152,13 +153,13 @@ export class MapPage implements AfterViewInit {
   }
 
   async storeClick() {
-    var urls = this.map.getBoundingBoxTileUrls();
+    let urls = this.map.getBoundingBoxTileUrls();
     console.dir(urls);
     if (urls.length > 250) {
-      alert('Zone is too large')
+      alert('Zone is too large');
       return;
     }
-    var fetchTasks = urls.map(url => fetch(url, { mode: 'cors' }));
+    let fetchTasks = urls.map(url => fetch(url, { mode: 'cors' }));
     try {
       await Promise.all(fetchTasks);
     }
@@ -184,21 +185,12 @@ export class MapPage implements AfterViewInit {
     return role;
   }
 
-  async mapSettingsClick() {
-    const modal = await this.modalController.create({
-      component: MapSettingsComponent,
-    });
-    await modal.present();
-    await modal.onDidDismiss();
-    await this.loadSettings();
-  }
-
   fetchItinerary(toCoords: number[]) {
-    var fromCoords = this.map.getGeographicPosition();
+    let fromCoords = this.map.getGeographicPosition();
     fetch(`https://wxs.ign.fr/essentiels/itineraire/rest/route.json?origin=${fromCoords[0]},${fromCoords[1]}&destination=${toCoords[0]},${toCoords[1]}&&method=DISTANCE&graphName=Pieton`)
       .then(res => res.json())
       .then(r => {
-        this.map.setWkt(r['geometryWkt']);
-      })
+        this.map.setWkt(r.geometryWkt);
+      });
   }
 }

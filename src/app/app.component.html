@@ -1,5 +1,5 @@
 <ion-app>
-  <ion-menu contentId="main-content" type="overlay">
+  <ion-menu contentId="main-content" type="overlay" [swipeGesture]="false">
     <ion-header>
       <ion-toolbar>
         <ion-title>Bikeboard</ion-title>
@@ -11,7 +11,7 @@
     <ion-footer>
       <ion-toolbar>
         <ion-buttons slot="start">
-          <ion-button>
+          <ion-button (click)="mapSettingsClick()">
             <ion-icon name="settings-outline" slot="icon-only"></ion-icon>
           </ion-button>
         </ion-buttons>

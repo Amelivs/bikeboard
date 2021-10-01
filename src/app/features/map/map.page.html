@@ -6,8 +6,8 @@
   </ion-fab>
 
   <ion-fab vertical="top" horizontal="start" slot="fixed">
-    <ion-fab-button (click)="mapSettingsClick()" color="light" class="btn-settings">
-      <ion-icon color="primary" name="layers-outline"></ion-icon>
+    <ion-fab-button (click)="menuClick()" color="light" class="btn-settings">
+      <ion-icon color="primary" name="menu-outline"></ion-icon>
     </ion-fab-button>
   </ion-fab>
 
@@ -17,7 +17,8 @@
     </ion-fab-button>
   </ion-fab>
 
-  <app-map #map [markerDisabled]="isTracking" (mapMove)="onMapDrag()" (mapDblClick)="onMapDblClick()" (context)="onContext($event)"></app-map>
+  <app-map #map [markerDisabled]="isTracking" (mapMove)="onMapDrag()" (mapDblClick)="onMapDblClick()"
+    (context)="onContext($event)"></app-map>
 </ion-content>
 
 <ion-footer>

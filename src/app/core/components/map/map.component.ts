@@ -107,7 +107,7 @@ export class MapComponent implements OnInit, AfterViewInit {
   }
 
   public getGeographicPosition() {
-    var coordinates = this.positionMarker.getPosition();
+    let coordinates = this.positionMarker.getPosition();
     return toLonLat(coordinates, this.view.getProjection());
   }
 
@@ -179,34 +179,34 @@ export class MapComponent implements OnInit, AfterViewInit {
       style: feature => this.gpxStyle[feature.getGeometry().getType()],
     });
 
-    layers.push(vector)
+    layers.push(vector);
     this.wktLayers.setLayers(new Collection(layers));
   }
 
   public getBoundingBoxTileUrls(zoom = 15) {
-    var layer = this.layers.getLayers().getArray()[0] as TileLayer;
-    var source = layer.getSource();
-    var tileGrid = source.getTileGrid();
-    var urlFunc = (source as TileDebug).getTileUrlFunction();
-    var tileURLs = [];
-    var extent = this.view.calculateExtent(this.map.getSize());
-    tileGrid.forEachTileCoord(extent, zoom, function (tileCoord) {
-      var url = urlFunc(tileCoord, 1, source.getProjection());
+    let layer = this.layers.getLayers().getArray()[0] as TileLayer;
+    let source = layer.getSource();
+    let tileGrid = source.getTileGrid();
+    let urlFunc = (source as TileDebug).getTileUrlFunction();
+    let tileURLs = [];
+    let extent = this.view.calculateExtent(this.map.getSize());
+    tileGrid.forEachTileCoord(extent, zoom, function(tileCoord) {
+      let url = urlFunc(tileCoord, 1, source.getProjection());
       tileURLs.push(url);
     });
     return tileURLs;
   }
 
   public onLongPress(event: MouseEvent | TouchEvent) {
-    var pixelCoords: number[];
+    let pixelCoords: number[];
     if (event instanceof MouseEvent) {
       pixelCoords = [event.x, event.y];
     }
     else {
       pixelCoords = [event.touches.item(0).clientX, event.touches.item(0).clientY];
     }
-    var coordinates = this.map.getCoordinateFromPixel(pixelCoords);
-    var geoCoords = toLonLat(coordinates, this.view.getProjection());
+    let coordinates = this.map.getCoordinateFromPixel(pixelCoords);
+    let geoCoords = toLonLat(coordinates, this.view.getProjection());
     this.context.emit(geoCoords);
   }
 }
