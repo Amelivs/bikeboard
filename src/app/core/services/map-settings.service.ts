@@ -36,7 +36,7 @@ export class MapSettingsService {
                 }),
             ]
         },
-        { id: 'ignscan25', name: 'Plan IGN Rando', maxZoom: 16, sourceUrls: ['https://wxs.ign.fr/an7nvfzojv5wa96dsga5nk8w/geoportail/wmts?layer=GEOGRAPHICALGRIDSYSTEMS.MAPS.SCAN25TOUR&style=normal&tilematrixset=PM&Service=WMTS&Request=GetTile&Version=1.0.0&Format=image%2Fjpeg&TileMatrix={z}&TileCol={x}&TileRow={y}'] },
+        { id: 'ignscan25', name: 'Plan IGN Rando', maxZoom: 16, sourceUrls: ['https://wxs.ign.fr/90a8uu8uohh2q9ormp4ryxni/geoportail/wmts?layer=GEOGRAPHICALGRIDSYSTEMS.MAPS.SCAN25TOUR&style=normal&tilematrixset=PM&Service=WMTS&Request=GetTile&Version=1.0.0&Format=image%2Fjpeg&TileMatrix={z}&TileCol={x}&TileRow={y}'] },
         { id: 'ignaerien', name: 'Plan IGN aérien', sourceUrls: ['https://wxs.ign.fr/decouverte/geoportail/wmts?gp-ol-ext=3.1.0&layer=ORTHOIMAGERY.ORTHOPHOTOS&style=normal&tilematrixset=PM&Service=WMTS&Request=GetTile&Version=1.0.0&Format=image%2Fjpeg&TileMatrix={z}&TileCol={x}&TileRow={y}'] },
         {
             id: 'cadastre', name: 'Cadastre', sourceUrls: [
@@ -55,7 +55,9 @@ export class MapSettingsService {
     readonly paths: Array<Layer> = [
         { id: 'ev5', name: 'EuroVelo 5', sourceUrls: ['assets/gpx/EuroVelo-5.gpx'] },
         { id: 'ev6', name: 'EuroVelo 6', sourceUrls: ['assets/gpx/EuroVelo-6.gpx'] },
-        { id: 'ev15', name: 'EuroVelo 15', sourceUrls: ['assets/gpx/EuroVelo-15.gpx'] }
+        { id: 'ev15', name: 'EuroVelo 15', sourceUrls: ['assets/gpx/EuroVelo-15.gpx'] },
+        { id: 'valdargent', name: 'Val d\'Argent', sourceUrls: ['assets/gpx/valdargent.gpx'] },
+        { id: 'bruche', name: 'Vallée de la Bruche', sourceUrls: ['assets/gpx/bruche.gpx'] }
     ];
 
     readonly defaultTrackingDuration = 5;
