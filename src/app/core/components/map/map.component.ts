@@ -184,10 +184,10 @@ export class MapComponent implements OnInit, AfterViewInit {
   }
 
   public getBoundingBoxTileUrls(zoom = 15) {
-    let layer = this.layers.getLayers().getArray()[0] as TileLayer;
+    let layer = this.layers.getLayers().getArray()[0] as TileLayer<TileDebug>;
     let source = layer.getSource();
     let tileGrid = source.getTileGrid();
-    let urlFunc = (source as TileDebug).getTileUrlFunction();
+    let urlFunc = source.getTileUrlFunction();
     let tileURLs = [];
     let extent = this.view.calculateExtent(this.map.getSize());
     tileGrid.forEachTileCoord(extent, zoom, function(tileCoord) {
