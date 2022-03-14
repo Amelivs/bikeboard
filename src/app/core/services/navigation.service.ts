@@ -108,8 +108,9 @@ export class NavigationService {
 
         let granted = await this.compassSrv.requestPermission();
         if (!granted) {
-            this.$heading.error(new Error('User denied orientation'));
-            return;
+            let error = new Error('User denied orientation');
+            this.$heading.error(error);
+            throw error;
         }
 
         let previousSpeed: number = null;
