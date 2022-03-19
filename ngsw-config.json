@@ -57,8 +57,8 @@
     {
       "name": "tiles",
       "cacheConfig": {
-        "maxAge": "90d",
-        "maxSize": 100000,
+        "maxAge": "30d",
+        "maxSize": 10000,
         "strategy": "performance"
       },
       "urls": [

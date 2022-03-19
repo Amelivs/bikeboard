@@ -106,11 +106,11 @@ export class NavigationService {
     public async startHeadingTracking() {
         this.stoptHeadingTracking();
 
-        let granted = await this.compassSrv.requestPermission();
-        if (!granted) {
-            let error = new Error('User denied orientation');
-            this.$heading.error(error);
-            throw error;
+        if (this.compassSrv.queryPermission() != 'granted') {
+            let permission = await this.compassSrv.requestPermission();
+            if (permission !== 'granted') {
+                return false;
+            }
         }
 
         let previousSpeed: number = null;
@@ -153,6 +153,8 @@ export class NavigationService {
             }, err => {
                 console.error(err);
             });
+
+        return true;
     }
 
     public stoptHeadingTracking() {

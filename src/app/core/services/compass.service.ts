@@ -8,6 +8,7 @@ import { map, share } from 'rxjs/operators';
 })
 export class CompassService {
 
+    private permissionState: PermissionState = 'prompt';
     public readonly heading: Observable<number>;
 
     private get orientationEvent() {
@@ -40,11 +41,17 @@ export class CompassService {
         this.heading = this.createObservable().pipe(share());
     }
 
+    public queryPermission() {
+        return this.permissionState;
+    }
+
     public async requestPermission() {
         if (typeof DeviceOrientationEvent.requestPermission === 'function') {
-            let permissionState = await DeviceOrientationEvent.requestPermission();
-            return permissionState !== 'denied';
-        };
-        return true;
+            this.permissionState = await DeviceOrientationEvent.requestPermission();
+        }
+        else {
+            this.permissionState = 'granted';
+        }
+        return this.permissionState;
     }
 }

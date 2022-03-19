@@ -13,11 +13,17 @@ import { environment } from '../environments/environment';
 import { MapSettingsComponent } from './core/components/map-settings/map-settings.component';
 import { FormsModule } from '@angular/forms';
 import { MapSelectorComponent } from './core/components/map-selector/map-selector.component';
+import { LongPressDirective } from './core/directives/longPress';
+import { MapComponent } from './core/components/map/map.component';
+import { MapPage } from './features/map/map.page';
 
 
 @NgModule({
   declarations: [
     AppComponent,
+    MapComponent,
+    MapPage,
+    LongPressDirective,
     MapSelectorComponent,
     MapSettingsComponent
   ],
@@ -34,7 +40,7 @@ import { MapSelectorComponent } from './core/components/map-selector/map-selecto
       enabled: environment.production,
       // Register the ServiceWorker as soon as the app is stable
       // or after 30 seconds (whichever comes first).
-      registrationStrategy: 'registerWhenStable:30000'
+      registrationStrategy: 'registerImmediately'
     })],
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
   bootstrap: [AppComponent],

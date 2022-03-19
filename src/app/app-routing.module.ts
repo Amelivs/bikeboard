@@ -1,16 +1,16 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
+import { MapPage } from './features/map/map.page';
 
 const routes: Routes = [
   {
-    path: '',
-    loadChildren: () => import('./features/map/map.module').then(m => m.MapPageModule)
+    path: '', component: MapPage
   }
 ];
 
 @NgModule({
   imports: [
-    RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules })
+    RouterModule.forRoot(routes)
   ],
   exports: [RouterModule]
 })

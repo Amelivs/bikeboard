@@ -22,8 +22,8 @@ export class MapPage implements AfterViewInit {
 
   private trackingDuration: number;
 
-  public currentSpeed = '0.0';
-  public currentAltitude = '0';
+  public currentSpeed = '-';
+  public currentAltitude = '-';
 
   public trackingMode: TrackingMode = 'Free';
 
@@ -54,8 +54,8 @@ export class MapPage implements AfterViewInit {
     private lastPositionSrv: LastPositionService) {
     this.navService.position.subscribe(position => this.onPositionChange(position), err => { this.onError(err); });
     this.navService.heading.subscribe(rotation => this.onHeadingChange(rotation), err => { this.onError(err); });
-    this.navService.speed.subscribe(speed => { this.currentSpeed = speed?.toFixed(1) || '0.0'; }, err => { this.onError(err); });
-    this.navService.altitude.subscribe(alt => { this.currentAltitude = alt?.toFixed(0) || '0'; }, err => { this.onError(err); });
+    this.navService.speed.subscribe(speed => { this.currentSpeed = speed?.toFixed(1) || '-'; }, err => { this.onError(err); });
+    this.navService.altitude.subscribe(alt => { this.currentAltitude = alt?.toFixed(0) || '-'; }, err => { this.onError(err); });
     this.screenService.off.subscribe(() => { this.onScreenOff(); });
   }
 
@@ -96,7 +96,10 @@ export class MapPage implements AfterViewInit {
       return;
     }
     if (this.trackingMode === 'Centered') {
-      await this.navService.startHeadingTracking();
+      let ok = await this.navService.startHeadingTracking();
+      if (!ok) {
+        return;
+      }
       this.trackingMode = 'Navigation';
       return;
     }
@@ -136,7 +139,6 @@ export class MapPage implements AfterViewInit {
 
   private onError(err: any) {
     console.error(err);
-    alert(err.message);
   }
 
   public async onContext(coords: number[]) {
