@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { ModalController } from '@ionic/angular';
+
 import { MapSettingsComponent } from './core/components/map-settings/map-settings.component';
 import { UpdateService } from './core/services/update.service';
 

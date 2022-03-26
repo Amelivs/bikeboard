@@ -1,10 +1,11 @@
 import { AfterViewInit, Component, ViewChild } from '@angular/core';
 import { ActionSheetController, MenuController, ModalController } from '@ionic/angular';
+import { toRadians } from 'ol/math';
+
 import { MapSettingsComponent } from '../../core/components/map-settings/map-settings.component';
 import { Layer, MapSettingsService } from '../../core/services/map-settings.service';
 import { NavigationService } from '../../core/services/navigation.service';
 import { LastPositionService } from '../../core/services/last-position.service';
-import { toRadians } from 'ol/math';
 import { BellService } from '../../core/services/bell.service';
 import { ScreenService } from '../../core/services/pause.service';
 import { MapComponent } from '../../core/components/map/map.component';

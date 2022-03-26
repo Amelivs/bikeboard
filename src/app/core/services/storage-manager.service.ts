@@ -8,14 +8,14 @@ export class StorageManagerService {
 
     public async estimate() {
         if ('storage' in navigator && 'estimate' in navigator.storage) {
-            var { usage, quota } = await navigator.storage.estimate();
+            let { usage, quota } = await navigator.storage.estimate();
             usage = Math.round(usage / (1024 * 1024));
             quota = Math.round(quota / (1024 * 1024));
             return { usage, quota };
         }
         else {
-            var usage = await this.cachesSize();
-            var quota: number = null;
+            let usage = await this.cachesSize();
+            let quota: number = null;
             usage = Math.round(usage / (1024 * 1024));
             return { usage, quota };
         }

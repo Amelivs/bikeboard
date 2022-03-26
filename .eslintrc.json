@@ -1,11 +1,21 @@
 {
   "root": true,
-  "ignorePatterns": ["projects/**/*"],
+  "ignorePatterns": [
+    "projects/**/*"
+  ],
+  "plugins": [
+    "filename-rules"
+  ],
   "overrides": [
     {
-      "files": ["*.ts"],
+      "files": [
+        "*.ts"
+      ],
       "parserOptions": {
-        "project": ["tsconfig.json", "e2e/tsconfig.json"],
+        "project": [
+          "tsconfig.json",
+          "e2e/tsconfig.json"
+        ],
         "createDefaultProgram": true
       },
       "extends": [
@@ -17,11 +27,14 @@
         "@angular-eslint/component-class-suffix": [
           "error",
           {
-            "suffixes": ["Page", "Component"]
+            "suffixes": [
+              "Page",
+              "Component"
+            ]
           }
         ],
         "@angular-eslint/component-selector": [
-          "error",
+          "off",
           {
             "type": "element",
             "prefix": "app",
@@ -29,19 +42,87 @@
           }
         ],
         "@angular-eslint/directive-selector": [
-          "error",
+          "off",
           {
             "type": "attribute",
             "prefix": "app",
             "style": "camelCase"
           }
         ],
-        "prefer-const": ["off"]
+        "@angular-eslint/no-input-rename": "off",
+        "@angular-eslint/no-output-rename": "off",
+        "@typescript-eslint/dot-notation": "off",
+        "@typescript-eslint/member-ordering": "off",
+        "@typescript-eslint/naming-convention": "off",
+        "@typescript-eslint/prefer-for-of": "off",
+        "prefer-arrow/prefer-arrow-functions": "off",
+        "arrow-body-style": "off",
+        "import/order": [
+          "error",
+          {
+            "groups": [
+              [
+                "builtin",
+                "external"
+              ],
+              [
+                "internal",
+                "parent",
+                "sibling"
+              ]
+            ],
+            "pathGroups": [
+              {
+                "pattern": "@shared/**",
+                "group": "external",
+                "position": "after"
+              }
+            ],
+            "pathGroupsExcludedImportTypes": [
+              "builtin"
+            ],
+            "newlines-between": "always"
+          }
+        ],
+        "max-len": [
+          "off",
+          {
+            "code": 140
+          }
+        ],
+        "no-bitwise": "off",
+        "no-fallthrough": "off",
+        "prefer-const": "off",
+        "filename-rules/match": [
+          "error",
+          {
+            ".ts": "kebabcase"
+          }
+        ],
+        "no-multiple-empty-lines": [
+          "error",
+          {
+            "max": 2
+          }
+        ],
+        "eqeqeq": [
+          "error",
+          "always",
+          {
+            "null": "ignore"
+          }
+        ],
+        "radix": "off",
+        "no-underscore-dangle": "off"
       }
     },
     {
-      "files": ["*.html"],
-      "extends": ["plugin:@angular-eslint/template/recommended"],
+      "files": [
+        "*.html"
+      ],
+      "extends": [
+        "plugin:@angular-eslint/template/recommended"
+      ],
       "rules": {}
     }
   ]

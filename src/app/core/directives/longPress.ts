@@ -14,12 +14,12 @@ export class LongPressDirective implements OnDestroy {
 
     constructor(elementRef: ElementRef) {
         const mousedown = fromEvent<MouseEvent>(elementRef.nativeElement, 'mousedown')
-            .pipe(filter(event => event.button == 0));
+            .pipe(filter(event => event.button === 0));
         const touchstart = fromEvent<TouchEvent>(elementRef.nativeElement, 'touchstart', { passive: true });
         const touchmove = fromEvent<TouchEvent>(elementRef.nativeElement, 'touchmove', { passive: true });
         const touchEnd = fromEvent<TouchEvent>(elementRef.nativeElement, 'touchend');
         const mouseup = fromEvent<MouseEvent>(elementRef.nativeElement, 'mouseup')
-            .pipe(filter(event => event.button == 0));
+            .pipe(filter(event => event.button === 0));
         const mousemove = fromEvent<MouseEvent>(elementRef.nativeElement, 'mousemove');
 
         this.eventSubscribe = merge(mousedown, touchstart)

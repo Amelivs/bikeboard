@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
+
 import { MapSettingsService, Layer } from '../../services/map-settings.service';
 import { StorageManagerService } from '../../services/storage-manager.service';
 

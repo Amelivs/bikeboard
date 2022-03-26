@@ -10,7 +10,7 @@
     "build": "ng build --configuration production",
     "deploy": "npm run build && npx firebase deploy",
     "test": "ng test",
-    "lint": "ng lint",
+    "lint": "ng lint --fix",
     "e2e": "ng e2e"
   },
   "private": true,
@@ -46,6 +46,7 @@
     "@typescript-eslint/eslint-plugin": "4.16.1",
     "@typescript-eslint/parser": "4.16.1",
     "eslint": "^7.6.0",
+    "eslint-plugin-filename-rules": "^1.2.0",
     "eslint-plugin-import": "2.22.1",
     "eslint-plugin-jsdoc": "30.7.6",
     "eslint-plugin-prefer-arrow": "1.2.2",

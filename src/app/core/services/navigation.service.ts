@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { merge, Subject } from 'rxjs';
 import { bufferCount, bufferTime, defaultIfEmpty, filter, first, last, map, startWith, switchMap, takeUntil } from 'rxjs/operators';
+
 import { CompassService } from './compass.service';
 import { LocationService } from './location.service';
 import { LastPositionService } from './last-position.service';
@@ -40,7 +41,7 @@ export class NavigationService {
             .pipe(filter(value => typeof (value) === 'number' && !isNaN(value)))
             .pipe(bufferTime(6000, null, 1))
             .pipe(map(values => {
-                if (values.length == 0) {
+                if (values.length === 0) {
                     return 0;
                 }
                 return 3.6 * values[0];
@@ -63,7 +64,7 @@ export class NavigationService {
 
         alt.pipe(bufferTime(6000, null, 6))
             .pipe(map(values => {
-                if (values.length == 0) {
+                if (values.length === 0) {
                     return 0;
                 }
                 return values.reduce((prev, curr) => prev + curr, 0) / values.length;
@@ -106,7 +107,7 @@ export class NavigationService {
     public async startHeadingTracking() {
         this.stoptHeadingTracking();
 
-        if (this.compassSrv.queryPermission() != 'granted') {
+        if (this.compassSrv.queryPermission() !== 'granted') {
             let permission = await this.compassSrv.requestPermission();
             if (permission !== 'granted') {
                 return false;
@@ -120,7 +121,7 @@ export class NavigationService {
             .pipe(bufferCount(3))
             .pipe(startWith<number[]>([]))
             .pipe(map(values => {
-                if (values.length == 0) {
+                if (values.length === 0) {
                     return 0;
                 }
                 return values.reduce((prev, curr) => prev + curr, 0) / values.length;

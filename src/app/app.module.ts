@@ -1,17 +1,15 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
-
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { IonicStorageModule } from '@ionic/storage-angular';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { FormsModule } from '@angular/forms';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
-import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
-
 import { MapSettingsComponent } from './core/components/map-settings/map-settings.component';
-import { FormsModule } from '@angular/forms';
 import { MapSelectorComponent } from './core/components/map-selector/map-selector.component';
 import { LongPressDirective } from './core/directives/longPress';
 import { MapComponent } from './core/components/map/map.component';
