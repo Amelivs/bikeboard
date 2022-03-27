@@ -46,8 +46,8 @@ export class CompassService {
     }
 
     public async requestPermission() {
-        if (typeof DeviceOrientationEvent.requestPermission === 'function') {
-            this.permissionState = await DeviceOrientationEvent.requestPermission();
+        if ('requestPermission' in DeviceOrientationEvent) {
+            this.permissionState = await (DeviceOrientationEvent as any).requestPermission();
         }
         else {
             this.permissionState = 'granted';

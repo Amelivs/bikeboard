@@ -106,3 +106,6 @@ www
 
 # Firebase folder
 .firebase/
+
+# misc
+/.angular/cache
