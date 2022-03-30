@@ -23,20 +23,11 @@
         ]
       },
       {
-        "source": "**/*.@(js|css|svg|aac|gpx|png)",
+        "source": "**/*.@(js|css|svg|aac|gpx|png|json)",
         "headers": [
           {
             "key": "Cache-Control",
             "value": "max-age=31536000"
-          }
-        ]
-      },
-      {
-        "source": "ngsw-worker.js",
-        "headers": [
-          {
-            "key": "Cache-Control",
-            "value": "no-cache"
           }
         ]
       }

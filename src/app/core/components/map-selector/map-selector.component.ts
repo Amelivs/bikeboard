@@ -22,6 +22,7 @@ export class MapSelectorComponent implements OnInit {
   async ngOnInit() {
     this.maps = await this.mapService.getAvailableMaps();
     this.selectedMap = await this.mapService.getActiveMap();
+    this.mapService.setActiveMap(this.selectedMap);
     let selectedPaths = await this.mapSettings.getPaths();
 
     for (let p of this.mapSettings.paths) {
@@ -31,7 +32,7 @@ export class MapSelectorComponent implements OnInit {
     this.mapService.setActivePaths(selectedPaths);
   }
 
-  async selectionChange() {
+  selectionChange() {
     this.menu.close();
     this.mapService.setActiveMap(this.selectedMap);
   }
