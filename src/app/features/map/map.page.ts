@@ -1,15 +1,16 @@
 import { AfterViewInit, Component, ViewChild } from '@angular/core';
 import { ActionSheetController, MenuController, ModalController } from '@ionic/angular';
 import { toRadians } from 'ol/math';
+import { MapEntity } from 'src/app/core/data/entities/map';
+import { PathEntity } from 'src/app/core/data/entities/path';
+import { DataCacheService } from 'src/app/core/services/data-cache.service';
 
-import { MapSettingsComponent } from '../../core/components/map-settings/map-settings.component';
-import { Layer, MapSettingsService } from '../../core/services/map-settings.service';
+import { SettingsComponent } from '../settings/settings.component';
 import { NavigationService } from '../../core/services/navigation.service';
 import { LastPositionService } from '../../core/services/last-position.service';
 import { BellService } from '../../core/services/bell.service';
 import { ScreenService } from '../../core/services/pause.service';
-import { MapComponent } from '../../core/components/map/map.component';
-import { MapSelectorService } from '../../core/components/map-selector/map-selector.service';
+import { MapViewerComponent } from './map-viewer/map-viewer.component';
 
 type TrackingMode = 'Free' | 'Centered' | 'Navigation';
 
@@ -19,9 +20,7 @@ type TrackingMode = 'Free' | 'Centered' | 'Navigation';
 })
 export class MapPage implements AfterViewInit {
 
-  @ViewChild('map') map: MapComponent;
-
-  private trackingDuration: number;
+  @ViewChild('map') map: MapViewerComponent;
 
   public currentSpeed = '-';
   public currentAltitude = '-';
@@ -45,13 +44,12 @@ export class MapPage implements AfterViewInit {
   }
 
   constructor(
-    private mapSettings: MapSettingsService,
     private menu: MenuController,
     private navService: NavigationService,
     private bellService: BellService,
     private screenService: ScreenService,
     public actionSheetController: ActionSheetController,
-    public mapSelectorService: MapSelectorService,
+    public dataCache: DataCacheService,
     private lastPositionSrv: LastPositionService) {
     this.navService.position.subscribe(position => this.onPositionChange(position), err => { this.onError(err); });
     this.navService.heading.subscribe(rotation => this.onHeadingChange(rotation), err => { this.onError(err); });
@@ -68,17 +66,17 @@ export class MapPage implements AfterViewInit {
     }
   }
 
-  private onMapChange(map: Layer) {
-    this.map.setXyzSources(map.sourceUrls, map.maxZoom);
+  private onMapChange(map: MapEntity) {
+    this.map.setXyzSources(map.wmtsUrls, map.maxZoom ?? 18);
   }
 
-  private onPathsChange(paths: Layer[]) {
+  private onPathsChange(paths: PathEntity[]) {
     this.map.setGpxSources(paths);
   }
 
   async ngAfterViewInit() {
-    this.mapSelectorService.activeMap.subscribe(map => this.onMapChange(map));
-    this.mapSelectorService.activePaths.subscribe(paths => this.onPathsChange(paths));
+    this.dataCache.activeMap.subscribe(map => this.onMapChange(map));
+    this.dataCache.activePaths.subscribe(paths => this.onPathsChange(paths));
 
     let lastPosition = await this.lastPositionSrv.getLastPosition();
     this.map.setPosition(lastPosition);

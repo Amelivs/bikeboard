@@ -1,0 +1,34 @@
+<ion-list>
+  <ion-radio-group [(ngModel)]="selectedMap" (ngModelChange)="selectionChange()">
+    <ion-item-divider>
+      <ion-label>Available maps</ion-label>
+    </ion-item-divider>
+    <ion-item-sliding #slindingItem *ngFor="let map of maps$ | async" [disabled]="isActiveMap(map)">
+      <ion-item-options side="start">
+        <ion-item-option color="danger" (click)="deleteMap(slindingItem, map)">
+          <ion-icon slot="icon-only" name="trash"></ion-icon>
+        </ion-item-option>
+      </ion-item-options>
+      <ion-item>
+        <ion-label>{{map.name}}</ion-label>
+        <ion-radio slot="end" [value]="map"></ion-radio>
+      </ion-item>
+    </ion-item-sliding>
+  </ion-radio-group>
+</ion-list>
+<ion-list>
+  <ion-item-divider>
+    <ion-label>Available paths</ion-label>
+  </ion-item-divider>
+  <ion-item-sliding #slindingItem *ngFor="let path of paths$ | async">
+    <ion-item-options side="start">
+      <ion-item-option color="danger" (click)="deletePath(slindingItem, path)">
+        <ion-icon slot="icon-only" name="trash"></ion-icon>
+      </ion-item-option>
+    </ion-item-options>
+    <ion-item>
+      <ion-label>{{path.name}}</ion-label>
+      <ion-checkbox slot="end" [checked]="isChecked(path)" (ionChange)="checkedChange($event, path)"></ion-checkbox>
+    </ion-item>
+  </ion-item-sliding>
+</ion-list>

@@ -56,13 +56,12 @@
     {
       "name": "tiles",
       "cacheConfig": {
-        "maxAge": "30d",
-        "maxSize": 10000,
+        "maxAge": "60d",
+        "maxSize": 6000,
         "strategy": "performance"
       },
       "urls": [
-        "https://*.openstreetmap.fr/**",
-        "https://wxs.ign.fr/**"
+        "**_tcache_**"
       ]
     }
   ]

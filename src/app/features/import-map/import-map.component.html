@@ -1,0 +1,25 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="end">
+      <ion-button (click)="okClick()">Close</ion-button>
+    </ion-buttons>
+    <ion-title>Import map</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list [formGroup]="form">
+    <ion-item>
+      <ion-label position="stacked">WMTS Url</ion-label>
+      <ion-input placeholder="https://exemple.com/{z}/{x}/{y}" type="url" formControlName="url"></ion-input>
+      <ion-note slot="error">{{urlError}}</ion-note>
+    </ion-item>
+    <ion-item>
+      <ion-label position="stacked">Name</ion-label>
+      <ion-input placeholder="Enter a name" formControlName="name"></ion-input>
+    </ion-item>
+    <ion-item lines="none" (click)="importClick()">
+      <ion-button shape="round" [disabled]="form.invalid" class="btn-import">Import</ion-button>
+    </ion-item>
+  </ion-list>
+</ion-content>

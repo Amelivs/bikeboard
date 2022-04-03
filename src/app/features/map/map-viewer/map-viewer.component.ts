@@ -14,16 +14,16 @@ import GPX from 'ol/format/GPX';
 import XYZ from 'ol/source/XYZ';
 import BaseLayer from 'ol/layer/Base';
 import TileDebug from 'ol/source/TileDebug';
-
-import { Layer } from '../../services/map-settings.service';
+import { MapEntity } from 'src/app/core/data/entities/map';
+import { PathEntity } from 'src/app/core/data/entities/path';
 
 
 @Component({
-  selector: 'app-map',
-  templateUrl: './map.component.html',
-  styleUrls: ['./map.component.scss'],
+  selector: 'app-map-viewer',
+  templateUrl: './map-viewer.component.html',
+  styleUrls: ['./map-viewer.component.scss']
 })
-export class MapComponent implements OnInit, AfterViewInit {
+export class MapViewerComponent implements OnInit, AfterViewInit {
 
   @ViewChild('map') mapElement: ElementRef;
   @ViewChild('positionMarker') positionMarkerElement: ElementRef;
@@ -131,7 +131,7 @@ export class MapComponent implements OnInit, AfterViewInit {
     this.view.setRotation(rotation);
   }
 
-  public setXyzSources(sources: string[], maxZoom = 18) {
+  public setXyzSources(sources: string[], maxZoom: number) {
     let layers = sources.map(url => new TileLayer({
       source: new XYZ({
         crossOrigin: 'anonymous',
@@ -143,12 +143,12 @@ export class MapComponent implements OnInit, AfterViewInit {
     this.view.setMaxZoom(maxZoom);
   }
 
-  public setGpxSources(sources: Layer[]) {
+  public setGpxSources(sources: PathEntity[]) {
     let layers: BaseLayer[] = [];
     for (let path of sources) {
       let layer = new VectorLayer({
         source: new VectorSource({
-          url: path.sourceUrls[0],
+          url: path.url,
           format: new GPX(),
         }),
         style: feature => this.gpxStyle[feature.getGeometry().getType()],

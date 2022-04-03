@@ -9,7 +9,7 @@ export class UpdateService {
     public constructor(private updates: SwUpdate) { }
 
     public checkForUpdates() {
-        this.updates.available.subscribe(event => this.promptUser());
+        this.updates.versionUpdates.subscribe(event => this.promptUser());
     }
 
     private promptUser() {

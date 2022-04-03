@@ -17,8 +17,8 @@
     </ion-fab-button>
   </ion-fab>
 
-  <app-map #map [markerDisabled]="isTracking" (mapMove)="onMapDrag()" (mapDblClick)="onMapDblClick()"
-    (context)="onContext($event)"></app-map>
+  <app-map-viewer #map [markerDisabled]="isTracking" (mapMove)="onMapDrag()" (mapDblClick)="onMapDblClick()"
+    (context)="onContext($event)"></app-map-viewer>
 </ion-content>
 
 <ion-footer>

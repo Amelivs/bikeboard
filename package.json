@@ -8,7 +8,7 @@
     "start": "ng serve",
     "start:sw": "ng build && http-server -p 4200 -c-1 www",
     "build": "ng build --configuration production",
-    "deploy": "npm run build && npx firebase deploy",
+    "deploy": "npm run build && npx firebase hosting:channel:deploy alpha",
     "lint": "ng lint --fix",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"

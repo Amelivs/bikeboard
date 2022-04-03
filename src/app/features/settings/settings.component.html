@@ -3,21 +3,15 @@
     <ion-buttons slot="end">
       <ion-button (click)="okClick()">Ok</ion-button>
     </ion-buttons>
-    <ion-title>Map settings</ion-title>
+    <ion-title>Settings</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
   <ion-list>
     <ion-list-header>
-      <ion-label>Settings</ion-label>
+      <ion-label>General settings</ion-label>
     </ion-list-header>
-    <ion-item>
-      <ion-label>Tracking duration</ion-label>
-      <ion-select [(ngModel)]="selectedDuration">
-        <ion-select-option [value]="d" *ngFor="let d of allDurations">{{d + ' min'}}</ion-select-option>
-      </ion-select>
-    </ion-item>
     <ion-item>
       <ion-label>Storage usage (Mb)</ion-label>
       <ion-text slot="end">{{storageUsage | async}}</ion-text>
@@ -28,7 +22,7 @@
     </ion-item>
     <ion-item>
       <ion-label>Version</ion-label>
-      <ion-text slot="end">2022.03.30</ion-text>
+      <ion-text slot="end">2022.04.03</ion-text>
     </ion-item>
   </ion-list>
 </ion-content>

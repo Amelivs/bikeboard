@@ -4,7 +4,7 @@ import { Injectable } from '@angular/core';
 @Injectable({
     providedIn: 'root'
 })
-export class StorageManagerService {
+export class SettingsService {
 
     public async estimate() {
         if ('storage' in navigator && 'estimate' in navigator.storage) {
