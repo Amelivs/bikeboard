@@ -27,3 +27,15 @@ body {
     color: #333 !important;
     border-color: #333;
 }
+
+ion-item-divider.ios {
+    font-size: 0.8em;
+}
+
+ion-content.ios {
+    --ion-background-color: var(--ion-color-step-50)
+}
+
+ion-list.ios {
+    --ion-item-background: var(--ion-color-step-50)
+}

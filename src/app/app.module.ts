@@ -18,6 +18,8 @@ import { ImportPathComponent } from './features/import-path/import-path.componen
 import { DataContext } from './core/data/data-context';
 import { HomeComponent } from './features/home/home.component';
 import { ImportMapComponent } from './features/import-map/import-map.component';
+import { AttributionsComponent } from './features/settings/attributions/attributions.component';
+import { HomeSettingsComponent } from './features/settings/home-settings/home-settings.component';
 
 
 @NgModule({
@@ -30,7 +32,9 @@ import { ImportMapComponent } from './features/import-map/import-map.component';
     SettingsComponent,
     ImportPathComponent,
     ImportMapComponent,
-    HomeComponent
+    HomeComponent,
+    HomeSettingsComponent,
+    AttributionsComponent
   ],
   entryComponents: [
     SettingsComponent

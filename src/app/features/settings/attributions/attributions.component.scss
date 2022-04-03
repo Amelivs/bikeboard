@@ -1,0 +1,6 @@
+pre {
+    padding-top: calc(var(--ion-safe-area-top) + 1rem);
+    padding-left: calc(var(--ion-safe-area-left) + 1rem);
+    padding-right: calc(var(--ion-safe-area-right) + 1rem);
+    padding-bottom: calc(var(--ion-safe-area-bottom) + 1rem);
+}

@@ -1,27 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { ModalController } from '@ionic/angular';
 
-import { SettingsService } from './settings.service';
+import { HomeSettingsComponent } from './home-settings/home-settings.component';
+
 
 @Component({
-  selector: 'app-settings',
-  templateUrl: './settings.component.html',
-  styleUrls: ['./settings.component.scss'],
+  selector: 'app-home-settings',
+  template: '<ion-nav [root]="rootPage"></ion-nav>'
 })
-export class SettingsComponent implements OnInit {
+export class SettingsComponent {
 
-  constructor(private modalCtrl: ModalController, private service: SettingsService) { }
-
-  storageUsage: Promise<string>;
-  cacheLength: number;
-
-  async ngOnInit() {
-    this.storageUsage = this.service.estimate()
-      .then((estimation) => `${estimation.usage} / ${estimation.quota}`);
-    this.cacheLength = await this.service.getCachedTilesCount();
-  }
-
-  okClick() {
-    this.modalCtrl.dismiss();
-  }
+  rootPage = HomeSettingsComponent;
 }
