@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { IonNav, ModalController } from '@ionic/angular';
 
+import { environment } from '../../../../environments/environment';
 import { AttributionsComponent } from '../attributions/attributions.component';
 import { SettingsService } from '../settings.service';
 
@@ -13,6 +14,7 @@ export class HomeSettingsComponent implements OnInit {
 
   constructor(private modalCtrl: ModalController, private service: SettingsService, private nav: IonNav) { }
 
+  appVersion = environment.appVersion;
   storageUsage: Promise<string>;
   cacheLength: number;
 

@@ -1,40 +1,26 @@
 import { Component, OnInit } from '@angular/core';
-import { ModalController } from '@ionic/angular';
+
+import { AttributionsService } from './attributions.service';
 
 @Component({
   selector: 'app-attributions',
   templateUrl: './attributions.component.html',
-  styleUrls: ['./attributions.component.scss']
+  styleUrls: ['./attributions.component.scss'],
+  providers: [AttributionsService]
 })
 export class AttributionsComponent implements OnInit {
 
-  credits: string;
+  atttributions: string;
 
-  constructor() { }
+  constructor(private service: AttributionsService) { }
 
   async ngOnInit() {
     try {
-      this.credits = await this.getlicense();
+      this.atttributions = await this.service.getAttributions();
     }
     catch (err) {
       console.error(err);
-      alert('Attributions could not be loaded');
+      alert(err.message);
     }
-  }
-
-  async getlicense() {
-    let otherLicense = await fetch('assets/licenses.txt');
-    if (!otherLicense.ok) {
-      throw new Error(otherLicense.statusText);
-    }
-    let otherContent = await otherLicense.blob().then(blob => blob.text());
-
-    let response = await fetch('3rdpartylicenses.txt');
-    if (!response.ok) {
-      throw new Error(response.statusText);
-    }
-    let content = await response.blob().then(blob => blob.text());
-
-    return otherContent.concat('\n\n', content);
   }
 }

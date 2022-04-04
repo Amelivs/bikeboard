@@ -1,6 +1,6 @@
 {
   "name": "bikeboard",
-  "version": "0.0.1",
+  "version": "2022.4.4",
   "author": "Guillaume Erhart",
   "homepage": "https://github.com/Amelivs/bikeboard",
   "scripts": {
@@ -8,7 +8,9 @@
     "start": "ng serve",
     "start:sw": "ng build && http-server -p 4200 -c-1 www",
     "build": "ng build --configuration production",
-    "deploy": "npm run build && npx firebase hosting:channel:deploy alpha",
+    "deploy": "npm run build && npx firebase deploy",
+    "deploy:alpha": "npm run build && npx firebase hosting:channel:deploy alpha",
+    "prebuild": "node version.js",
     "lint": "ng lint --fix",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"

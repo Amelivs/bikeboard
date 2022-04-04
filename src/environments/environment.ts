@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  useServiceWorker: false
+  useServiceWorker: false,
+  appVersion: require('../../package.json').version + '-dev'
 };
 
 /*

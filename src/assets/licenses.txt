@@ -1,1 +1,2 @@
-<a target="_blank" href="https://www.flaticon.com/fr/icones-gratuites/carte" title="carte icônes">Carte icônes créées par Freepik - Flaticon</a>
+Application icon
+<a target="_blank" href="https://www.flaticon.com/free-icons/map" title="map icons">Map icons created by Freepik - Flaticon</a>
