@@ -1,6 +1,6 @@
 {
   "name": "bikeboard",
-  "version": "2022.4.4",
+  "version": "2022.4.24",
   "author": "Guillaume Erhart",
   "homepage": "https://github.com/Amelivs/bikeboard",
   "scripts": {
@@ -8,6 +8,7 @@
     "start": "ng serve",
     "start:sw": "ng build && http-server -p 4200 -c-1 www",
     "build": "ng build --configuration production",
+    "splash": "pwa-asset-generator src/assets/icons/icon-512.png src/assets/splash --splash-only --portrait-only --padding 40% --quality 90 --index src/index.html",
     "deploy": "npm run build && npx firebase deploy",
     "deploy:alpha": "npm run build && npx firebase hosting:channel:deploy alpha",
     "prebuild": "node version.js",
@@ -29,6 +30,7 @@
     "@ionic/angular": "^6.0.13",
     "@ionic/storage-angular": "^3.0.6",
     "ol": "^6.14.1",
+    "pwa-asset-generator": "^6.0.8",
     "rxjs": "~7.5.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.11.4"
