@@ -4,14 +4,14 @@ import { PreferencesEntity } from './entities/settings';
 
 export class EntityFactory {
     static createMap(data: Omit<MapEntity, 'id'>): MapEntity {
-        if (!data.name || !Array.isArray(data.wmtsUrls) || data.wmtsUrls.length === 0) {
+        if (!data.name || !Array.isArray(data.layers) || data.layers.length === 0) {
             throw new Error('Missing required properties');
         }
         return {
             id: null,
             name: data.name,
             maxZoom: data.maxZoom ?? null,
-            wmtsUrls: data.wmtsUrls.slice()
+            layers: data.layers.slice()
         };
     }
 

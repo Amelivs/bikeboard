@@ -67,7 +67,7 @@ export class MapPage implements AfterViewInit {
   }
 
   private onMapChange(map: MapEntity) {
-    this.map.setXyzSources(map.wmtsUrls, map.maxZoom ?? 18);
+    this.map.setXyzSources(map);
   }
 
   private onPathsChange(paths: PathEntity[]) {

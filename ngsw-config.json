@@ -61,7 +61,8 @@
         "strategy": "performance"
       },
       "urls": [
-        "**_tcache_**"
+        "**_tcache_**",
+        "wxs.ign.fr/**/*.(json|pbf)"
       ]
     }
   ]

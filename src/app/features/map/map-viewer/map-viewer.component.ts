@@ -16,6 +16,7 @@ import BaseLayer from 'ol/layer/Base';
 import TileDebug from 'ol/source/TileDebug';
 import { MapEntity } from 'src/app/core/data/entities/map';
 import { PathEntity } from 'src/app/core/data/entities/path';
+import MapboxVector from 'ol/layer/MapboxVector';
 
 
 @Component({
@@ -131,16 +132,27 @@ export class MapViewerComponent implements OnInit, AfterViewInit {
     this.view.setRotation(rotation);
   }
 
-  public setXyzSources(sources: string[], maxZoom: number) {
-    let layers = sources.map(url => new TileLayer({
-      source: new XYZ({
-        crossOrigin: 'anonymous',
-        url,
-        opaque: false
-      })
-    }));
+  public setXyzSources(map: MapEntity) {
+    let layers = map.layers.map(layer => {
+      if (layer.type === 'raster') {
+        return new TileLayer({
+          source: new XYZ({
+            crossOrigin: 'anonymous',
+            url: layer.url,
+            opaque: false
+          })
+        });
+      }
+      else if (layer.type === 'vector') {
+        return new MapboxVector({
+          styleUrl: layer.url
+        });
+      }
+      throw new Error(`Unknown layer type '${layer.type}'`);
+    });
+
     this.layers.setLayers(new Collection(layers));
-    this.view.setMaxZoom(maxZoom);
+    this.view.setMaxZoom(map.maxZoom ?? 18);
   }
 
   public setGpxSources(sources: PathEntity[]) {
