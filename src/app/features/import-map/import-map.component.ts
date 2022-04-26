@@ -31,19 +31,13 @@ export class ImportMapComponent implements OnInit {
   }
 
   async importClick() {
-  /*  this.addCacheFlag(this.form.value.url);
-    let map = EntityFactory.createMap({
-      name: this.form.value.name,
-      wmtsUrls: [this.addCacheFlag(this.form.value.url)]
-    });
-    await this.dataCache.saveMap(map);
-    this.modalCtrl.dismiss();*/
-  }
-
-  private addCacheFlag(urlValue: string) {
-    let url = new URL(urlValue);
-    url.searchParams.append('_tcache_', '1');
-    return url.toString();
+    /*  this.addCacheFlag(this.form.value.url);
+      let map = EntityFactory.createMap({
+        name: this.form.value.name,
+        wmtsUrls: [this.addCacheFlag(this.form.value.url)]
+      });
+      await this.dataCache.saveMap(map);
+      this.modalCtrl.dismiss();*/
   }
 
   static urlValidator: ValidatorFn = (control: AbstractControl) => {

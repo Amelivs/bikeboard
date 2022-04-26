@@ -6,7 +6,7 @@
             "layers": [
                 {
                     "type": "raster",
-                    "url": "https://{a-c}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png?_tcache_"
+                    "url": "https://{a-c}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png"
                 }
             ]
         },
@@ -16,7 +16,7 @@
             "layers": [
                 {
                     "type": "raster",
-                    "url": "https://{a-c}.tile-cyclosm.openstreetmap.fr/cyclosm/{z}/{x}/{y}.png?_tcache_"
+                    "url": "https://{a-c}.tile-cyclosm.openstreetmap.fr/cyclosm/{z}/{x}/{y}.png"
                 }
             ]
         },
@@ -26,7 +26,7 @@
             "layers": [
                 {
                     "type": "raster",
-                    "url": "https://wxs.ign.fr/decouverte/geoportail/wmts?layer=GEOGRAPHICALGRIDSYSTEMS.PLANIGNV2&style=normal&tilematrixset=PM&Service=WMTS&Request=GetTile&Version=1.0.0&Format=image/png&TileMatrix={z}&TileCol={x}&TileRow={y}&_tcache_"
+                    "url": "https://wxs.ign.fr/decouverte/geoportail/wmts?layer=GEOGRAPHICALGRIDSYSTEMS.PLANIGNV2&style=normal&tilematrixset=PM&Service=WMTS&Request=GetTile&Version=1.0.0&Format=image/png&TileMatrix={z}&TileCol={x}&TileRow={y}"
                 }
             ]
         },
@@ -46,7 +46,7 @@
             "layers": [
                 {
                     "type": "raster",
-                    "url": "https://wxs.ign.fr/90a8uu8uohh2q9ormp4ryxni/geoportail/wmts?layer=GEOGRAPHICALGRIDSYSTEMS.MAPS.SCAN25TOUR&style=normal&tilematrixset=PM&Service=WMTS&Request=GetTile&Version=1.0.0&Format=image%2Fjpeg&TileMatrix={z}&TileCol={x}&TileRow={y}&_tcache_"
+                    "url": "https://wxs.ign.fr/90a8uu8uohh2q9ormp4ryxni/geoportail/wmts?layer=GEOGRAPHICALGRIDSYSTEMS.MAPS.SCAN25TOUR&style=normal&tilematrixset=PM&Service=WMTS&Request=GetTile&Version=1.0.0&Format=image%2Fjpeg&TileMatrix={z}&TileCol={x}&TileRow={y}"
                 }
             ]
         },
@@ -56,7 +56,7 @@
             "layers": [
                 {
                     "type": "raster",
-                    "url": "https://wxs.ign.fr/decouverte/geoportail/wmts?gp-ol-ext=3.1.0&layer=ORTHOIMAGERY.ORTHOPHOTOS&style=normal&tilematrixset=PM&Service=WMTS&Request=GetTile&Version=1.0.0&Format=image%2Fjpeg&TileMatrix={z}&TileCol={x}&TileRow={y}&_tcache_"
+                    "url": "https://wxs.ign.fr/decouverte/geoportail/wmts?gp-ol-ext=3.1.0&layer=ORTHOIMAGERY.ORTHOPHOTOS&style=normal&tilematrixset=PM&Service=WMTS&Request=GetTile&Version=1.0.0&Format=image%2Fjpeg&TileMatrix={z}&TileCol={x}&TileRow={y}"
                 }
             ]
         },
@@ -66,25 +66,25 @@
             "layers": [
                 {
                     "type": "raster",
-                    "url": "https://{a-c}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png?_cache=1"
+                    "url": "https://{a-c}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png"
                 },
                 {
                     "type": "raster",
-                    "url": "https://wxs.ign.fr/parcellaire/geoportail/wmts?layer=CADASTRALPARCELS.PARCELLAIRE_EXPRESS&style=PCI%20vecteur&tilematrixset=PM&Service=WMTS&Request=GetTile&Version=1.0.0&Format=image%2Fpng&TileMatrix={z}&TileCol={x}&TileRow={y}&_tcache_"
+                    "url": "https://wxs.ign.fr/parcellaire/geoportail/wmts?layer=CADASTRALPARCELS.PARCELLAIRE_EXPRESS&style=PCI%20vecteur&tilematrixset=PM&Service=WMTS&Request=GetTile&Version=1.0.0&Format=image%2Fpng&TileMatrix={z}&TileCol={x}&TileRow={y}"
                 }
             ]
         },
         {
             "name": "Zones de restrictions drones",
-            "maxZoom": null,
+            "maxZoom": 15,
             "layers": [
                 {
-                    "type": "raster",
-                    "url": "https://{a-c}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png?_cache=1"
+                    "type": "vector",
+                    "url": "https://wxs.ign.fr/static/vectorTiles/styles/PLAN.IGN/essentiels/standard.json"
                 },
                 {
                     "type": "raster",
-                    "url": "https://wxs.ign.fr/transports/geoportail/wmts?layer=TRANSPORTS.DRONES.RESTRICTIONS&style=normal&tilematrixset=PM&Service=WMTS&Request=GetTile&Version=1.0.0&Format=image%2Fpng&TileMatrix={z}&TileCol={x}&TileRow={y}&_tcache_"
+                    "url": "https://wxs.ign.fr/transports/geoportail/wmts?layer=TRANSPORTS.DRONES.RESTRICTIONS&style=normal&tilematrixset=PM&Service=WMTS&Request=GetTile&Version=1.0.0&Format=image%2Fpng&TileMatrix={z}&TileCol={x}&TileRow={y}"
                 }
             ]
         }
