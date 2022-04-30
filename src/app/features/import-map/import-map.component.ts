@@ -31,13 +31,15 @@ export class ImportMapComponent implements OnInit {
   }
 
   async importClick() {
-    /*  this.addCacheFlag(this.form.value.url);
-      let map = EntityFactory.createMap({
-        name: this.form.value.name,
-        wmtsUrls: [this.addCacheFlag(this.form.value.url)]
-      });
-      await this.dataCache.saveMap(map);
-      this.modalCtrl.dismiss();*/
+    let map = EntityFactory.createMap({
+      name: this.form.value.name,
+      layers: [{
+        type: 'raster',
+        url: this.form.value.url
+      }]
+    });
+    await this.dataCache.saveMap(map);
+    this.modalCtrl.dismiss();
   }
 
   static urlValidator: ValidatorFn = (control: AbstractControl) => {

@@ -9,7 +9,7 @@ import { SettingsComponent } from '../settings/settings.component';
 import { NavigationService } from '../../core/services/navigation.service';
 import { LastPositionService } from '../../core/services/last-position.service';
 import { BellService } from '../../core/services/bell.service';
-import { ScreenService } from '../../core/services/pause.service';
+import { ApplicationService } from '../../core/services/application.service';
 import { MapViewerComponent } from './map-viewer/map-viewer.component';
 
 type TrackingMode = 'Free' | 'Centered' | 'Navigation';
@@ -47,23 +47,14 @@ export class MapPage implements AfterViewInit {
     private menu: MenuController,
     private navService: NavigationService,
     private bellService: BellService,
-    private screenService: ScreenService,
-    public actionSheetController: ActionSheetController,
-    public dataCache: DataCacheService,
+    private app: ApplicationService,
+    private actionSheetController: ActionSheetController,
+    private dataCache: DataCacheService,
     private lastPositionSrv: LastPositionService) {
     this.navService.position.subscribe(position => this.onPositionChange(position), err => { this.onError(err); });
     this.navService.heading.subscribe(rotation => this.onHeadingChange(rotation), err => { this.onError(err); });
     this.navService.speed.subscribe(speed => { this.currentSpeed = speed?.toFixed(1) || '-'; }, err => { this.onError(err); });
     this.navService.altitude.subscribe(alt => { this.currentAltitude = alt?.toFixed(0) || '-'; }, err => { this.onError(err); });
-    this.screenService.off.subscribe(() => { this.onScreenOff(); });
-  }
-
-  private onScreenOff() {
-    console.debug('Handling screen off event');
-    if (this.trackingMode !== 'Free') {
-      this.navService.stopTracking();
-      this.trackingMode = 'Free';
-    }
   }
 
   private onMapChange(map: MapEntity) {
