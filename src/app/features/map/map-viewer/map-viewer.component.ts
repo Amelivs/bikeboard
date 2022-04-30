@@ -40,7 +40,6 @@ export class MapViewerComponent implements OnInit, AfterViewInit {
   });
 
   private readonly view = new View({
-    constrainResolution: true,
     constrainRotation: false,
     zoom: 14,
     minZoom: 4,
@@ -135,15 +134,21 @@ export class MapViewerComponent implements OnInit, AfterViewInit {
   public setXyzSources(map: MapEntity) {
     let layers = map.layers.map(layer => {
       if (layer.type === 'raster') {
+        this.view.setConstrainResolution(true);
+        let tilePixelRatio = this.getDevicePixelRatio();
+        let tileSize = Math.round(256 / tilePixelRatio);
         return new TileLayer({
           source: new XYZ({
             crossOrigin: 'anonymous',
             url: layer.url,
-            opaque: false
+            opaque: false,
+            tilePixelRatio,
+            tileSize
           })
         });
       }
       else if (layer.type === 'vector') {
+        this.view.setConstrainResolution(false);
         return new MapboxVector({
           styleUrl: layer.url
         });
@@ -203,7 +208,7 @@ export class MapViewerComponent implements OnInit, AfterViewInit {
     let urlFunc = source.getTileUrlFunction();
     let tileURLs = [];
     let extent = this.view.calculateExtent(this.map.getSize());
-    tileGrid.forEachTileCoord(extent, zoom, function(tileCoord) {
+    tileGrid.forEachTileCoord(extent, zoom, function (tileCoord) {
       let url = urlFunc(tileCoord, 1, source.getProjection());
       tileURLs.push(url);
     });
@@ -221,5 +226,16 @@ export class MapViewerComponent implements OnInit, AfterViewInit {
     let coordinates = this.map.getCoordinateFromPixel(pixelCoords);
     let geoCoords = toLonLat(coordinates, this.view.getProjection());
     this.context.emit(geoCoords);
+  }
+
+  private getDevicePixelRatio() {
+    let mediaQuery = '(-webkit-min-device-pixel-ratio: 1.5),(min-resolution: 1.5dppx)';
+    if (window.devicePixelRatio > 1) {
+      return 2;
+    }
+    if (window.matchMedia && window.matchMedia(mediaQuery).matches) {
+      return 2;
+    }
+    return 1;
   }
 }
