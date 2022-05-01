@@ -208,7 +208,7 @@ export class MapViewerComponent implements OnInit, AfterViewInit {
     let urlFunc = source.getTileUrlFunction();
     let tileURLs = [];
     let extent = this.view.calculateExtent(this.map.getSize());
-    tileGrid.forEachTileCoord(extent, zoom, function (tileCoord) {
+    tileGrid.forEachTileCoord(extent, zoom, function(tileCoord) {
       let url = urlFunc(tileCoord, 1, source.getProjection());
       tileURLs.push(url);
     });

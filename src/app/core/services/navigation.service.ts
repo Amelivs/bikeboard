@@ -33,65 +33,77 @@ export class NavigationService {
     public startTracking() {
         this.stopTracking();
 
-        let location = this.locationSrv.location.pipe(takeUntil(this.unsubscribeLocation));
-        let speed = this.locationSrv.speed.pipe(takeUntil(this.unsubscribeLocation));
-        let altitude = this.locationSrv.altitude.pipe(takeUntil(this.unsubscribeLocation));
+        let position = this.locationSrv.watchPosition.pipe(takeUntil(this.unsubscribeLocation));
 
-        speed
-            .pipe(filter(value => typeof (value) === 'number' && !isNaN(value)))
+        position
+            .pipe(map(position => position.coords.speed))
+            .pipe(filter(speed => typeof (speed) === 'number' && !isNaN(speed)))
             .pipe(bufferTime(6000, null, 1))
-            .pipe(map(values => {
-                if (values.length === 0) {
+            .pipe(map(speeds => {
+                if (speeds.length === 0) {
                     return 0;
                 }
-                return 3.6 * values[0];
+                return 3.6 * speeds[0];
             }))
-            .subscribe(speed => {
-                this.$speed.next(speed);
-            }, err => {
-                this.$speed.error(err);
-                console.error(err);
-            }, () => {
-                this.$speed.next(null);
+            .subscribe({
+                next: speed => {
+                    this.$speed.next(speed);
+                },
+                error: err => {
+                    this.$speed.error(err);
+                    console.error(err);
+                },
+                complete: () => {
+                    this.$speed.next(null);
+                }
             });
 
-        let alt = altitude
-            .pipe(filter(value => typeof (value) === 'number' && !isNaN(value)));
+        let alt = position
+            .pipe(map(position => position.coords.altitude))
+            .pipe(filter(altitude => typeof (altitude) === 'number' && !isNaN(altitude)));
 
         alt.pipe(defaultIfEmpty(null), first()).subscribe(first => {
             this.$altitude.next(first);
         });
 
         alt.pipe(bufferTime(6000, null, 6))
-            .pipe(map(values => {
-                if (values.length === 0) {
+            .pipe(map(altitudes => {
+                if (altitudes.length === 0) {
                     return 0;
                 }
-                return values.reduce((prev, curr) => prev + curr, 0) / values.length;
+                return altitudes.reduce((prev, curr) => prev + curr, 0) / altitudes.length;
             }))
-            .subscribe(altitude => {
-                this.$altitude.next(altitude);
-            }, err => {
-                this.$altitude.error(err);
-                console.error(err);
-            }, () => {
-                this.$altitude.next(null);
+            .subscribe({
+                next: altitude => {
+                    this.$altitude.next(altitude);
+                },
+                error: err => {
+                    this.$altitude.error(err);
+                    console.error(err);
+                },
+                complete: () => {
+                    this.$altitude.next(null);
+                }
             });
 
         // Track first and last position
-        merge(location.pipe(first()), location.pipe(last()))
+        merge(position.pipe(first()), position.pipe(last()))
             .subscribe(position => {
-                this.lastPositionSrv.setLastPosition(position);
+                this.lastPositionSrv.setLastPosition([position.coords.longitude, position.coords.latitude]);
             });
 
         this.isTracking = true;
-        location.subscribe(pos => {
-            this.$position.next(pos);
-        }, err => {
-            this.$position.error(err);
-            console.error(err);
-        }, () => {
-            this.isTracking = false;
+        position.subscribe({
+            next: position => {
+                this.$position.next([position.coords.longitude, position.coords.latitude]);
+            },
+            error: err => {
+                this.$position.error(err);
+                console.error(err);
+            },
+            complete: () => {
+                this.isTracking = false;
+            }
         });
     }
 
@@ -116,15 +128,16 @@ export class NavigationService {
 
         let previousSpeed: number = null;
 
-        this.locationSrv.speed
+        this.locationSrv.watchPosition
+            .pipe(map(position => position.coords.speed))
             .pipe(map(speed => isNaN(speed) || speed == null ? 0 : speed))
             .pipe(bufferCount(3))
             .pipe(startWith<number[]>([]))
-            .pipe(map(values => {
-                if (values.length === 0) {
+            .pipe(map(speeds => {
+                if (speeds.length === 0) {
                     return 0;
                 }
-                return values.reduce((prev, curr) => prev + curr, 0) / values.length;
+                return speeds.reduce((prev, curr) => prev + curr, 0) / speeds.length;
             }))
             .pipe(filter(speed => {
                 if (speed < this.speedThreshold && previousSpeed != null && previousSpeed < this.speedThreshold) {
@@ -145,14 +158,17 @@ export class NavigationService {
                 }
                 else {
                     console.debug('Switching to GPS heading');
-                    return this.locationSrv.heading;
+                    return this.locationSrv.watchPosition.pipe(map(position => position.coords.heading));
                 }
             }))
             .pipe(takeUntil(this.unsubscribeHeading))
-            .subscribe(heading => {
-                this.$heading.next(heading);
-            }, err => {
-                console.error(err);
+            .subscribe({
+                next: heading => {
+                    this.$heading.next(heading);
+                },
+                error: err => {
+                    console.error(err);
+                }
             });
 
         return true;
