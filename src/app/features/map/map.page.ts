@@ -1,9 +1,11 @@
-import { AfterViewInit, Component, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, NgZone, ViewChild } from '@angular/core';
 import { ActionSheetController, MenuController, ModalController } from '@ionic/angular';
 import { toRadians } from 'ol/math';
 import { MapEntity } from 'src/app/core/data/entities/map';
 import { PathEntity } from 'src/app/core/data/entities/path';
 import { DataCacheService } from 'src/app/core/services/data-cache.service';
+import { TrackingService } from 'src/app/core/services/tracking.service';
+import { DownloadUtils } from 'src/app/core/utils/download';
 
 import { SettingsComponent } from '../settings/settings.component';
 import { NavigationService } from '../../core/services/navigation.service';
@@ -24,6 +26,7 @@ export class MapPage implements AfterViewInit {
 
   public currentSpeed = '-';
   public currentAltitude = '-';
+  public currentDistance = 0;
 
   public trackingMode: TrackingMode = 'Free';
 
@@ -47,14 +50,21 @@ export class MapPage implements AfterViewInit {
     private menu: MenuController,
     private navService: NavigationService,
     private bellService: BellService,
+    private zone: NgZone,
     private app: ApplicationService,
     private actionSheetController: ActionSheetController,
     private dataCache: DataCacheService,
+    private trackingService: TrackingService,
     private lastPositionSrv: LastPositionService) {
     this.navService.position.subscribe(position => this.onPositionChange(position), err => { this.onError(err); });
     this.navService.heading.subscribe(rotation => this.onHeadingChange(rotation), err => { this.onError(err); });
     this.navService.speed.subscribe(speed => { this.currentSpeed = speed?.toFixed(1) || '-'; }, err => { this.onError(err); });
     this.navService.altitude.subscribe(alt => { this.currentAltitude = alt?.toFixed(0) || '-'; }, err => { this.onError(err); });
+    this.trackingService.distance$.subscribe(distance => {
+      this.zone.run(() => {
+        this.currentDistance = distance;
+      });
+    });
   }
 
   private onMapChange(map: MapEntity) {
@@ -75,6 +85,33 @@ export class MapPage implements AfterViewInit {
 
   public menuClick() {
     this.menu.open();
+  }
+
+  public async mileagePress() {
+
+    const actionSheet = await this.actionSheetController.create({
+      header: 'Mileage',
+      buttons: [
+        {
+          text: 'Clear mileage',
+          icon: 'trash-outline',
+          handler: async () => {
+            await actionSheet.dismiss();
+            await this.trackingService.clearMileage();
+          }
+        },
+        {
+          text: 'Export',
+          icon: 'share-outline',
+          handler: async () => {
+            actionSheet.dismiss();
+            let data = await this.trackingService.export();
+            let now = new Date();
+            await DownloadUtils.download(data, `trace-${now.toISOString()}.gpx`);
+          }
+        }]
+    });
+    await actionSheet.present();
   }
 
   public async navigateClick() {

@@ -20,6 +20,7 @@ import { HomeComponent } from './features/home/home.component';
 import { ImportMapComponent } from './features/import-map/import-map.component';
 import { AttributionsComponent } from './features/settings/attributions/attributions.component';
 import { HomeSettingsComponent } from './features/settings/home-settings/home-settings.component';
+import { KilometerPipe } from './core/pipes/kilometer';
 
 
 @NgModule({
@@ -34,7 +35,8 @@ import { HomeSettingsComponent } from './features/settings/home-settings/home-se
     ImportMapComponent,
     HomeComponent,
     HomeSettingsComponent,
-    AttributionsComponent
+    AttributionsComponent,
+    KilometerPipe
   ],
   entryComponents: [
     SettingsComponent

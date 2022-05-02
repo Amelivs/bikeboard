@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
-import { merge, Subject } from 'rxjs';
-import { bufferCount, bufferTime, defaultIfEmpty, filter, first, last, map, startWith, switchMap, takeUntil } from 'rxjs/operators';
+import { from, merge, Observable, Subject } from 'rxjs';
+import { bufferCount, bufferTime, defaultIfEmpty, filter, finalize, first, last, map, mergeMap, startWith, switchMap, takeUntil, tap } from 'rxjs/operators';
 
 import { CompassService } from './compass.service';
 import { LocationService } from './location.service';
 import { LastPositionService } from './last-position.service';
+import { TrackingService } from './tracking.service';
 
 @Injectable({
     providedIn: 'root'
@@ -23,7 +24,7 @@ export class NavigationService {
 
     private isTracking = false;
 
-    public constructor(private locationSrv: LocationService, private compassSrv: CompassService, private lastPositionSrv: LastPositionService) { }
+    public constructor(private locationSrv: LocationService, private compassSrv: CompassService, private lastPositionSrv: LastPositionService, private trackingService: TrackingService) { }
 
     public readonly position = this.$position.asObservable();
     public readonly heading = this.$heading.asObservable();
@@ -93,18 +94,21 @@ export class NavigationService {
             });
 
         this.isTracking = true;
-        position.subscribe({
-            next: position => {
-                this.$position.next([position.coords.longitude, position.coords.latitude]);
-            },
-            error: err => {
-                this.$position.error(err);
-                console.error(err);
-            },
-            complete: () => {
-                this.isTracking = false;
-            }
-        });
+        from(this.trackingService.beginTrack()).pipe(switchMap(() => position))
+            .subscribe({
+                next: position => {
+                    this.$position.next([position.coords.longitude, position.coords.latitude]);
+                    this.trackingService.addTrackPoint(position);
+                },
+                error: err => {
+                    this.$position.error(err);
+                    console.error(err);
+                },
+                complete: async () => {
+                    this.isTracking = false;
+                    await this.trackingService.endTrack();
+                }
+            });
     }
 
     public stopTracking() {

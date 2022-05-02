@@ -1,5 +1,5 @@
 <ion-content [scrollY]="false">
-  <ion-fab vertical="bottom" horizontal="end" slot="fixed" edge>
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
     <ion-fab-button (click)="navigateClick()" color="light" class="btn-navigate">
       <ion-icon color="primary" [name]="navIcon"></ion-icon>
     </ion-fab-button>
@@ -34,6 +34,12 @@
         <div class="btn-content">
           <div class="btn-value">{{currentAltitude}}</div>
           <div class="btn-text">Altitude</div>
+        </div>
+      </ion-button>
+      <ion-button (click)="mileagePress()">
+        <div class="btn-content">
+          <div class="btn-value">{{currentDistance | km}}</div>
+          <div class="btn-text">Distance</div>
         </div>
       </ion-button>
     </ion-buttons>

@@ -1,5 +1,6 @@
 {
   "hosting": {
+    "site": "bike-board",
     "public": "www",
     "ignore": [
       "firebase.json",

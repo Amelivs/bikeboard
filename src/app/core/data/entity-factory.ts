@@ -1,6 +1,7 @@
 import { MapEntity } from './entities/map';
 import { PathEntity } from './entities/path';
 import { PreferencesEntity } from './entities/settings';
+import { Track } from './entities/track';
 
 export class EntityFactory {
     static createMap(data: Omit<MapEntity, 'id'>): MapEntity {
