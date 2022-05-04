@@ -135,20 +135,16 @@ export class MapViewerComponent implements OnInit, AfterViewInit {
     let layers = map.layers.map(layer => {
       if (layer.type === 'raster') {
         this.view.setConstrainResolution(true);
-        let tilePixelRatio = this.getDevicePixelRatio();
-        let tileSize = Math.round(256 / tilePixelRatio);
         return new TileLayer({
           source: new XYZ({
             crossOrigin: 'anonymous',
             url: layer.url,
-            opaque: false,
-            tilePixelRatio,
-            tileSize
+            opaque: false
           })
         });
       }
       else if (layer.type === 'vector') {
-        this.view.setConstrainResolution(false);
+        this.view.setConstrainResolution(true);
         return new MapboxVector({
           styleUrl: layer.url
         });

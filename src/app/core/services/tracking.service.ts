@@ -80,6 +80,10 @@ export class TrackingService {
         this.track.points.push(point);
     }
 
+    public async saveCurrentTrack() {
+        await this.dataContext.currentTrack.save(this.track);
+    }
+
     public async endTrack() {
         await this.dataContext.currentTrack.save(this.track);
         this.track = null;

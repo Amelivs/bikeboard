@@ -6,6 +6,8 @@ import { PathEntity } from 'src/app/core/data/entities/path';
 import { DataCacheService } from 'src/app/core/services/data-cache.service';
 import { TrackingService } from 'src/app/core/services/tracking.service';
 import { DownloadUtils } from 'src/app/core/utils/download';
+import { LoadingController } from '@ionic/angular';
+import { DirectionService } from 'src/app/core/services/direction.service';
 
 import { SettingsComponent } from '../settings/settings.component';
 import { NavigationService } from '../../core/services/navigation.service';
@@ -54,6 +56,8 @@ export class MapPage implements AfterViewInit {
     private app: ApplicationService,
     private actionSheetController: ActionSheetController,
     private dataCache: DataCacheService,
+    private loadingController: LoadingController,
+    private directionService: DirectionService,
     private trackingService: TrackingService,
     private lastPositionSrv: LastPositionService) {
     this.navService.position.subscribe(position => this.onPositionChange(position), err => { this.onError(err); });
@@ -174,7 +178,7 @@ export class MapPage implements AfterViewInit {
       await this.storeClick();
     }
     if (role === 'itineraryTo') {
-      this.fetchItinerary(coords);
+      this.calculateDirection(coords);
     }
     if (role === 'clear') {
       this.map.setWkt(null);
@@ -214,12 +218,21 @@ export class MapPage implements AfterViewInit {
     return role;
   }
 
-  fetchItinerary(toCoords: number[]) {
-    let fromCoords = this.map.getGeographicPosition();
-    fetch(`https://wxs.ign.fr/essentiels/itineraire/rest/route.json?origin=${fromCoords[0]},${fromCoords[1]}&destination=${toCoords[0]},${toCoords[1]}&&method=DISTANCE&graphName=Pieton`)
-      .then(res => res.json())
-      .then(r => {
-        this.map.setWkt(r.geometryWkt);
-      });
+  async calculateDirection(toCoords: number[]) {
+    let loading = await this.loadingController.create({ message: 'Calculating directions...' });
+    loading.present();
+
+    try {
+      let fromCoords = this.map.getGeographicPosition();
+      let data = await this.directionService.getDirection(fromCoords, toCoords);
+      this.map.setWkt(data.geometryWkt);
+
+    } catch (err) {
+      alert(err.message);
+      console.error(err.message);
+    }
+    finally {
+      loading.dismiss();
+    }
   }
 }

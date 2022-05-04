@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { from, merge, Observable, Subject } from 'rxjs';
-import { bufferCount, bufferTime, defaultIfEmpty, filter, finalize, first, last, map, mergeMap, startWith, switchMap, takeUntil, tap } from 'rxjs/operators';
+import { bufferCount, bufferTime, defaultIfEmpty, filter, finalize, first, last, map, mergeMap, startWith, switchMap, takeUntil, tap, windowCount } from 'rxjs/operators';
 
 import { CompassService } from './compass.service';
 import { LocationService } from './location.service';
@@ -94,21 +94,25 @@ export class NavigationService {
             });
 
         this.isTracking = true;
-        from(this.trackingService.beginTrack()).pipe(switchMap(() => position))
-            .subscribe({
-                next: position => {
-                    this.$position.next([position.coords.longitude, position.coords.latitude]);
-                    this.trackingService.addTrackPoint(position);
-                },
-                error: err => {
-                    this.$position.error(err);
-                    console.error(err);
-                },
-                complete: async () => {
-                    this.isTracking = false;
-                    await this.trackingService.endTrack();
-                }
-            });
+        let trackedPosition$ = from(this.trackingService.beginTrack()).pipe(switchMap(() => position));
+        trackedPosition$.subscribe({
+            next: position => {
+                this.$position.next([position.coords.longitude, position.coords.latitude]);
+                this.trackingService.addTrackPoint(position);
+            },
+            error: err => {
+                this.$position.error(err);
+                console.error(err);
+            },
+            complete: async () => {
+                this.isTracking = false;
+                await this.trackingService.endTrack();
+            }
+        });
+        // save the track every 8 points.
+        trackedPosition$.pipe(bufferCount(8)).subscribe(async () => {
+            await this.trackingService.saveCurrentTrack();
+        });
     }
 
     public stopTracking() {
