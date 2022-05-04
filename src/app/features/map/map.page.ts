@@ -29,6 +29,7 @@ export class MapPage implements AfterViewInit {
   public currentSpeed = '-';
   public currentAltitude = '-';
   public currentDistance = 0;
+  public rotation = 0;
 
   public trackingMode: TrackingMode = 'Free';
 
@@ -91,6 +92,10 @@ export class MapPage implements AfterViewInit {
     this.menu.open();
   }
 
+  public compassClick() {
+    this.map.setRotation(0, true);
+  }
+
   public async mileagePress() {
 
     const actionSheet = await this.actionSheetController.create({
@@ -150,6 +155,10 @@ export class MapPage implements AfterViewInit {
   public onMapDrag() {
     this.navService.stopTracking();
     this.trackingMode = 'Free';
+  }
+
+  public onViewRotate(rotation: number) {
+    this.rotation = rotation;
   }
 
   public async onMapDblClick() {

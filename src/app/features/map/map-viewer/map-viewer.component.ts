@@ -32,6 +32,7 @@ export class MapViewerComponent implements OnInit, AfterViewInit {
   @Input() markerDisabled = true;
   @Output() mapMove = new EventEmitter<void>();
   @Output() mapDblClick = new EventEmitter<void>();
+  @Output() viewRotate = new EventEmitter<number>();
   @Output() context = new EventEmitter<number[]>();
 
   private readonly positionMarker = new Overlay({
@@ -48,7 +49,7 @@ export class MapViewerComponent implements OnInit, AfterViewInit {
   });
 
   private readonly map = new Map({
-    controls: [new ScaleLine(), new Rotate({ autoHide: false })],
+    controls: [new ScaleLine()],
     interactions: defaultInteractions({ doubleClickZoom: false })
   });
 
@@ -85,6 +86,10 @@ export class MapViewerComponent implements OnInit, AfterViewInit {
     this.map.updateSize();
   }
 
+  private onViewRotate() {
+    this.viewRotate.emit(this.view.getRotation());
+  }
+
   constructor(private zone: NgZone) { }
 
   public ngOnInit() {
@@ -95,6 +100,7 @@ export class MapViewerComponent implements OnInit, AfterViewInit {
     this.map.addOverlay(this.positionMarker);
     this.map.on('pointerdrag', () => this.zone.run(() => this.onMapDrag()));
     this.map.on('dblclick', () => this.zone.run(() => this.onMapDblClick()));
+    this.view.on('change:rotation', () => this.zone.run(() => this.onViewRotate()));
   }
 
   public ngAfterViewInit() {
@@ -127,8 +133,10 @@ export class MapViewerComponent implements OnInit, AfterViewInit {
     this.view.setZoom(zoom);
   }
 
-  public setRotation(rotation: number) {
-    this.view.setRotation(rotation);
+  public setRotation(rotation: number, animate = false) {
+    animate ?
+      this.view.animate({ rotation, duration: 300 }) :
+      this.view.setRotation(rotation);
   }
 
   public setXyzSources(map: MapEntity) {
@@ -204,7 +212,7 @@ export class MapViewerComponent implements OnInit, AfterViewInit {
     let urlFunc = source.getTileUrlFunction();
     let tileURLs = [];
     let extent = this.view.calculateExtent(this.map.getSize());
-    tileGrid.forEachTileCoord(extent, zoom, function(tileCoord) {
+    tileGrid.forEachTileCoord(extent, zoom, tileCoord => {
       let url = urlFunc(tileCoord, 1, source.getProjection());
       tileURLs.push(url);
     });

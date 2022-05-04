@@ -1,0 +1,13 @@
+<svg viewBox='0 0 29 29'
+    xmlns='http://www.w3.org/2000/svg'>
+    <style>
+    .north {
+        fill: red;
+    }
+    .south {
+        fill: rgba(var(--ion-color-dark-rgb), 0.4);
+    }
+    </style>
+    <path class="north" d='M10.5 14l4-8 4 8h-8z'/>
+    <path class="south" d='M10.5 16l4 8 4-8h-8z'/>
+</svg>

@@ -6,8 +6,14 @@
   </ion-fab>
 
   <ion-fab vertical="top" horizontal="start" slot="fixed">
-    <ion-fab-button (click)="menuClick()" color="light" class="btn-settings">
+    <ion-fab-button (click)="menuClick()" color="light" class="btn-small">
       <ion-icon color="primary" name="menu-outline"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
+  <ion-fab vertical="top" horizontal="end" slot="fixed">
+    <ion-fab-button (click)="compassClick()" color="light" class="btn-small">
+      <ion-icon [style.transform]="'rotate('+rotation+'rad) scale(1.8)'" src="assets/icons/compass.svg"></ion-icon>
     </ion-fab-button>
   </ion-fab>
 
@@ -18,7 +24,7 @@
   </ion-fab>
 
   <app-map-viewer #map [markerDisabled]="isTracking" (mapMove)="onMapDrag()" (mapDblClick)="onMapDblClick()"
-    (context)="onContext($event)"></app-map-viewer>
+    (viewRotate)="onViewRotate($event)" (context)="onContext($event)"></app-map-viewer>
 </ion-content>
 
 <ion-footer>
