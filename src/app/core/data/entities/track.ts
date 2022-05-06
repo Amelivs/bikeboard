@@ -1,4 +1,8 @@
 export interface Track {
+    segments: TrackSegment[];
+}
+
+export interface TrackSegment {
     points: TrackPoint[];
 }
 

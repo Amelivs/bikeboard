@@ -6,17 +6,19 @@ import SeedingData from '../../../seeding.json';
 import { DataContext } from '../data/data-context';
 import { MapEntity } from '../data/entities/map';
 import { PathEntity } from '../data/entities/path';
+import { TrackingService } from '../services/tracking.service';
 
 @Injectable({
     providedIn: 'root'
 })
 export class SeedingGuard implements CanActivate {
 
-    constructor(private context: DataContext) { }
+    constructor(private context: DataContext, private trackingService: TrackingService) { }
 
     async canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
         try {
             await this.context.initialize();
+            await this.trackingService.initialize();
             let maps = await this.seedMaps();
             let paths = await this.seedPaths();
             await this.seedSettings(maps, paths);

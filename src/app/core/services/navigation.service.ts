@@ -94,7 +94,7 @@ export class NavigationService {
             });
 
         this.isTracking = true;
-        let trackedPosition$ = from(this.trackingService.beginTrack()).pipe(switchMap(() => position));
+        let trackedPosition$ = from(this.trackingService.beginSegment()).pipe(switchMap(() => position));
         trackedPosition$.subscribe({
             next: position => {
                 this.$position.next([position.coords.longitude, position.coords.latitude]);
@@ -106,12 +106,12 @@ export class NavigationService {
             },
             complete: async () => {
                 this.isTracking = false;
-                await this.trackingService.endTrack();
+                await this.trackingService.saveTrack();
             }
         });
         // save the track every 8 points.
         trackedPosition$.pipe(bufferCount(8)).subscribe(async () => {
-            await this.trackingService.saveCurrentTrack();
+            await this.trackingService.saveTrack();
         });
     }
 

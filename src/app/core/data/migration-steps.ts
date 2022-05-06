@@ -2,6 +2,7 @@ import { Storage } from '@ionic/storage-angular';
 
 import SeedingData from '../../../seeding.json';
 import { UUID } from '../utils/uuid';
+import { Track } from './entities/track';
 import { EntityFactory } from './entity-factory';
 
 export const MigrationSteps: ReadonlyArray<(storage: Storage) => Promise<void>> = [
@@ -27,5 +28,12 @@ export const MigrationSteps: ReadonlyArray<(storage: Storage) => Promise<void>> 
     async storage => {
         await storage.remove('maps');
         await storage.remove('preferences');
-    }
+    },
+    async storage => {
+        let currentTrack = await storage.get('currentTrack');
+        let track: Track = {
+            segments: [{ points: currentTrack.points }]
+        };
+        await storage.set('currentTrack', track);
+    },
 ];

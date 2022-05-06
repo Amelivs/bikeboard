@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { all } from 'ol/events/condition';
-import { Subject } from 'rxjs';
+import { ReplaySubject, Subject } from 'rxjs';
 
 import { DataContext } from '../data/data-context';
-import { Track, TrackPoint } from '../data/entities/track';
+import { Track, TrackPoint, TrackSegment } from '../data/entities/track';
 
 @Injectable({
     providedIn: 'root'
@@ -13,26 +13,24 @@ export class TrackingService {
     private track: Track;
     private distance = 0;
 
-    public readonly distance$ = new Subject<number>();
+    public readonly distance$ = new ReplaySubject<number>(1);
 
     private getDistance() {
-        if (this.track == null || this.track.points == null) {
-            return 0;
-        }
-
         let dist = 0;
-
-        for (let i = 0; i < this.track.points.length; i++) {
-            let p1 = this.track.points[i];
-            let p2 = this.track.points[i + 1];
-
-            if (p2 == null) {
-                return dist;
+        for (let segment of this.track.segments) {
+            if (segment.points == null) {
+                continue;
             }
+            for (let i = 0; i < segment.points.length; i++) {
+                let p1 = segment.points[i];
+                let p2 = segment.points[i + 1];
 
-            dist += this.getDistanceBetween(p1, p2);
+                if (p2 == null) {
+                    break;
+                }
+                dist += this.getDistanceBetween(p1, p2);
+            }
         }
-        console.log(dist);
         return dist;
     }
 
@@ -53,10 +51,14 @@ export class TrackingService {
 
     public constructor(public dataContext: DataContext) { }
 
-    public async beginTrack() {
-        this.track = await this.dataContext.currentTrack.get() ?? { points: [] };
+    public async initialize() {
+        this.track = await this.dataContext.currentTrack.get() ?? { segments: [] };
         this.distance = this.getDistance();
         this.distance$.next(this.distance);
+    }
+
+    public async beginSegment() {
+        this.track.segments.push({ points: [] });
     }
 
     public addTrackPoint(position: GeolocationPosition) {
@@ -70,44 +72,43 @@ export class TrackingService {
             timestamp: position.timestamp
         };
 
-        let lastPoint = this.track.points[this.track.points.length - 1];
+        let segment = this.track.segments[this.track.segments.length - 1];
+        let lastPoint = segment.points[segment.points.length - 1];
 
         if (lastPoint != null) {
             this.distance += this.getDistanceBetween(lastPoint, point);
             this.distance$.next(this.distance);
         }
 
-        this.track.points.push(point);
+        segment.points.push(point);
     }
 
-    public async saveCurrentTrack() {
+    public async saveTrack() {
         await this.dataContext.currentTrack.save(this.track);
-    }
-
-    public async endTrack() {
-        await this.dataContext.currentTrack.save(this.track);
-        this.track = null;
     }
 
     public async clearMileage() {
         if (!confirm('The current mileage will be lost. Are you sure?')) {
             return;
         }
-        this.track = { points: [] };
+        this.track = { segments: [] };
         await this.dataContext.currentTrack.save(null);
         this.distance = 0;
         this.distance$.next(this.distance);
     }
 
     public async export() {
-        let track = await this.dataContext.currentTrack.get() ?? { points: [] };
-        let file = '<gpx><trk><trkseg>';
-        for (let point of track.points) {
-            let timestamp = new Date(point.timestamp);
-            file += `<trkpt lat="${point.latitude}" lon="${point.longitude}"><ele>${point.altitude}</ele><time>${timestamp.toISOString()}</time></trkpt>`;
+        let track = await this.dataContext.currentTrack.get() ?? { segments: [] };
+        let file = '<gpx><trk>';
+        for (let segment of track.segments) {
+            file += '<trkseg>';
+            for (let point of segment.points) {
+                let timestamp = new Date(point.timestamp);
+                file += `<trkpt lat="${point.latitude}" lon="${point.longitude}"><ele>${point.altitude}</ele><time>${timestamp.toISOString()}</time></trkpt>`;
+            }
+            file += '</trkseg>';
         }
-        file += '</trkseg></trk></gpx>';
-
+        file += '</trk></gpx>';
         return new Blob([file], { type: 'application/gpx+xml' });
     }
 }
