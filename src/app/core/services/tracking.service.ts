@@ -1,9 +1,11 @@
 import { Injectable } from '@angular/core';
-import { all } from 'ol/events/condition';
-import { ReplaySubject, Subject } from 'rxjs';
+import { ReplaySubject } from 'rxjs';
 
 import { DataContext } from '../data/data-context';
-import { Track, TrackPoint, TrackSegment } from '../data/entities/track';
+import { Track, TrackPoint } from '../data/entities/track';
+
+const MAX_COORDS_ACCURACY = 20;
+
 
 @Injectable({
     providedIn: 'root'
@@ -62,6 +64,9 @@ export class TrackingService {
     }
 
     public addTrackPoint(position: GeolocationPosition) {
+        if (position.coords.accuracy > MAX_COORDS_ACCURACY) {
+            return;
+        }
         let point: TrackPoint =
         {
             latitude: position.coords.latitude,

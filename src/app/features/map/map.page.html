@@ -17,12 +17,6 @@
     </ion-fab-button>
   </ion-fab>
 
-  <ion-fab vertical="center" horizontal="end" slot="fixed">
-    <ion-fab-button (touchstart)="bellClick($event)" (click)="bellClick()" color="danger">
-      <ion-icon name="notifications"></ion-icon>
-    </ion-fab-button>
-  </ion-fab>
-
   <app-map-viewer #map [markerDisabled]="isTracking" (mapMove)="onMapDrag()" (mapDblClick)="onMapDblClick()"
     (viewRotate)="onViewRotate($event)" (context)="onContext($event)"></app-map-viewer>
 </ion-content>

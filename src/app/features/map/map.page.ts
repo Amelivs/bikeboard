@@ -9,10 +9,8 @@ import { DownloadUtils } from 'src/app/core/utils/download';
 import { LoadingController } from '@ionic/angular';
 import { DirectionService } from 'src/app/core/services/direction.service';
 
-import { SettingsComponent } from '../settings/settings.component';
 import { NavigationService } from '../../core/services/navigation.service';
 import { LastPositionService } from '../../core/services/last-position.service';
-import { BellService } from '../../core/services/bell.service';
 import { ApplicationService } from '../../core/services/application.service';
 import { MapViewerComponent } from './map-viewer/map-viewer.component';
 
@@ -52,7 +50,6 @@ export class MapPage implements AfterViewInit {
   constructor(
     private menu: MenuController,
     private navService: NavigationService,
-    private bellService: BellService,
     private zone: NgZone,
     private app: ApplicationService,
     private actionSheetController: ActionSheetController,
@@ -145,11 +142,6 @@ export class MapPage implements AfterViewInit {
       this.trackingMode = 'Centered';
       return;
     }
-  }
-
-  public bellClick(event?: Event) {
-    this.bellService.honk();
-    event?.preventDefault();
   }
 
   public onMapDrag() {

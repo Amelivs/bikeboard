@@ -39,12 +39,12 @@ export class NavigationService {
         position
             .pipe(map(position => position.coords.speed))
             .pipe(filter(speed => typeof (speed) === 'number' && !isNaN(speed)))
-            .pipe(bufferTime(6000, null, 1))
+            .pipe(bufferTime(3000, null, 3))
             .pipe(map(speeds => {
                 if (speeds.length === 0) {
                     return 0;
                 }
-                return 3.6 * speeds[0];
+                return 3.6 * speeds.reduce((prev, curr) => prev + curr, 0) / speeds.length;
             }))
             .subscribe({
                 next: speed => {
