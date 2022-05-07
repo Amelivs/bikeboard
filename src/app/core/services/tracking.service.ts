@@ -99,16 +99,20 @@ export class TrackingService {
 
     public async export() {
         let track = await this.dataContext.currentTrack.get() ?? { segments: [] };
-        let file = '<gpx><trk>';
+        let lines = [];
+        lines.push('<?xml version="1.0" encoding="UTF-8"?>');
+        lines.push('<gpx xmlns="http://www.topografix.com/GPX/1/1" creator="MapTracker" version="1.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd">');
+        lines.push('<trk>');
         for (let segment of track.segments) {
-            file += '<trkseg>';
+            lines.push('<trkseg>');
             for (let point of segment.points) {
                 let timestamp = new Date(point.timestamp);
-                file += `<trkpt lat="${point.latitude}" lon="${point.longitude}"><ele>${point.altitude}</ele><time>${timestamp.toISOString()}</time></trkpt>`;
+                lines.push(`<trkpt lat="${point.latitude.toFixed(7)}" lon="${point.longitude.toFixed(7)}"><ele>${point.altitude.toFixed(1)}</ele><time>${timestamp.toISOString()}</time></trkpt>`);
             }
-            file += '</trkseg>';
+            lines.push('</trkseg>');
         }
-        file += '</trk></gpx>';
-        return new Blob([file], { type: 'application/gpx+xml' });
+        lines.push('</trk>');
+        lines.push('</gpx>');
+        return new Blob([lines.join('')], { type: 'application/gpx+xml' });
     }
 }
