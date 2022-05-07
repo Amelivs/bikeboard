@@ -51,8 +51,8 @@ import { KilometerPipe } from './core/pipes/kilometer';
     ServiceWorkerModule.register('ngsw-worker.js', {
       enabled: environment.useServiceWorker,
       // Register the ServiceWorker as soon as the app is stable
-      // or after 30 seconds (whichever comes first).
-      registrationStrategy: 'registerImmediately'
+      // or after 10 seconds (whichever comes first).
+      registrationStrategy: 'registerWhenStable:10000'
     })],
   providers: [DataContext, { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
   bootstrap: [AppComponent],

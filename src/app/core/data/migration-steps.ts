@@ -31,6 +31,9 @@ export const MigrationSteps: ReadonlyArray<(storage: Storage) => Promise<void>> 
     },
     async storage => {
         let currentTrack = await storage.get('currentTrack');
+        if (currentTrack == null) {
+            return;
+        }
         let track: Track = {
             segments: [{ points: currentTrack.points }]
         };
