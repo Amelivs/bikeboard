@@ -1,6 +1,7 @@
 {
     "defaultMaps": [
         {
+            "id": "00000000-0000-0000-0000-201c214521d6",
             "name": "OpenStreetMap",
             "maxZoom": null,
             "attributions": "© Contributeurs d'OpenStreetMap",
@@ -12,6 +13,7 @@
             ]
         },
         {
+            "id": "00000000-0000-0000-0000-ee47d3d2e897",
             "name": "CyclOSM",
             "maxZoom": null,
             "attributions": "© Contributeurs d'OpenStreetMap",
@@ -23,17 +25,19 @@
             ]
         },
         {
+            "id": "00000000-0000-0000-0000-05548b4a86f9",
             "name": "IGN Plan",
             "maxZoom": 20,
             "attributions": "© IGN 2022",
             "layers": [
                 {
                     "type": "vector",
-                    "url": "https://wxs.ign.fr/static/vectorTiles/styles/PLAN.IGN/essentiels/standard.json"
+                    "url": "https://wxs.ign.fr/static/vectorTiles/styles/PLAN.IGN/essentiels/accentue.json"
                 }
             ]
         },
         {
+            "id": "00000000-0000-0000-0000-e0448f69eda9",
             "name": "IGN SCAN 25®",
             "maxZoom": 16,
             "attributions": "© IGN 2022",
@@ -45,6 +49,7 @@
             ]
         },
         {
+            "id": "00000000-0000-0000-0000-4f1e6f995312",
             "name": "IGN Photos",
             "maxZoom": null,
             "attributions": "© IGN 2022",
@@ -56,13 +61,14 @@
             ]
         },
         {
-            "name": "Cadastre",
+            "id": "00000000-0000-0000-0000-8425ff7d610e",
+            "name": "IGN Cadastre",
             "maxZoom": null,
             "attributions": "© IGN 2022",
             "layers": [
                 {
-                    "type": "raster",
-                    "url": "https://{a-c}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png"
+                    "type": "vector",
+                    "url": "https://wxs.ign.fr/static/vectorTiles/styles/PLAN.IGN/essentiels/standard.json"
                 },
                 {
                     "type": "raster",
@@ -71,7 +77,8 @@
             ]
         },
         {
-            "name": "Zones de restrictions drones",
+            "id": "00000000-0000-0000-0000-624a9606613c",
+            "name": "IGN Restrictions drones",
             "maxZoom": 15,
             "attributions": "© IGN 2022",
             "layers": [
@@ -88,22 +95,27 @@
     ],
     "defaultPaths": [
         {
+            "id": "00000000-0000-0000-0000-7618c49c3a5c",
             "name": "EuroVelo 5",
             "url": "assets/gpx/EuroVelo-5.gpx"
         },
         {
+            "id": "00000000-0000-0000-0000-7fe955f63983",
             "name": "EuroVelo 6",
             "url": "assets/gpx/EuroVelo-6.gpx"
         },
         {
+            "id": "00000000-0000-0000-0000-66e7f91c7fd3",
             "name": "EuroVelo 15",
             "url": "assets/gpx/EuroVelo-15.gpx"
         },
         {
+            "id": "00000000-0000-0000-0000-9246de9334fb",
             "name": "Val d'Argent",
             "url": "assets/gpx/valdargent.gpx"
         },
         {
+            "id": "00000000-0000-0000-0000-1a0d1de1bcff",
             "name": "Vallée de la Bruche",
             "url": "assets/gpx/bruche.gpx"
         }

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { ModalController } from '@ionic/angular';
-import { EntityFactory } from 'src/app/core/data/entity-factory';
+import { MapEntity } from 'src/app/core/data/entities/map';
 import { DataCacheService } from 'src/app/core/services/data-cache.service';
 
 
@@ -31,14 +31,15 @@ export class ImportMapComponent implements OnInit {
   }
 
   async importClick() {
-    let map = EntityFactory.createMap({
+    let map: MapEntity = {
+      id: null,
       name: this.form.value.name,
       attributions: null,
       layers: [{
         type: 'raster',
         url: this.form.value.url
       }]
-    });
+    };
     await this.dataCache.saveMap(map);
     this.modalCtrl.dismiss();
   }

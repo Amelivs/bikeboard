@@ -3,7 +3,6 @@ import { Storage } from '@ionic/storage-angular';
 import SeedingData from '../../../seeding.json';
 import { UUID } from '../utils/uuid';
 import { Track } from './entities/track';
-import { EntityFactory } from './entity-factory';
 
 export const MigrationSteps: ReadonlyArray<(storage: Storage) => Promise<void>> = [
     async storage => {
@@ -19,7 +18,7 @@ export const MigrationSteps: ReadonlyArray<(storage: Storage) => Promise<void>> 
             delete map.wmtsUrls;
         }
 
-        let newMap = EntityFactory.createMap(SeedingData.defaultMaps[3]);
+        let newMap = SeedingData.defaultMaps[3];
         newMap.id = UUID.next();
         maps.splice(3, 0, newMap);
 
@@ -41,6 +40,11 @@ export const MigrationSteps: ReadonlyArray<(storage: Storage) => Promise<void>> 
     },
     async storage => {
         await storage.remove('maps');
+        await storage.remove('preferences');
+    },
+    async storage => {
+        await storage.remove('maps');
+        await storage.remove('paths');
         await storage.remove('preferences');
     }
 ];

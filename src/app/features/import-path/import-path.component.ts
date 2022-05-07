@@ -1,7 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { IonInput, ModalController } from '@ionic/angular';
-import { EntityFactory } from 'src/app/core/data/entity-factory';
+import { MapEntity } from 'src/app/core/data/entities/map';
+import { PathEntity } from 'src/app/core/data/entities/path';
 import { DataCacheService } from 'src/app/core/services/data-cache.service';
 
 
@@ -53,10 +54,11 @@ export class ImportPathComponent implements OnInit {
     let data = await this.toDataUrl(this.form.controls['file'].value);
     let name = this.form.controls['name'].value;
 
-    let path = EntityFactory.createPath({
+    let path: PathEntity = {
+      id: null,
       name,
       url: data
-    });
+    };
 
     await this.dataCache.savePath(path);
     this.modalCtrl.dismiss();
