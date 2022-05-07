@@ -33,6 +33,7 @@ export class ImportMapComponent implements OnInit {
   async importClick() {
     let map = EntityFactory.createMap({
       name: this.form.value.name,
+      attributions: null,
       layers: [{
         type: 'raster',
         url: this.form.value.url

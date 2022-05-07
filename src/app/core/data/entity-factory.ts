@@ -11,6 +11,7 @@ export class EntityFactory {
         return {
             id: null,
             name: data.name,
+            attributions: data.attributions,
             maxZoom: data.maxZoom ?? null,
             layers: data.layers.slice()
         };

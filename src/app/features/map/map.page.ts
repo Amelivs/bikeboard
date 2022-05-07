@@ -28,6 +28,7 @@ export class MapPage implements AfterViewInit {
   public currentAltitude = '-';
   public currentDistance = 0;
   public rotation = 0;
+  public attributions: string;
 
   public trackingMode: TrackingMode = 'Free';
 
@@ -70,6 +71,7 @@ export class MapPage implements AfterViewInit {
   }
 
   private onMapChange(map: MapEntity) {
+    this.attributions = map.attributions;
     this.map.setXyzSources(map);
   }
 

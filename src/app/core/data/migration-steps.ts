@@ -39,4 +39,8 @@ export const MigrationSteps: ReadonlyArray<(storage: Storage) => Promise<void>> 
         };
         await storage.set('currentTrack', track);
     },
+    async storage => {
+        await storage.remove('maps');
+        await storage.remove('preferences');
+    }
 ];

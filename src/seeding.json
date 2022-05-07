@@ -3,6 +3,7 @@
         {
             "name": "OpenStreetMap",
             "maxZoom": null,
+            "attributions": "© Contributeurs d'OpenStreetMap",
             "layers": [
                 {
                     "type": "raster",
@@ -13,6 +14,7 @@
         {
             "name": "CyclOSM",
             "maxZoom": null,
+            "attributions": "© Contributeurs d'OpenStreetMap",
             "layers": [
                 {
                     "type": "raster",
@@ -21,18 +23,9 @@
             ]
         },
         {
-            "name": "Plan IGN",
+            "name": "IGN Plan",
             "maxZoom": 20,
-            "layers": [
-                {
-                    "type": "raster",
-                    "url": "https://wxs.ign.fr/decouverte/geoportail/wmts?layer=GEOGRAPHICALGRIDSYSTEMS.PLANIGNV2&style=normal&tilematrixset=PM&Service=WMTS&Request=GetTile&Version=1.0.0&Format=image/png&TileMatrix={z}&TileCol={x}&TileRow={y}"
-                }
-            ]
-        },
-        {
-            "name": "Plan IGN (Vector)",
-            "maxZoom": 20,
+            "attributions": "© IGN 2022",
             "layers": [
                 {
                     "type": "vector",
@@ -41,8 +34,9 @@
             ]
         },
         {
-            "name": "Plan IGN Rando",
+            "name": "IGN SCAN 25®",
             "maxZoom": 16,
+            "attributions": "© IGN 2022",
             "layers": [
                 {
                     "type": "raster",
@@ -51,8 +45,9 @@
             ]
         },
         {
-            "name": "Plan IGN aérien",
+            "name": "IGN Photos",
             "maxZoom": null,
+            "attributions": "© IGN 2022",
             "layers": [
                 {
                     "type": "raster",
@@ -63,6 +58,7 @@
         {
             "name": "Cadastre",
             "maxZoom": null,
+            "attributions": "© IGN 2022",
             "layers": [
                 {
                     "type": "raster",
@@ -77,6 +73,7 @@
         {
             "name": "Zones de restrictions drones",
             "maxZoom": 15,
+            "attributions": "© IGN 2022",
             "layers": [
                 {
                     "type": "vector",

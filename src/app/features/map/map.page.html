@@ -1,4 +1,7 @@
 <ion-content [scrollY]="false">
+  <app-map-viewer #map [markerDisabled]="isTracking" (mapMove)="onMapDrag()" (mapDblClick)="onMapDblClick()"
+    (viewRotate)="onViewRotate($event)" (context)="onContext($event)"></app-map-viewer>
+
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">
     <ion-fab-button (click)="navigateClick()" color="light" class="btn-navigate">
       <ion-icon color="primary" [name]="navIcon"></ion-icon>
@@ -17,8 +20,7 @@
     </ion-fab-button>
   </ion-fab>
 
-  <app-map-viewer #map [markerDisabled]="isTracking" (mapMove)="onMapDrag()" (mapDblClick)="onMapDblClick()"
-    (viewRotate)="onViewRotate($event)" (context)="onContext($event)"></app-map-viewer>
+  <div class="attributions" *ngIf="attributions">{{attributions}}</div>
 </ion-content>
 
 <ion-footer>
