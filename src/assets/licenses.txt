@@ -1,2 +1,3 @@
-Application icon
-<a target="_blank" href="https://www.flaticon.com/free-icons/map" title="map icons">Map icons created by Freepik - Flaticon</a>
+Map icons created by <a target="_blank" href="https://www.flaticon.com/free-icons/map">Freepik - Flaticon</a>
+
+Routing service powered by <a target="_blank" href="https://www.geoapify.com/">Geoapify</a>
