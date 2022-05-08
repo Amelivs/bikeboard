@@ -10,7 +10,14 @@
 <ion-content>
   <ion-list [formGroup]="form">
     <ion-item>
-      <ion-label position="stacked">WMTS Url</ion-label>
+      <ion-label>Type</ion-label>
+      <ion-select placeholder="Select One" formControlName="type">
+        <ion-select-option value="raster">Raster</ion-select-option>
+        <ion-select-option value="vector">Vector</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <ion-item>
+      <ion-label position="stacked">Url</ion-label>
       <ion-input placeholder="https://exemple.com/{z}/{x}/{y}" type="url" formControlName="url"></ion-input>
       <ion-note slot="error">{{urlError}}</ion-note>
     </ion-item>

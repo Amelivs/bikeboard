@@ -13,9 +13,10 @@ import { DataCacheService } from 'src/app/core/services/data-cache.service';
 export class ImportMapComponent implements OnInit {
 
   readonly form = new FormGroup({
-    url: new FormControl(null, [Validators.required, ImportMapComponent.urlValidator]),
+    type: new FormControl(null, [Validators.required]),
+    url: new FormControl(null, [Validators.required,]),
     name: new FormControl(null, [Validators.required])
-  });
+  }, ImportMapComponent.urlValidator);
 
   get urlError() {
     let errors = this.form.controls['url'].errors;
@@ -36,7 +37,7 @@ export class ImportMapComponent implements OnInit {
       name: this.form.value.name,
       attributions: null,
       layers: [{
-        type: 'raster',
+        type: this.form.value.type,
         url: this.form.value.url
       }]
     };
@@ -44,19 +45,27 @@ export class ImportMapComponent implements OnInit {
     this.modalCtrl.dismiss();
   }
 
-  static urlValidator: ValidatorFn = (control: AbstractControl) => {
-    let value = control.value as string;
+  static urlValidator: ValidatorFn = (formGroup: FormGroup) => {
+    const type = formGroup.get('type');
+    const url = formGroup.get('url');
+    let value = url.value as string;
     if (!value) {
       return;
     }
     let inputControl = document.createElement('input');
     inputControl.type = 'url';
     inputControl.value = value;
+    url.setErrors(null);
     if (!inputControl.checkValidity()) {
-      return { message: inputControl.validationMessage };
+      url.setErrors({ message: inputControl.validationMessage });
+      return null;
+    }
+    if (type.value === 'vector') {
+      return null;
     }
     if (!value.includes('{x}') || !value.includes('{y}') || !value.includes('{z}')) {
-      return { message: 'URL must include {X}, {y} and {z} placeholders' };
+      url.setErrors({ message: 'URL must include {X}, {y} and {z} placeholders' });
+      return null;
     }
   };
 }
