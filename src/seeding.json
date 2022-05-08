@@ -32,7 +32,7 @@
             "layers": [
                 {
                     "type": "vector",
-                    "url": "https://wxs.ign.fr/static/vectorTiles/styles/PLAN.IGN/essentiels/accentue.json"
+                    "url": "assets/maps/plan_ign.json"
                 }
             ]
         },

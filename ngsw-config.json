@@ -40,19 +40,22 @@
           "/svg/close.svg"
         ]
       }
-    },
-    {
-      "name": "traces",
-      "installMode": "lazy",
-      "updateMode": "lazy",
-      "resources": {
-        "files": [
-          "/assets/gpx/**"
-        ]
-      }
     }
   ],
   "dataGroups": [
+    {
+      "name": "layers",
+      "version": 1,
+      "cacheConfig": {
+        "maxAge": "90d",
+        "maxSize": 40,
+        "strategy": "performance"
+      },
+      "urls": [
+        "/assets/gpx/**",
+        "/assets/maps/**"
+      ]
+    },
     {
       "name": "tiles",
       "cacheConfig": {
