@@ -10,6 +10,7 @@ import VectorLayer from 'ol/layer/Vector';
 import LayerGroup from 'ol/layer/Group';
 import VectorSource from 'ol/source/Vector';
 import WKT from 'ol/format/WKT';
+import GeoJSON from 'ol/format/GeoJSON';
 import GPX from 'ol/format/GPX';
 import XYZ from 'ol/source/XYZ';
 import BaseLayer from 'ol/layer/Base';
@@ -17,6 +18,10 @@ import TileDebug from 'ol/source/TileDebug';
 import { MapEntity } from 'src/app/core/data/entities/map';
 import { PathEntity } from 'src/app/core/data/entities/path';
 import MapboxVector from 'ol/layer/MapboxVector';
+import { DirectionResult } from 'src/app/core/services/direction.service';
+import { ReadOptions } from 'ol/format/Feature';
+import Feature from 'ol/Feature';
+import { Geometry } from 'ol/geom';
 
 
 @Component({
@@ -55,7 +60,7 @@ export class MapViewerComponent implements OnInit, AfterViewInit {
 
   private readonly layers = new LayerGroup();
   private readonly gpxLayers = new LayerGroup();
-  private readonly wktLayers = new LayerGroup();
+  private readonly directionLayers = new LayerGroup();
 
   private readonly gpxStyle = {
     MultiLineString: new Style({
@@ -96,7 +101,7 @@ export class MapViewerComponent implements OnInit, AfterViewInit {
     this.map.setView(this.view);
     this.map.addLayer(this.layers);
     this.map.addLayer(this.gpxLayers);
-    this.map.addLayer(this.wktLayers);
+    this.map.addLayer(this.directionLayers);
     this.map.addOverlay(this.positionMarker);
     this.map.on('pointerdrag', () => this.zone.run(() => this.onMapDrag()));
     this.map.on('dblclick', () => this.zone.run(() => this.onMapDblClick()));
@@ -179,30 +184,43 @@ export class MapViewerComponent implements OnInit, AfterViewInit {
     this.gpxLayers.setLayers(new Collection(layers));
   }
 
-  public setWkt(wkt: string) {
+  public setDirection(direction: DirectionResult) {
     let layers: BaseLayer[] = [];
 
-    if (wkt == null) {
-      this.wktLayers.setLayers(new Collection(layers));
+    if (direction == null) {
+      this.directionLayers.setLayers(new Collection(layers));
       return;
     }
 
-    const format = new WKT();
-
-    const feature = format.readFeature(wkt, {
+    let features: Feature<Geometry>[];
+    let options: ReadOptions = {
       dataProjection: 'EPSG:4326',
       featureProjection: 'EPSG:3857',
-    });
+    };
+
+    if (direction.format === 'WKT') {
+      let format = new WKT();
+      let source = direction.data['geometryWkt'];
+      features = format.readFeatures(source, options);
+    }
+    else if (direction.format === 'GeoJSON') {
+      let format = new GeoJSON();
+      let source = direction.data;
+      features = format.readFeatures(source, options);
+    }
+    else {
+      throw new Error(`Unsupported direction format '${direction.format}'`);
+    }
 
     const vector = new VectorLayer({
       source: new VectorSource({
-        features: [feature],
+        features,
       }),
       style: feature => this.gpxStyle[feature.getGeometry().getType()],
     });
 
     layers.push(vector);
-    this.wktLayers.setLayers(new Collection(layers));
+    this.directionLayers.setLayers(new Collection(layers));
   }
 
   public getBoundingBoxTileUrls(zoom = 15) {

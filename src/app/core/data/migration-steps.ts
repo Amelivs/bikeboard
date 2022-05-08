@@ -47,6 +47,7 @@ export const MigrationSteps: ReadonlyArray<(storage: Storage) => Promise<void>> 
         await storage.remove('paths');
         await storage.remove('preferences');
     },
+    async storage => { },
     async storage => {
         let maps = await storage.get('maps') as any[];
         let map = maps?.find(m => m.id === '00000000-0000-0000-0000-05548b4a86f9');
@@ -58,5 +59,6 @@ export const MigrationSteps: ReadonlyArray<(storage: Storage) => Promise<void>> 
             return;
         }
         layer.url = 'assets/maps/plan_ign.json';
-    }
+        await storage.set('maps', maps);
+    },
 ];

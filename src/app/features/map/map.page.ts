@@ -184,7 +184,7 @@ export class MapPage implements AfterViewInit {
       this.calculateDirection(coords);
     }
     if (role === 'clear') {
-      this.map.setWkt(null);
+      this.map.setDirection(null);
     }
   }
 
@@ -227,8 +227,8 @@ export class MapPage implements AfterViewInit {
 
     try {
       let fromCoords = this.map.getGeographicPosition();
-      let data = await this.directionService.getDirection(fromCoords, toCoords);
-      this.map.setWkt(data.geometryWkt);
+      let direction = await this.directionService.getDirection(fromCoords, toCoords, 'geoapify');
+      this.map.setDirection(direction);
 
     } catch (err) {
       alert(err.message);
