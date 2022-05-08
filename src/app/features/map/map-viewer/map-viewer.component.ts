@@ -62,6 +62,9 @@ export class MapViewerComponent implements OnInit, AfterViewInit {
   private readonly gpxLayers = new LayerGroup();
   private readonly directionLayers = new LayerGroup();
 
+  private readonly points: number[][] = [];
+  private readonly pointOverlays: Overlay[] = [];
+
   private readonly gpxStyle = {
     MultiLineString: new Style({
       stroke: new Stroke({
@@ -142,6 +145,38 @@ export class MapViewerComponent implements OnInit, AfterViewInit {
     animate ?
       this.view.animate({ rotation, duration: 300 }) :
       this.view.setRotation(rotation);
+  }
+
+  public setPoints(points: number[][]) {
+    this.pointOverlays.forEach(po => this.map.removeOverlay(po));
+    this.points.length = 0;
+    this.pointOverlays.length = 0;
+
+    if (points == null) {
+      return;
+    }
+
+    for (let point of points) {
+      this.points.push(point);
+
+      let element = document.createElement('ion-icon');
+      element.setAttribute('name', 'location');
+      element.className = 'app-overlay-waypoint';
+
+      let overlay = new Overlay({
+        positioning: OverlayPositioning.CENTER_CENTER,
+        element,
+        className: 'app-overlay-waypoint',
+        position: fromLonLat(point, this.view.getProjection()),
+        stopEvent: false,
+      });
+      this.pointOverlays.push(overlay);
+      this.map.addOverlay(overlay);
+    }
+  }
+
+  public getPoints() {
+    return this.points;
   }
 
   public setXyzSources(map: MapEntity) {

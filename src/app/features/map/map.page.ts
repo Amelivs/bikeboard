@@ -30,6 +30,10 @@ export class MapPage implements AfterViewInit {
   public rotation = 0;
   public attributions: string;
 
+  public origin: number[];
+  public waypoints: number[][] = [];
+  public destination: number[];
+
   public trackingMode: TrackingMode = 'Free';
 
   public get navIcon() {
@@ -180,11 +184,48 @@ export class MapPage implements AfterViewInit {
     if (role === 'save') {
       await this.storeClick();
     }
-    if (role === 'itineraryTo') {
-      this.calculateDirection(coords);
+    if (role === 'defineOriginPoint') {
+      this.origin = coords;
+      if (this.origin && this.origin.length > 0 && this.destination && this.destination.length > 0) {
+        this.calculateDirection();
+      }
     }
+    if (role === 'defineDestinationPoint') {
+      this.destination = coords;
+      if (this.origin == null) {
+        this.origin = this.map.getGeographicPosition();
+      }
+      if (this.origin && this.origin.length > 0 && this.destination && this.destination.length > 0) {
+        this.calculateDirection();
+      }
+    }
+    if (role === 'addWaypoint') {
+      this.waypoints.push(coords);
+      if (this.origin && this.origin.length > 0 && this.destination && this.destination.length > 0) {
+        this.calculateDirection();
+      }
+    }
+    if (role === 'removeWaypoint') {
+      this.waypoints.pop();
+      if (this.origin && this.origin.length > 0 && this.destination && this.destination.length > 0) {
+        this.calculateDirection();
+      }
+    }
+    let points = [...this.waypoints];
+    if (this.origin != null) {
+      points.push(this.origin);
+
+    }
+    if (this.destination != null) {
+      points.push(this.destination);
+    }
+    this.map.setPoints(points);
     if (role === 'clear') {
       this.map.setDirection(null);
+      this.origin = null;
+      this.destination = null;
+      this.waypoints.length = 0;
+      this.map.setPoints(null);
     }
   }
 
@@ -210,7 +251,10 @@ export class MapPage implements AfterViewInit {
       header: 'Map',
       buttons: [
         { role: 'save', text: 'Save map for offline use', icon: 'cloud-offline-outline' },
-        { role: 'itineraryTo', text: 'Itinerary to this point', icon: 'map-outline' },
+        { role: 'defineOriginPoint', text: 'Define origin point', icon: 'location-outline' },
+        { role: 'defineDestinationPoint', text: 'Define destination point', icon: 'location-outline' },
+        { role: 'addWaypoint', text: 'Add waypoint', icon: 'location-outline' },
+        { role: 'removeWaypoint', text: 'Remove waypoint', icon: 'location-outline' },
         { role: 'clear', text: 'Clear itinerary', icon: 'trash-outline' },
         { role: 'cancel', text: 'Cancel', icon: 'close', }
       ]
@@ -221,13 +265,12 @@ export class MapPage implements AfterViewInit {
     return role;
   }
 
-  async calculateDirection(toCoords: number[]) {
+  async calculateDirection() {
     let loading = await this.loadingController.create({ message: 'Calculating directions...' });
     loading.present();
 
     try {
-      let fromCoords = this.map.getGeographicPosition();
-      let direction = await this.directionService.getDirection(fromCoords, toCoords, 'geoapify');
+      let direction = await this.directionService.getDirection(this.origin, this.waypoints, this.destination, 'geoapify');
       this.map.setDirection(direction);
 
     } catch (err) {

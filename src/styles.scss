@@ -39,3 +39,10 @@ ion-content.ios {
 ion-list.ios {
     --ion-item-background: var(--ion-color-step-50)
 }
+
+.app-overlay-waypoint {
+    filter: drop-shadow(0 0 1px #fff) drop-shadow(0 0 1px #fff);
+    color: var(--ion-color-danger);
+    width: 2em;
+    height: 2em;
+}
