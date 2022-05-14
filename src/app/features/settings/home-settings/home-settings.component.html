@@ -20,6 +20,9 @@
       <ion-label>Tiles in cache</ion-label>
       <ion-text slot="end">{{cacheLength}}</ion-text>
     </ion-item>
+    <ion-item button detail="false" (click)="clearClick()">
+      <ion-label>Clear cache</ion-label>
+    </ion-item>
     <ion-item>
       <ion-label>Version</ion-label>
       <ion-text slot="end">{{appVersion}}</ion-text>

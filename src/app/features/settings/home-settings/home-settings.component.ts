@@ -28,6 +28,10 @@ export class HomeSettingsComponent implements OnInit {
     this.modalCtrl.dismiss();
   }
 
+  clearClick() {
+    this.service.clearCache();
+  }
+
   attributionClick() {
     this.nav.push(AttributionsComponent);
   }
