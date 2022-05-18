@@ -15,21 +15,22 @@ export class HomeSettingsComponent implements OnInit {
   constructor(private modalCtrl: ModalController, private service: SettingsService, private nav: IonNav) { }
 
   appVersion = environment.appVersion;
-  storageUsage: Promise<string>;
-  cacheLength: number;
+  cachedTilesCount: number;
 
   async ngOnInit() {
-    this.storageUsage = this.service.estimate()
-      .then((estimation) => `${estimation.usage} / ${estimation.quota}`);
-    this.cacheLength = await this.service.getCachedTilesCount();
+    this.cachedTilesCount = await this.service.countCachedTiles();
   }
 
   okClick() {
     this.modalCtrl.dismiss();
   }
 
-  clearClick() {
-    this.service.clearCache();
+  async resetClick() {
+    if (!confirm('All application settings and data will be lost.')) {
+      return;
+    }
+    await this.service.reset();
+    location.reload();
   }
 
   attributionClick() {

@@ -32,6 +32,11 @@ export class DataContext {
         this.currentTrack = new ObjectStore<Track>(storage, 'currentTrack');
     }
 
+    public async reset() {
+        let storage = await this.storageFactory.create();
+        await storage.clear();
+    }
+
     private async migrate(storage: Storage) {
         let oldVersion: number = await storage.get('version') ?? 0;
         let newVersion = MigrationSteps.length;

@@ -58,14 +58,15 @@
     },
     {
       "name": "tiles",
+      "version": 1,
       "cacheConfig": {
-        "maxAge": "90d",
+        "maxAge": "60d",
         "maxSize": 4000,
         "strategy": "performance"
       },
       "urls": [
         "fonts.(googleapis|gstatic).com",
-        "openstreetmap",
+        "*.openstreetmap.*",
         "wxs.ign.fr"
       ]
     }
