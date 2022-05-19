@@ -67,6 +67,7 @@
       "urls": [
         "fonts.(googleapis|gstatic).com",
         "*.openstreetmap.*",
+        "*.geoapify.com",
         "wxs.ign.fr"
       ]
     }
