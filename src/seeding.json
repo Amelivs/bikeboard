@@ -119,5 +119,23 @@
             "name": "Vallée de la Bruche",
             "url": "assets/gpx/bruche.gpx"
         }
+    ],
+    "directionProviders": [
+        {
+            "name": "ign",
+            "format": "WKT",
+            "waypointsOnly": false,
+            "waypointPrefix": "",
+            "separator": ";",
+            "url": "https://wxs.ign.fr/essentiels/itineraire/rest/route.json?origin={{ORIGIN}}&destination={{DESTINATION}}&waypoints={{WAYPOINTS}}&method=DISTANCE&graphName=Pieton"
+        },
+        {
+            "name": "geoapify",
+            "format": "GeoJSON",
+            "waypointsOnly": true,
+            "waypointPrefix": "lonlat:",
+            "separator": "|",
+            "url": "https://api.geoapify.com/v1/routing?waypoints={{WAYPOINTS}}&mode=bicycle&apiKey=1b48259b810e48ddb151889f9ea58db0"
+        }
     ]
 }

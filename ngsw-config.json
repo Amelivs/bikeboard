@@ -68,6 +68,7 @@
         "fonts.(googleapis|gstatic).com",
         "*.openstreetmap.*",
         "*.geoapify.com",
+        "*.mapbox.com",
         "wxs.ign.fr"
       ]
     }
