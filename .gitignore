@@ -109,3 +109,4 @@ www
 
 # misc
 /.angular/cache
+/private/

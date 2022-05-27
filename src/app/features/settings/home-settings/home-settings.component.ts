@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { IonNav, ModalController } from '@ionic/angular';
+import { UnlockService } from 'src/app/core/services/unlock.service';
 
 import { environment } from '../../../../environments/environment';
 import { AttributionsComponent } from '../attributions/attributions.component';
@@ -12,7 +13,7 @@ import { SettingsService } from '../settings.service';
 })
 export class HomeSettingsComponent implements OnInit {
 
-  constructor(private modalCtrl: ModalController, private service: SettingsService, private nav: IonNav) { }
+  constructor(private modalCtrl: ModalController, private service: SettingsService, private unlockService: UnlockService, private nav: IonNav) { }
 
   appVersion = environment.appVersion;
   cachedTilesCount: number;
@@ -31,6 +32,20 @@ export class HomeSettingsComponent implements OnInit {
     }
     await this.service.reset();
     location.reload();
+  }
+
+  async unlockClick() {
+    try {
+      let key = prompt('Enter key');
+      if (key != null) {
+        await this.unlockService.unlock(key);
+        alert('Advanced features unlocked successfully.');
+      }
+    }
+    catch (err) {
+      console.error(err);
+      alert('Advanced features could not be unlocked.');
+    }
   }
 
   attributionClick() {

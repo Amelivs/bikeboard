@@ -16,6 +16,9 @@
       <ion-label>Cached tiles</ion-label>
       <ion-text slot="end">{{cachedTilesCount}}</ion-text>
     </ion-item>
+    <ion-item button detail="false" (click)="unlockClick()">
+      <ion-label>Unlock advanced features</ion-label>
+    </ion-item>
     <ion-item button detail="false" (click)="resetClick()">
       <ion-label>Reset settings</ion-label>
     </ion-item>

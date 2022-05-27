@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+
 import SeedingData from '../../../seeding.json';
 
 export interface DirectionResult {

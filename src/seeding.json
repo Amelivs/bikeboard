@@ -37,18 +37,6 @@
             ]
         },
         {
-            "id": "00000000-0000-0000-0000-e0448f69eda9",
-            "name": "IGN SCAN 25®",
-            "maxZoom": 16,
-            "attributions": "© IGN 2022",
-            "layers": [
-                {
-                    "type": "raster",
-                    "url": "https://wxs.ign.fr/90a8uu8uohh2q9ormp4ryxni/geoportail/wmts?layer=GEOGRAPHICALGRIDSYSTEMS.MAPS.SCAN25TOUR&style=normal&tilematrixset=PM&Service=WMTS&Request=GetTile&Version=1.0.0&Format=image%2Fjpeg&TileMatrix={z}&TileCol={x}&TileRow={y}"
-                }
-            ]
-        },
-        {
             "id": "00000000-0000-0000-0000-4f1e6f995312",
             "name": "IGN Photos",
             "maxZoom": null,
