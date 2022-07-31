@@ -4,7 +4,6 @@ import { fromLonLat, toLonLat } from 'ol/proj';
 import { Style, Stroke } from 'ol/style';
 import { ScaleLine, Rotate, } from 'ol/control';
 import { defaults as defaultInteractions } from 'ol/interaction';
-import OverlayPositioning from 'ol/OverlayPositioning';
 import TileLayer from 'ol/layer/Tile';
 import VectorLayer from 'ol/layer/Vector';
 import LayerGroup from 'ol/layer/Group';
@@ -41,7 +40,7 @@ export class MapViewerComponent implements OnInit, AfterViewInit {
   @Output() context = new EventEmitter<number[]>();
 
   private readonly positionMarker = new Overlay({
-    positioning: OverlayPositioning.CENTER_CENTER,
+    positioning: 'center-center',
     stopEvent: false,
   });
 
@@ -164,7 +163,7 @@ export class MapViewerComponent implements OnInit, AfterViewInit {
       element.className = 'app-overlay-waypoint';
 
       let overlay = new Overlay({
-        positioning: OverlayPositioning.CENTER_CENTER,
+        positioning: 'center-center',
         element,
         className: 'app-overlay-waypoint',
         position: fromLonLat(point, this.view.getProjection()),

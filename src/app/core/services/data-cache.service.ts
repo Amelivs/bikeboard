@@ -17,7 +17,7 @@ export class DataCacheService {
 
     private async loadMaps() {
         let maps = await this.context.maps.get();
-        maps = maps.sort((left, right) => left.name > right.name ? 1 : right.name > left.name ? -1 : 0)
+        maps = maps.sort((left, right) => left.name > right.name ? 1 : right.name > left.name ? -1 : 0);
         let preferences = await this.context.preferences.get();
         let activeMap = maps.find(map => map.id === preferences.activeMapId);
         this.activeMap$.next(activeMap);
@@ -26,7 +26,7 @@ export class DataCacheService {
 
     private async loadPaths() {
         let paths = await this.context.paths.get();
-        paths = paths.sort((left, right) => left.name > right.name ? 1 : right.name > left.name ? -1 : 0)
+        paths = paths.sort((left, right) => left.name > right.name ? 1 : right.name > left.name ? -1 : 0);
         let preferences = await this.context.preferences.get();
         let activePaths = paths.filter(path => preferences.activePathIds?.indexOf(path.id) >= 0);
         this.activePaths$.next(activePaths);
