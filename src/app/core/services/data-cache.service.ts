@@ -38,7 +38,8 @@ export class DataCacheService {
             this.loadMaps();
             this.loadPaths();
         } catch (err) {
-            alert(err.message);
+            console.error(err);
+            alert(err instanceof Error ? err.message : err);
         }
     }
 

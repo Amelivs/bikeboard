@@ -7,7 +7,7 @@ export class GlobalErrorHandler implements ErrorHandler {
 
     constructor(private toastService: ToastService) { }
 
-    handleError(error) {
+    handleError(error: any) {
         if (error.promise && error.rejection) {
             // Promise rejection wrapped by zone.js
             error = error.rejection;

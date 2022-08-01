@@ -45,7 +45,7 @@ export class ImportMapComponent implements OnInit {
     this.modalCtrl.dismiss();
   }
 
-  static urlValidator: ValidatorFn = (formGroup: FormGroup) => {
+  static urlValidator: ValidatorFn = (formGroup: AbstractControl) => {
     const type = formGroup.get('type');
     const url = formGroup.get('url');
     let value = url.value as string;

@@ -275,8 +275,8 @@ export class MapPage implements AfterViewInit {
       this.map.setDirection(direction);
 
     } catch (err) {
-      alert(err.message);
-      console.error(err.message);
+      console.error(err);
+      alert(err instanceof Error ? err.message : err);
     }
     finally {
       loading.dismiss();

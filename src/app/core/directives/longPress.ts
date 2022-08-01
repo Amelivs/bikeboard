@@ -24,7 +24,7 @@ export class LongPressDirective implements OnDestroy {
 
         this.eventSubscribe = merge(mousedown, touchstart)
             .pipe(switchMap(event =>
-                timer(500)
+                timer(250)
                     .pipe(takeUntil(merge(mouseup, mousemove, touchEnd, touchmove)))
                     .pipe(map(() => event))
             ))

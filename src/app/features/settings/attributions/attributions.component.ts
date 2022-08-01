@@ -20,7 +20,7 @@ export class AttributionsComponent implements OnInit {
     }
     catch (err) {
       console.error(err);
-      alert(err.message);
+      alert(err instanceof Error ? err.message : err);
     }
   }
 }
