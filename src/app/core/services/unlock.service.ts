@@ -32,7 +32,7 @@ export class UnlockService {
         return JSON.parse(jsonData);
     }
 
-    private base64StringToArrayBuffer(b64str) {
+    private base64StringToArrayBuffer(b64str: string) {
         let byteStr = atob(b64str);
         let bytes = new Uint8Array(byteStr.length);
         for (let i = 0; i < byteStr.length; i++) {

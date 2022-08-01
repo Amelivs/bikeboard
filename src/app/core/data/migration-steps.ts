@@ -11,7 +11,7 @@ export const MigrationSteps: ReadonlyArray<(storage: Storage) => Promise<void>> 
             return;
         }
         for (let map of maps) {
-            map.layers = map.wmtsUrls?.map(url => ({
+            map.layers = map.wmtsUrls?.map((url: any) => ({
                 type: 'raster',
                 url
             }));

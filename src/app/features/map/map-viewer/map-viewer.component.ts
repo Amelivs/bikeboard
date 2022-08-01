@@ -21,7 +21,7 @@ import { DirectionResult } from 'src/app/core/services/direction.service';
 import { ReadOptions } from 'ol/format/Feature';
 import Feature from 'ol/Feature';
 import { Geometry } from 'ol/geom';
-
+import { Type } from 'ol/geom/Geometry';
 
 @Component({
   selector: 'app-map-viewer',
@@ -64,7 +64,7 @@ export class MapViewerComponent implements OnInit, AfterViewInit {
   private readonly points: number[][] = [];
   private readonly pointOverlays: Overlay[] = [];
 
-  private readonly gpxStyle = {
+  private readonly gpxStyle: Partial<{ [key in Type]: Style }> = {
     MultiLineString: new Style({
       stroke: new Stroke({
         color: 'rgba(205, 61, 0, 0.8)',
@@ -262,7 +262,7 @@ export class MapViewerComponent implements OnInit, AfterViewInit {
     let source = layer.getSource();
     let tileGrid = source.getTileGrid();
     let urlFunc = source.getTileUrlFunction();
-    let tileURLs = [];
+    let tileURLs: string[] = [];
     let extent = this.view.calculateExtent(this.map.getSize());
     tileGrid.forEachTileCoord(extent, zoom, tileCoord => {
       let url = urlFunc(tileCoord, 1, source.getProjection());

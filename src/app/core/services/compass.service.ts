@@ -18,9 +18,7 @@ export class CompassService {
         if ('ondeviceorientationabsolute' in window) {
             return 'deviceorientationabsolute';
         }
-        if ('ondeviceorientation' in window) {
-            return 'deviceorientation';
-        }
+        return 'deviceorientation';
     }
 
     private createObservable() {

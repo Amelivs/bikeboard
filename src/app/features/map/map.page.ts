@@ -46,6 +46,7 @@ export class MapPage implements AfterViewInit {
     if (this.trackingMode === 'Navigation') {
       return 'compass';
     }
+    return null;
   }
 
   public get isTracking() {
