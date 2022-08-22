@@ -1,129 +1,129 @@
 {
-    "defaultMaps": [
+  "defaultMaps": [
+    {
+      "id": "00000000-0000-0000-0000-201c214521d6",
+      "name": "OpenStreetMap",
+      "maxZoom": null,
+      "attributions": "© Contributeurs d'OpenStreetMap",
+      "layers": [
         {
-            "id": "00000000-0000-0000-0000-201c214521d6",
-            "name": "OpenStreetMap",
-            "maxZoom": null,
-            "attributions": "© Contributeurs d'OpenStreetMap",
-            "layers": [
-                {
-                    "type": "raster",
-                    "url": "https://{a-c}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png"
-                }
-            ]
-        },
-        {
-            "id": "00000000-0000-0000-0000-ee47d3d2e897",
-            "name": "CyclOSM",
-            "maxZoom": null,
-            "attributions": "© Contributeurs d'OpenStreetMap",
-            "layers": [
-                {
-                    "type": "raster",
-                    "url": "https://{a-c}.tile-cyclosm.openstreetmap.fr/cyclosm/{z}/{x}/{y}.png"
-                }
-            ]
-        },
-        {
-            "id": "00000000-0000-0000-0000-05548b4a86f9",
-            "name": "IGN Plan",
-            "maxZoom": 20,
-            "attributions": "© IGN 2022",
-            "layers": [
-                {
-                    "type": "vector",
-                    "url": "assets/maps/plan_ign.json"
-                }
-            ]
-        },
-        {
-            "id": "00000000-0000-0000-0000-4f1e6f995312",
-            "name": "IGN Photos",
-            "maxZoom": null,
-            "attributions": "© IGN 2022",
-            "layers": [
-                {
-                    "type": "raster",
-                    "url": "https://wxs.ign.fr/decouverte/geoportail/wmts?gp-ol-ext=3.1.0&layer=ORTHOIMAGERY.ORTHOPHOTOS&style=normal&tilematrixset=PM&Service=WMTS&Request=GetTile&Version=1.0.0&Format=image%2Fjpeg&TileMatrix={z}&TileCol={x}&TileRow={y}"
-                }
-            ]
-        },
-        {
-            "id": "00000000-0000-0000-0000-8425ff7d610e",
-            "name": "IGN Cadastre",
-            "maxZoom": null,
-            "attributions": "© IGN 2022",
-            "layers": [
-                {
-                    "type": "vector",
-                    "url": "https://wxs.ign.fr/static/vectorTiles/styles/PLAN.IGN/essentiels/standard.json"
-                },
-                {
-                    "type": "raster",
-                    "url": "https://wxs.ign.fr/parcellaire/geoportail/wmts?layer=CADASTRALPARCELS.PARCELLAIRE_EXPRESS&style=PCI%20vecteur&tilematrixset=PM&Service=WMTS&Request=GetTile&Version=1.0.0&Format=image%2Fpng&TileMatrix={z}&TileCol={x}&TileRow={y}"
-                }
-            ]
-        },
-        {
-            "id": "00000000-0000-0000-0000-624a9606613c",
-            "name": "IGN Restrictions drones",
-            "maxZoom": 15,
-            "attributions": "© IGN 2022",
-            "layers": [
-                {
-                    "type": "vector",
-                    "url": "https://wxs.ign.fr/static/vectorTiles/styles/PLAN.IGN/essentiels/standard.json"
-                },
-                {
-                    "type": "raster",
-                    "url": "https://wxs.ign.fr/transports/geoportail/wmts?layer=TRANSPORTS.DRONES.RESTRICTIONS&style=normal&tilematrixset=PM&Service=WMTS&Request=GetTile&Version=1.0.0&Format=image%2Fpng&TileMatrix={z}&TileCol={x}&TileRow={y}"
-                }
-            ]
+          "type": "raster",
+          "url": "https://{a-c}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png"
         }
-    ],
-    "defaultPaths": [
+      ]
+    },
+    {
+      "id": "00000000-0000-0000-0000-ee47d3d2e897",
+      "name": "CyclOSM",
+      "maxZoom": null,
+      "attributions": "© Contributeurs d'OpenStreetMap",
+      "layers": [
         {
-            "id": "00000000-0000-0000-0000-7618c49c3a5c",
-            "name": "EuroVelo 5",
-            "url": "assets/gpx/EuroVelo-5.gpx"
-        },
-        {
-            "id": "00000000-0000-0000-0000-7fe955f63983",
-            "name": "EuroVelo 6",
-            "url": "assets/gpx/EuroVelo-6.gpx"
-        },
-        {
-            "id": "00000000-0000-0000-0000-66e7f91c7fd3",
-            "name": "EuroVelo 15",
-            "url": "assets/gpx/EuroVelo-15.gpx"
-        },
-        {
-            "id": "00000000-0000-0000-0000-9246de9334fb",
-            "name": "Val d'Argent",
-            "url": "assets/gpx/valdargent.gpx"
-        },
-        {
-            "id": "00000000-0000-0000-0000-1a0d1de1bcff",
-            "name": "Vallée de la Bruche",
-            "url": "assets/gpx/bruche.gpx"
+          "type": "raster",
+          "url": "https://{a-c}.tile-cyclosm.openstreetmap.fr/cyclosm/{z}/{x}/{y}.png"
         }
-    ],
-    "directionProviders": [
+      ]
+    },
+    {
+      "id": "00000000-0000-0000-0000-05548b4a86f9",
+      "name": "IGN Plan",
+      "maxZoom": 20,
+      "attributions": "© IGN 2022",
+      "layers": [
         {
-            "name": "ign",
-            "format": "WKT",
-            "waypointsOnly": false,
-            "waypointPrefix": "",
-            "separator": ";",
-            "url": "https://wxs.ign.fr/essentiels/itineraire/rest/route.json?origin={{ORIGIN}}&destination={{DESTINATION}}&waypoints={{WAYPOINTS}}&method=DISTANCE&graphName=Pieton"
+          "type": "vector",
+          "url": "assets/maps/plan_ign.json"
+        }
+      ]
+    },
+    {
+      "id": "00000000-0000-0000-0000-4f1e6f995312",
+      "name": "IGN Photos",
+      "maxZoom": null,
+      "attributions": "© IGN 2022",
+      "layers": [
+        {
+          "type": "raster",
+          "url": "https://wxs.ign.fr/decouverte/geoportail/wmts?gp-ol-ext=3.1.0&layer=ORTHOIMAGERY.ORTHOPHOTOS&style=normal&tilematrixset=PM&Service=WMTS&Request=GetTile&Version=1.0.0&Format=image%2Fjpeg&TileMatrix={z}&TileCol={x}&TileRow={y}"
+        }
+      ]
+    },
+    {
+      "id": "00000000-0000-0000-0000-8425ff7d610e",
+      "name": "IGN Cadastre",
+      "maxZoom": null,
+      "attributions": "© IGN 2022",
+      "layers": [
+        {
+          "type": "vector",
+          "url": "https://wxs.ign.fr/static/vectorTiles/styles/PLAN.IGN/essentiels/standard.json"
         },
         {
-            "name": "geoapify",
-            "format": "GeoJSON",
-            "waypointsOnly": true,
-            "waypointPrefix": "lonlat:",
-            "separator": "|",
-            "url": "https://api.geoapify.com/v1/routing?waypoints={{WAYPOINTS}}&mode=bicycle&apiKey=1b48259b810e48ddb151889f9ea58db0"
+          "type": "raster",
+          "url": "https://wxs.ign.fr/parcellaire/geoportail/wmts?layer=CADASTRALPARCELS.PARCELLAIRE_EXPRESS&style=PCI%20vecteur&tilematrixset=PM&Service=WMTS&Request=GetTile&Version=1.0.0&Format=image%2Fpng&TileMatrix={z}&TileCol={x}&TileRow={y}"
         }
-    ]
+      ]
+    },
+    {
+      "id": "00000000-0000-0000-0000-624a9606613c",
+      "name": "IGN Restrictions drones",
+      "maxZoom": 15,
+      "attributions": "© IGN 2022",
+      "layers": [
+        {
+          "type": "vector",
+          "url": "https://wxs.ign.fr/static/vectorTiles/styles/PLAN.IGN/essentiels/standard.json"
+        },
+        {
+          "type": "raster",
+          "url": "https://wxs.ign.fr/transports/geoportail/wmts?layer=TRANSPORTS.DRONES.RESTRICTIONS&style=normal&tilematrixset=PM&Service=WMTS&Request=GetTile&Version=1.0.0&Format=image%2Fpng&TileMatrix={z}&TileCol={x}&TileRow={y}"
+        }
+      ]
+    }
+  ],
+  "defaultPaths": [
+    {
+      "id": "00000000-0000-0000-0000-7618c49c3a5c",
+      "name": "EuroVelo 5",
+      "url": "assets/gpx/EuroVelo-5.gpx"
+    },
+    {
+      "id": "00000000-0000-0000-0000-7fe955f63983",
+      "name": "EuroVelo 6",
+      "url": "assets/gpx/EuroVelo-6.gpx"
+    },
+    {
+      "id": "00000000-0000-0000-0000-66e7f91c7fd3",
+      "name": "EuroVelo 15",
+      "url": "assets/gpx/EuroVelo-15.gpx"
+    },
+    {
+      "id": "00000000-0000-0000-0000-9246de9334fb",
+      "name": "Val d'Argent",
+      "url": "assets/gpx/valdargent.gpx"
+    },
+    {
+      "id": "00000000-0000-0000-0000-1a0d1de1bcff",
+      "name": "Vallée de la Bruche",
+      "url": "assets/gpx/bruche.gpx"
+    }
+  ],
+  "directionProviders": [
+    {
+      "name": "ign",
+      "format": "WKT",
+      "waypointsOnly": false,
+      "waypointPrefix": "",
+      "separator": ";",
+      "url": "https://wxs.ign.fr/essentiels/itineraire/rest/route.json?origin={{ORIGIN}}&destination={{DESTINATION}}&waypoints={{WAYPOINTS}}&method=DISTANCE&graphName=Pieton"
+    },
+    {
+      "name": "geoapify",
+      "format": "GeoJSON",
+      "waypointsOnly": true,
+      "waypointPrefix": "lonlat:",
+      "separator": "|",
+      "url": "https://api.geoapify.com/v1/routing?waypoints={{WAYPOINTS}}&mode=bicycle&apiKey=1b48259b810e48ddb151889f9ea58db0"
+    }
+  ]
 }

@@ -19,30 +19,30 @@
 @import "~ol/ol.css";
 
 body {
-    touch-action: none;
-    overflow: hidden;
+  touch-action: none;
+  overflow: hidden;
 }
 
 .ol-scale-line-inner {
-    color: #333 !important;
-    border-color: #333;
+  color: #333 !important;
+  border-color: #333;
 }
 
 ion-item-divider.ios {
-    font-size: 0.8em;
+  font-size: 0.8em;
 }
 
 ion-content.ios {
-    --ion-background-color: var(--ion-color-step-50)
+  --ion-background-color: var(--ion-color-step-50)
 }
 
 ion-list.ios {
-    --ion-item-background: var(--ion-color-step-50)
+  --ion-item-background: var(--ion-color-step-50)
 }
 
 .app-overlay-waypoint {
-    filter: drop-shadow(0 0 1px #fff) drop-shadow(0 0 1px #fff);
-    color: var(--ion-color-danger);
-    width: 2em;
-    height: 2em;
+  filter: drop-shadow(0 0 1px #fff) drop-shadow(0 0 1px #fff);
+  color: var(--ion-color-danger);
+  width: 2em;
+  height: 2em;
 }

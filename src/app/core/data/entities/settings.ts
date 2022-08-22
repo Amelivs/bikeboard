@@ -1,4 +1,4 @@
 export interface PreferencesEntity {
-    activeMapId: string;
-    activePathIds: string[];
+  activeMapId: string;
+  activePathIds: string[];
 }

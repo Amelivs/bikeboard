@@ -1,8 +1,15 @@
 {
     "files.exclude": {
-        "dist": true,
+        ".firebase": true,
+        ".angular": true,
         "node_modules": true,
         "www": true
     },
-    "typescript.tsdk": "node_modules\\typescript\\lib"
+    "editor.tabSize": 2,
+    "editor.detectIndentation": false,
+    "formatFiles.extensionsToInclude": "json,js,ts,html,scss",
+    "typescript.tsdk": "node_modules\\typescript\\lib",
+    "files.insertFinalNewline": true,
+    "files.trimFinalNewlines": true,
+    "editor.wordWrapColumn": 160
 }

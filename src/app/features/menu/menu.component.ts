@@ -17,7 +17,7 @@ export class MenuComponent implements OnInit {
   readonly paths$: Observable<PathEntity[]>;
 
   selectedMap: MapEntity;
-  selectedPaths: PathEntity[];
+  selectedPaths: PathEntity[] = [];
 
   constructor(private service: DataCacheService, private menu: MenuController) {
     this.maps$ = service.maps;
