@@ -19,7 +19,7 @@ export class LastPositionService {
     public constructor(private storage: DataContext) { }
 
     public async getLastPosition() {
-        let position = await this.storage.position.get();
+        let position = await this.storage.preferences.get<number[]>('position');
         if (this.isValid(position)) {
             return position as Array<number>;
         }
@@ -29,7 +29,7 @@ export class LastPositionService {
     public async setLastPosition(position: Array<number>) {
         if (this.isValid(position)) {
             console.debug('saving position', position);
-            await this.storage.position.save(position);
+            await this.storage.preferences.save('position', position);
         }
     }
 }

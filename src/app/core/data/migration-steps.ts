@@ -2,9 +2,13 @@ import { Storage } from '@ionic/storage-angular';
 
 import SeedingData from '../../../seeding.json';
 import { UUID } from '../utils/uuid';
-import { Track } from './entities/track';
+import { MapEntity } from './entities/map';
+import { PreferencesEntity } from './entities/settings';
+import { Activity } from './entities/activity';
 
-export const MigrationSteps: ReadonlyArray<(storage: Storage) => Promise<void>> = [
+export type MigrationStep = (storage: Storage, db: IDBDatabase) => Promise<void>;
+
+export const MigrationSteps: ReadonlyArray<MigrationStep> = [
     async storage => {
         let maps = await storage.get('maps');
         if (!Array.isArray(maps)) {
@@ -33,7 +37,8 @@ export const MigrationSteps: ReadonlyArray<(storage: Storage) => Promise<void>> 
         if (currentTrack == null) {
             return;
         }
-        let track: Track = {
+        let track: Activity = {
+            id: null,
             segments: [{ points: currentTrack.points }]
         };
         await storage.set('currentTrack', track);
@@ -61,4 +66,38 @@ export const MigrationSteps: ReadonlyArray<(storage: Storage) => Promise<void>> 
         layer.url = 'assets/maps/plan_ign.json';
         await storage.set('maps', maps);
     },
+    async (storage, db) => {
+        let maps: Array<MapEntity> = await storage.get('maps');
+        let paths: Array<MapEntity> = await storage.get('paths');
+        let preferences: PreferencesEntity = await storage.get('preferences');
+        let position: PreferencesEntity = await storage.get('position');
+        let track: Activity = await storage.get('currentTrack');
+
+        let transaction = db.transaction(['maps', 'paths', 'preferences', 'activities', 'version'], 'readwrite');
+
+        if (maps != null) {
+            let mapsStore = transaction.objectStore('maps');
+            for (let map of maps) {
+                mapsStore.put(map);
+            }
+        }
+        if (paths != null) {
+            let pathsStore = transaction.objectStore('paths');
+            for (let path of paths) {
+                pathsStore.put(path);
+            }
+        }
+        let preferencesStore = transaction.objectStore('preferences');
+        if (preferences != null) {
+            preferencesStore.put(preferences.activeMapId, 'activeMapId');
+            preferencesStore.put(preferences.activePathIds, 'activePathIds');
+        }
+        if (position != null) {
+            preferencesStore.put(position, 'position');
+        }
+        if (track != null) {
+            track.id = 'currentActivity';
+            transaction.objectStore('activities').put(track);
+        }
+    }
 ];

@@ -27,8 +27,8 @@ export class SeedingGuard implements CanActivate {
     }
 
     private async seedMaps() {
-        let existingMaps = await this.context.maps.get();
-        if (existingMaps != null) {
+        let existingMaps = await this.context.maps.getAll();
+        if (existingMaps.length > 0) {
             return;
         }
         for (let map of SeedingData.defaultMaps) {
@@ -37,8 +37,8 @@ export class SeedingGuard implements CanActivate {
     }
 
     private async seedPaths() {
-        let existingPaths = await this.context.paths.get();
-        if (existingPaths != null) {
+        let existingPaths = await this.context.paths.getAll();
+        if (existingPaths.length > 0) {
             return;
         }
         for (let path of SeedingData.defaultPaths) {
@@ -47,13 +47,7 @@ export class SeedingGuard implements CanActivate {
     }
 
     private async seedSettings() {
-        let existingSettings = await this.context.preferences.get();
-        if (existingSettings != null) {
-            return;
-        }
-        await this.context.preferences.save({
-            activeMapId: SeedingData.defaultMaps[0]?.id,
-            activePathIds: [],
-        });
+        await this.context.preferences.save('activeMapId', SeedingData.defaultMaps[0]?.id);
+        await this.context.preferences.save('activePathIds', []);
     }
 }

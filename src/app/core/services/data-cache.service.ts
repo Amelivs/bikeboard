@@ -16,19 +16,19 @@ export class DataCacheService {
     private readonly activePaths$ = new ReplaySubject<PathEntity[]>(1);
 
     private async loadMaps() {
-        let maps = await this.context.maps.get();
+        let maps = await this.context.maps.getAll();
         maps = maps.sort((left, right) => left.name > right.name ? 1 : right.name > left.name ? -1 : 0);
-        let preferences = await this.context.preferences.get();
-        let activeMap = maps.find(map => map.id === preferences.activeMapId);
+        let activeMapId = await this.context.preferences.get('activeMapId');
+        let activeMap = maps.find(map => map.id === activeMapId);
         this.activeMap$.next(activeMap);
         this.maps$.next(maps);
     }
 
     private async loadPaths() {
-        let paths = await this.context.paths.get();
+        let paths = await this.context.paths.getAll();
         paths = paths.sort((left, right) => left.name > right.name ? 1 : right.name > left.name ? -1 : 0);
-        let preferences = await this.context.preferences.get();
-        let activePaths = paths.filter(path => preferences.activePathIds?.indexOf(path.id) >= 0);
+        let activePathIds = await this.context.preferences.get<string[]>('activePathIds');
+        let activePaths = paths.filter(path => activePathIds?.indexOf(path.id) >= 0);
         this.activePaths$.next(activePaths);
         this.paths$.next(paths);
     }
@@ -54,9 +54,7 @@ export class DataCacheService {
     }
 
     public async setActiveMap(map: MapEntity) {
-        let preferences = await this.context.preferences.get();
-        preferences.activeMapId = map.id;
-        await this.context.preferences.save(preferences);
+        await this.context.preferences.save('activeMapId', map.id);
         this.activeMap$.next(map);
     }
 
@@ -66,9 +64,7 @@ export class DataCacheService {
     }
 
     public async setActivePaths(paths: PathEntity[]) {
-        let preferences = await this.context.preferences.get();
-        preferences.activePathIds = paths.map(p => p.id);
-        await this.context.preferences.save(preferences);
+        await this.context.preferences.save('activePathIds', paths.map(p => p.id));
         this.activePaths$.next(paths);
     }
 

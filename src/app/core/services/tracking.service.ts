@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { ReplaySubject } from 'rxjs';
 
 import { DataContext } from '../data/data-context';
-import { Track, TrackPoint } from '../data/entities/track';
+import { Activity, ActivityPoint } from '../data/entities/activity';
 
 const MAX_COORDS_ACCURACY = 20;
 
@@ -12,14 +12,14 @@ const MAX_COORDS_ACCURACY = 20;
 })
 export class TrackingService {
 
-    private track: Track;
+    private activity: Activity;
     private distance = 0;
 
     public readonly distance$ = new ReplaySubject<number>(1);
 
     private getDistance() {
         let dist = 0;
-        for (let segment of this.track.segments) {
+        for (let segment of this.activity.segments) {
             if (segment.points == null) {
                 continue;
             }
@@ -36,7 +36,7 @@ export class TrackingService {
         return dist;
     }
 
-    private getDistanceBetween(p1: TrackPoint, p2: TrackPoint) {
+    private getDistanceBetween(p1: ActivityPoint, p2: ActivityPoint) {
         const R = 6371e3; // metres
         const φ1 = p1.latitude * Math.PI / 180; // φ, λ in radians
         const φ2 = p2.latitude * Math.PI / 180;
@@ -54,20 +54,20 @@ export class TrackingService {
     public constructor(public dataContext: DataContext) { }
 
     public async initialize() {
-        this.track = await this.dataContext.currentTrack.get() ?? { segments: [] };
+        this.activity = await this.dataContext.activities.get('currentActivity') ?? { id: 'currentActivity', segments: [] };
         this.distance = this.getDistance();
         this.distance$.next(this.distance);
     }
 
     public async beginSegment() {
-        this.track.segments.push({ points: [] });
+        this.activity.segments.push({ points: [] });
     }
 
     public addTrackPoint(position: GeolocationPosition) {
         if (position.coords.accuracy > MAX_COORDS_ACCURACY) {
             return;
         }
-        let point: TrackPoint =
+        let point: ActivityPoint =
         {
             latitude: position.coords.latitude,
             longitude: position.coords.longitude,
@@ -77,7 +77,7 @@ export class TrackingService {
             timestamp: position.timestamp
         };
 
-        let segment = this.track.segments[this.track.segments.length - 1];
+        let segment = this.activity.segments[this.activity.segments.length - 1];
         let lastPoint = segment.points[segment.points.length - 1];
 
         if (lastPoint != null) {
@@ -89,26 +89,26 @@ export class TrackingService {
     }
 
     public async saveTrack() {
-        await this.dataContext.currentTrack.save(this.track);
+        await this.dataContext.activities.save(this.activity);
     }
 
     public async clearMileage() {
         if (!confirm('The current mileage will be lost. Are you sure?')) {
             return;
         }
-        this.track = { segments: [] };
-        await this.dataContext.currentTrack.save(null);
+        this.activity = { id: 'currentActivity', segments: [] };
+        await this.dataContext.activities.delete('currentActivity');
         this.distance = 0;
         this.distance$.next(this.distance);
     }
 
     public async export() {
-        let track = await this.dataContext.currentTrack.get() ?? { segments: [] };
+        let activity = await this.dataContext.activities.get('currentActivity') ?? { id: null, segments: [] };
         let lines = [];
         lines.push('<?xml version="1.0" encoding="UTF-8"?>');
         lines.push('<gpx xmlns="http://www.topografix.com/GPX/1/1" creator="MapTracker" version="1.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd">');
         lines.push('<trk>');
-        for (let segment of track.segments) {
+        for (let segment of activity.segments) {
             lines.push('<trkseg>');
             for (let point of segment.points) {
                 let timestamp = new Date(point.timestamp);
