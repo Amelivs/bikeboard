@@ -4,6 +4,7 @@ import { IonInput, ModalController } from '@ionic/angular';
 import { MapEntity } from 'src/app/core/data/entities/map';
 import { PathEntity } from 'src/app/core/data/entities/path';
 import { DataCacheService } from 'src/app/core/services/data-cache.service';
+import { UUID } from 'src/app/core/utils/uuid';
 
 
 @Component({
@@ -55,7 +56,7 @@ export class ImportPathComponent implements OnInit {
     let name = this.form.controls['name'].value;
 
     let path: PathEntity = {
-      id: null,
+      id: UUID.next(),
       name,
       url: data
     };

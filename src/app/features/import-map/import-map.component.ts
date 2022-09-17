@@ -3,6 +3,7 @@ import { AbstractControl, FormControl, FormGroup, ValidatorFn, Validators } from
 import { ModalController } from '@ionic/angular';
 import { MapEntity } from 'src/app/core/data/entities/map';
 import { DataCacheService } from 'src/app/core/services/data-cache.service';
+import { UUID } from 'src/app/core/utils/uuid';
 
 
 @Component({
@@ -33,7 +34,7 @@ export class ImportMapComponent implements OnInit {
 
   async importClick() {
     let map: MapEntity = {
-      id: null,
+      id: UUID.next(),
       name: this.form.value.name,
       attributions: null,
       layers: [{
