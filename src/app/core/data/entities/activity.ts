@@ -1,6 +1,9 @@
 import { Entity } from './entity';
 
 export interface Activity extends Entity {
+  startDate: Date;
+  distance: number;
+  duration: number;
   segments: ActivitySegment[];
 }
 

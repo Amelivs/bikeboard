@@ -8,11 +8,13 @@ import { TrackingService } from 'src/app/core/services/tracking.service';
 import { DownloadUtils } from 'src/app/core/utils/download';
 import { LoadingController } from '@ionic/angular';
 import { DirectionService } from 'src/app/core/services/direction.service';
+import { Activity } from 'src/app/core/data/entities/activity';
 
 import { NavigationService } from '../../core/services/navigation.service';
 import { LastPositionService } from '../../core/services/last-position.service';
 import { ApplicationService } from '../../core/services/application.service';
 import { MapViewerComponent } from './map-viewer/map-viewer.component';
+import { ActivitiesComponent } from '../activities/activities.component';
 
 type TrackingMode = 'Free' | 'Centered' | 'Navigation';
 
@@ -61,6 +63,7 @@ export class MapPage implements AfterViewInit {
     private actionSheetController: ActionSheetController,
     private dataCache: DataCacheService,
     private loadingController: LoadingController,
+    private modalController: ModalController,
     private directionService: DirectionService,
     private trackingService: TrackingService,
     private lastPositionSrv: LastPositionService) {
@@ -103,26 +106,27 @@ export class MapPage implements AfterViewInit {
   public async mileagePress() {
 
     const actionSheet = await this.actionSheetController.create({
-      header: 'Mileage',
+      header: 'Activity',
       buttons: [
         {
-          text: 'Clear mileage',
-          icon: 'trash-outline',
+          text: 'New activity',
+          icon: 'refresh',
           handler: async () => {
             await actionSheet.dismiss();
-            await this.trackingService.clearMileage();
+            await this.trackingService.startNewActivity();
           }
         },
         {
-          text: 'Export',
-          icon: 'share-outline',
+          text: 'Activities',
+          icon: 'analytics',
           handler: async () => {
             actionSheet.dismiss();
-            let data = await this.trackingService.export();
-            let now = new Date();
-            await DownloadUtils.download(data, `trace-${now.toISOString()}.gpx`);
+            this.modalController
+              .create({ component: ActivitiesComponent })
+              .then(modal => modal.present());
           }
-        }]
+        }
+      ]
     });
     await actionSheet.present();
   }

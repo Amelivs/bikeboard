@@ -1,10 +1,12 @@
 import { Storage } from '@ionic/storage-angular';
+import { firstValueFrom, Subject } from 'rxjs';
 
 import SeedingData from '../../../seeding.json';
 import { UUID } from '../utils/uuid';
 import { MapEntity } from './entities/map';
 import { PreferencesEntity } from './entities/settings';
 import { Activity } from './entities/activity';
+import { DistanceUtil } from '../utils/distance';
 
 export type MigrationStep = (storage: Storage, db: IDBDatabase) => Promise<void>;
 
@@ -39,6 +41,9 @@ export const MigrationSteps: ReadonlyArray<MigrationStep> = [
     }
     let track: Activity = {
       id: null,
+      startDate: null,
+      distance: null,
+      duration: null,
       segments: [{ points: currentTrack.points }]
     };
     await storage.set('currentTrack', track);
@@ -67,6 +72,8 @@ export const MigrationSteps: ReadonlyArray<MigrationStep> = [
     await storage.set('maps', maps);
   },
   async (storage, db) => {
+    let result$ = new Subject<void>();
+
     let maps: Array<MapEntity> = await storage.get('maps');
     let paths: Array<MapEntity> = await storage.get('paths');
     let preferences: PreferencesEntity = await storage.get('preferences');
@@ -99,5 +106,54 @@ export const MigrationSteps: ReadonlyArray<MigrationStep> = [
       track.id = 'currentActivity';
       transaction.objectStore('activities').put(track);
     }
+
+    transaction.oncomplete = () => {
+      result$.next();
+    };
+
+    transaction.onerror = () => {
+      result$.error(transaction.error);
+    };
+
+    return firstValueFrom(result$);
+  },
+  async (storage, db) => {
+    let result$ = new Subject<void>();
+
+    let transaction = db.transaction(['activities', 'preferences'], 'readwrite');
+    let activityStore = transaction.objectStore('activities');
+    let preferencesStore = transaction.objectStore('preferences');
+
+    let getRequest = activityStore.get('currentActivity');
+    getRequest.onsuccess = () => {
+      let activity: Activity = getRequest.result;
+
+      activity.id = UUID.next();
+      let timestamp = activity.segments[0]?.points[0]?.timestamp;
+      if (!isNaN(timestamp) && timestamp !== Infinity) {
+        activity.startDate = new Date(timestamp);
+      }
+      else {
+        activity.startDate = new Date();
+      }
+      activity.distance = DistanceUtil.getDistance(activity);
+      activity.duration = DistanceUtil.getDuration(activity);
+
+      activityStore.put(activity).onsuccess = () => {
+        preferencesStore.put(activity.id, 'currentActivityId').onsuccess = () => {
+          activityStore.delete('currentActivity');
+        };
+      };
+    };
+
+    transaction.oncomplete = () => {
+      result$.next();
+    };
+
+    transaction.onerror = () => {
+      result$.error(transaction.error);
+    };
+
+    return firstValueFrom(result$);
   }
 ];

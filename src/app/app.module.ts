@@ -20,7 +20,11 @@ import { HomeComponent } from './features/home/home.component';
 import { ImportMapComponent } from './features/import-map/import-map.component';
 import { AttributionsComponent } from './features/settings/attributions/attributions.component';
 import { HomeSettingsComponent } from './features/settings/home-settings/home-settings.component';
-import { KilometerPipe } from './core/pipes/kilometer';
+import { DistancePipe } from './core/pipes/distance.pipe';
+import { DurationPipe } from './core/pipes/duration.pipe';
+import { LocaleDatePipe } from './core/pipes/locale-date.pipe';
+import { ActivitiesComponent } from './features/activities/activities.component';
+import { KilometerPipe } from './core/pipes/kilometer.pipe';
 
 
 @NgModule({
@@ -36,6 +40,10 @@ import { KilometerPipe } from './core/pipes/kilometer';
     HomeComponent,
     HomeSettingsComponent,
     AttributionsComponent,
+    ActivitiesComponent,
+    DistancePipe,
+    DurationPipe,
+    LocaleDatePipe,
     KilometerPipe
   ],
   entryComponents: [
