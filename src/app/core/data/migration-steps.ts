@@ -127,6 +127,9 @@ export const MigrationSteps: ReadonlyArray<MigrationStep> = [
     let getRequest = activityStore.get('currentActivity');
     getRequest.onsuccess = () => {
       let activity: Activity = getRequest.result;
+      if (activity == null) {
+        return;
+      }
 
       activity.id = UUID.next();
       let timestamp = activity.segments[0]?.points[0]?.timestamp;
@@ -144,6 +147,34 @@ export const MigrationSteps: ReadonlyArray<MigrationStep> = [
           activityStore.delete('currentActivity');
         };
       };
+    };
+
+    transaction.oncomplete = () => {
+      result$.next();
+    };
+
+    transaction.onerror = () => {
+      result$.error(transaction.error);
+    };
+
+    return firstValueFrom(result$);
+  },
+  async (storage, db) => {
+    let result$ = new Subject<void>();
+
+    let transaction = db.transaction(['activities'], 'readwrite');
+    let activityStore = transaction.objectStore('activities');
+
+    let getRequest = activityStore.getAll();
+    getRequest.onsuccess = () => {
+      let activities: Activity[] = getRequest.result;
+      if (activities == null) {
+        return;
+      }
+      for (var activity of activities) {
+        activity.duration = DistanceUtil.getDuration(activity);
+        activityStore.put(activity)
+      }
     };
 
     transaction.oncomplete = () => {

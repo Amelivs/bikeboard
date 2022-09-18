@@ -79,8 +79,10 @@ export class MapPage implements AfterViewInit {
   }
 
   private onMapChange(map: MapEntity) {
-    this.attributions = map.attributions;
-    this.map.setXyzSources(map);
+    if (map != null) {
+      this.attributions = map.attributions;
+      this.map.setXyzSources(map);
+    }
   }
 
   private onPathsChange(paths: PathEntity[]) {

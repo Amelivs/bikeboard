@@ -47,7 +47,8 @@ import { KilometerPipe } from './core/pipes/kilometer.pipe';
     KilometerPipe
   ],
   entryComponents: [
-    SettingsComponent
+    SettingsComponent,
+    ActivitiesComponent
   ],
   imports: [
     BrowserModule,

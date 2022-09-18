@@ -22,6 +22,7 @@ export class SeedingGuard implements CanActivate {
     }
     catch (err) {
       console.error(err);
+      alert(err instanceof Error ? err.message : err)
     }
     return true;
   }

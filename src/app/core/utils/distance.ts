@@ -38,13 +38,19 @@ export class DistanceUtil {
   }
 
   public static getDuration(activity: Activity) {
-    let firstPoint = activity.segments[0]?.points[0];
-    let lastSegment = activity.segments[activity.segments.length - 1];
-    let lastPoint = lastSegment?.points[lastSegment.points.length - 1];
+    let durationMs = 0;
 
-    if (firstPoint != null && lastPoint != null) {
-      return lastPoint.timestamp - firstPoint.timestamp;
+    for (let segment of activity.segments) {
+      if (segment.points == null || segment.points.length === 0) {
+        continue;
+      }
+
+      let points = segment.points.map(pt => pt.timestamp).filter(ts => !Number.isNaN(ts));
+      let min = Math.min(...points);
+      let max = Math.max(...points);
+
+      durationMs += max - min;
     }
-    return 0;
+    return durationMs;
   }
 }
