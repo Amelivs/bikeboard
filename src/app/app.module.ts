@@ -46,10 +46,6 @@ import { KilometerPipe } from './core/pipes/kilometer.pipe';
     LocaleDatePipe,
     KilometerPipe
   ],
-  entryComponents: [
-    SettingsComponent,
-    ActivitiesComponent
-  ],
   imports: [
     BrowserModule,
     IonicModule.forRoot(),
@@ -62,8 +58,9 @@ import { KilometerPipe } from './core/pipes/kilometer.pipe';
       // Register the ServiceWorker as soon as the app is stable
       // or after 10 seconds (whichever comes first).
       registrationStrategy: 'registerWhenStable:10000'
-    })],
+    })
+  ],
   providers: [DataContext, { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
-  bootstrap: [AppComponent],
+  bootstrap: [AppComponent]
 })
 export class AppModule { }

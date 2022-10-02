@@ -5,10 +5,8 @@ import { MapEntity } from 'src/app/core/data/entities/map';
 import { PathEntity } from 'src/app/core/data/entities/path';
 import { DataCacheService } from 'src/app/core/services/data-cache.service';
 import { TrackingService } from 'src/app/core/services/tracking.service';
-import { DownloadUtils } from 'src/app/core/utils/download';
 import { LoadingController } from '@ionic/angular';
 import { DirectionService } from 'src/app/core/services/direction.service';
-import { Activity } from 'src/app/core/data/entities/activity';
 
 import { NavigationService } from '../../core/services/navigation.service';
 import { LastPositionService } from '../../core/services/last-position.service';

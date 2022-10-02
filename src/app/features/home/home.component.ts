@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { ActionSheetController, ModalController } from '@ionic/angular';
 import { ImportPathComponent } from 'src/app/features/import-path/import-path.component';
 import { SettingsComponent } from 'src/app/features/settings/settings.component';
-import { UpdateService } from 'src/app/core/services/update.service';
 
 import { ImportMapComponent } from '../import-map/import-map.component';
 
@@ -13,9 +12,7 @@ import { ImportMapComponent } from '../import-map/import-map.component';
 })
 export class HomeComponent implements OnInit {
 
-  constructor(private sw: UpdateService, private modalController: ModalController, public actionSheetController: ActionSheetController) {
-    this.sw.checkForUpdates();
-  }
+  constructor(private modalController: ModalController, public actionSheetController: ActionSheetController) { }
 
   ngOnInit(): void { }
 

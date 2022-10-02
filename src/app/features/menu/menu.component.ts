@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { IonItemSliding, MenuController } from '@ionic/angular';
-import { firstValueFrom, Observable, tap } from 'rxjs';
+import { firstValueFrom, Observable } from 'rxjs';
 import { MapEntity } from 'src/app/core/data/entities/map';
 import { PathEntity } from 'src/app/core/data/entities/path';
 import { DataCacheService } from 'src/app/core/services/data-cache.service';

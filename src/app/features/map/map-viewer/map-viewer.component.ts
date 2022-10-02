@@ -2,7 +2,7 @@ import { AfterViewInit, Component, ElementRef, EventEmitter, Input, NgZone, OnIn
 import { Map, Overlay, View, Collection } from 'ol';
 import { fromLonLat, toLonLat } from 'ol/proj';
 import { Style, Stroke } from 'ol/style';
-import { ScaleLine, Rotate, } from 'ol/control';
+import { ScaleLine, } from 'ol/control';
 import { defaults as defaultInteractions } from 'ol/interaction';
 import TileLayer from 'ol/layer/Tile';
 import VectorLayer from 'ol/layer/Vector';

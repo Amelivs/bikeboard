@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { fromEvent, of } from 'rxjs';
-import { filter, map, switchMap, take, timeout, timeoutWith } from 'rxjs/operators';
+import { filter, map, switchMap, take, timeout } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'

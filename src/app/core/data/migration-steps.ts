@@ -171,9 +171,9 @@ export const MigrationSteps: ReadonlyArray<MigrationStep> = [
       if (activities == null) {
         return;
       }
-      for (var activity of activities) {
+      for (let activity of activities) {
         activity.duration = DistanceUtil.getDuration(activity);
-        activityStore.put(activity)
+        activityStore.put(activity);
       }
     };
 

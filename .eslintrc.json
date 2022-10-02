@@ -4,7 +4,8 @@
     "projects/**/*"
   ],
   "plugins": [
-    "filename-rules"
+    "filename-rules",
+    "unused-imports"
   ],
   "overrides": [
     {
@@ -54,6 +55,7 @@
         "@typescript-eslint/dot-notation": "off",
         "@typescript-eslint/member-ordering": "off",
         "@typescript-eslint/naming-convention": "off",
+        "@typescript-eslint/no-unused-vars": "off",
         "@typescript-eslint/prefer-for-of": "off",
         "prefer-arrow/prefer-arrow-functions": "off",
         "arrow-body-style": "off",
@@ -97,6 +99,16 @@
           "error",
           {
             ".ts": "kebabcase"
+          }
+        ],
+        "unused-imports/no-unused-imports": "warn",
+        "unused-imports/no-unused-vars": [
+          "warn",
+          {
+            "vars": "all",
+            "varsIgnorePattern": "^_",
+            "args": "after-used",
+            "argsIgnorePattern": "^_"
           }
         ],
         "no-multiple-empty-lines": [

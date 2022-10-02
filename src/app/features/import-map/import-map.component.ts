@@ -14,9 +14,9 @@ import { UUID } from 'src/app/core/utils/uuid';
 export class ImportMapComponent implements OnInit {
 
   readonly form = new FormGroup({
-    type: new FormControl(null, [Validators.required]),
-    url: new FormControl(null, [Validators.required,]),
-    name: new FormControl(null, [Validators.required])
+    type: new FormControl<string>(null, [Validators.required]),
+    url: new FormControl<string>(null, [Validators.required,]),
+    name: new FormControl<string>(null, [Validators.required])
   }, ImportMapComponent.urlValidator);
 
   get urlError() {

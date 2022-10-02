@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { from, merge, Observable, Subject } from 'rxjs';
-import { bufferCount, bufferTime, defaultIfEmpty, filter, finalize, first, last, map, mergeMap, startWith, switchMap, takeUntil, tap, windowCount } from 'rxjs/operators';
+import { from, merge, Subject } from 'rxjs';
+import { bufferCount, bufferTime, defaultIfEmpty, filter, first, last, map, startWith, switchMap, takeUntil } from 'rxjs/operators';
 
 import { CompassService } from './compass.service';
 import { LocationService } from './location.service';

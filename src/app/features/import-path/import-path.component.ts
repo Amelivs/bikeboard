@@ -1,7 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { IonInput, ModalController } from '@ionic/angular';
-import { MapEntity } from 'src/app/core/data/entities/map';
 import { PathEntity } from 'src/app/core/data/entities/path';
 import { DataCacheService } from 'src/app/core/services/data-cache.service';
 import { UUID } from 'src/app/core/utils/uuid';
@@ -23,9 +22,9 @@ export class ImportPathComponent implements OnInit {
   private nativefileInput: HTMLInputElement;
 
   readonly form = new FormGroup({
-    fileName: new FormControl(null, [Validators.required]),
-    file: new FormControl(null, [Validators.required]),
-    name: new FormControl(null, [Validators.required])
+    fileName: new FormControl<string>(null, [Validators.required]),
+    file: new FormControl<File>(null, [Validators.required]),
+    name: new FormControl<string>(null, [Validators.required])
   });
 
   constructor(private modalCtrl: ModalController, private dataCache: DataCacheService) { }
