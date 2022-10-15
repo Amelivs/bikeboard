@@ -185,8 +185,7 @@ export class MapViewerComponent implements OnInit, AfterViewInit {
         return new TileLayer({
           source: new XYZ({
             crossOrigin: 'anonymous',
-            url: layer.url,
-            opaque: false
+            url: layer.url
           })
         });
       }
