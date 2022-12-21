@@ -1,0 +1,24 @@
+{
+  "extends": [
+    "stylelint-config-standard-scss"
+  ],
+  "plugins": [
+    "stylelint-no-unsupported-browser-features"
+  ],
+  "rules": {
+    "plugin/no-unsupported-browser-features": [
+      true,
+      {
+        "severity": "warning"
+      }
+    ],
+    "color-hex-length": null,
+    "no-empty-source": null,
+    "block-closing-brace-newline-before": "always-multi-line",
+    "custom-property-empty-line-before": null,
+    "at-rule-empty-line-before": null,
+    "declaration-colon-newline-after": null,
+    "declaration-block-semicolon-newline-before": "never-multi-line",
+    "declaration-block-semicolon-newline-after": "always"
+  }
+}
