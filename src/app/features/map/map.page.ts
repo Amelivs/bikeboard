@@ -176,7 +176,7 @@ export class MapPage implements AfterViewInit {
   }
 
   private onHeadingChange(heading: number) {
-    let rotation = toRadians((360 - heading) % 360);
+    let rotation = -1 * toRadians(heading);
     this.map.setRotation(rotation);
   }
 
