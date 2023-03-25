@@ -1,20 +1,41 @@
 import { Injectable } from '@angular/core';
-import { fromEvent, of } from 'rxjs';
-import { filter, map, switchMap, take, timeout } from 'rxjs/operators';
+import { fromEvent } from 'rxjs';
+import { filter, switchMap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ApplicationService {
 
-  public readonly offDelay = 30000;
+  private wakeLock: WakeLockSentinel;
 
-  public readonly pause = fromEvent(window, 'blur')
-    .pipe(switchMap(() =>
-      fromEvent(window, 'focus')
-        .pipe(map(() => true))
-        .pipe(take(1), timeout({ each: this.offDelay, with: () => of(false) }))
-        .pipe(filter(reseted => !reseted))
-        .pipe(map(() => { }))
-    ));
+  private get wakeLockSupported() {
+    return 'wakeLock' in navigator;
+  }
+
+  private async tryLockScreen() {
+    if (!this.wakeLockSupported) { return; }
+    try {
+      this.wakeLock = await navigator.wakeLock.request('screen');
+      console.info('Screen wake lock successfully acquired');
+    }
+    catch (err) {
+      console.error('Screen wake lock could not be acquired\n', err);
+    }
+  }
+
+  constructor(private window: Window) {
+    fromEvent(window.document, 'visibilitychange')
+      .pipe(
+        filter(() => window.document.visibilityState === 'visible'),
+        filter(() => this.wakeLock?.released),
+        switchMap(() => this.tryLockScreen()))
+      .subscribe();
+  }
+
+  public async lockScreen() {
+    if (this.wakeLock == null || this.wakeLock.released) {
+      await this.tryLockScreen();
+    }
+  }
 }

@@ -60,7 +60,7 @@ import { KilometerPipe } from './core/pipes/kilometer.pipe';
       registrationStrategy: 'registerWhenStable:10000'
     })
   ],
-  providers: [DataContext, { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
+  providers: [DataContext, { provide: Window, useValue: window }, { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
