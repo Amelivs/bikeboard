@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, NgZone, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ViewChild } from '@angular/core';
 import { ActionSheetController, MenuController, ModalController } from '@ionic/angular';
 import { toRadians } from 'ol/math';
 import { MapEntity } from 'src/app/core/data/entities/map';
@@ -10,7 +10,6 @@ import { DirectionService } from 'src/app/core/services/direction.service';
 
 import { NavigationService } from '../../core/services/navigation.service';
 import { LastPositionService } from '../../core/services/last-position.service';
-import { ApplicationService } from '../../core/services/application.service';
 import { MapViewerComponent } from './map-viewer/map-viewer.component';
 import { ActivitiesComponent } from '../activities/activities.component';
 
@@ -24,9 +23,6 @@ export class MapPage implements AfterViewInit {
 
   @ViewChild('map') map: MapViewerComponent;
 
-  public currentSpeed = '-';
-  public currentAltitude = '-';
-  public currentDistance = 0;
   public rotation = 0;
   public attributions: string;
 
@@ -53,11 +49,21 @@ export class MapPage implements AfterViewInit {
     return !this.navService.getTracking();
   }
 
+  public get currentSpeed() {
+    return this.navService.speed;
+  }
+
+  public get currentAltitude() {
+    return this.navService.altitude;
+  }
+
+  public get currentDistance() {
+    return this.trackingService.distance$;
+  }
+
   constructor(
     private menu: MenuController,
     private navService: NavigationService,
-    private zone: NgZone,
-    private app: ApplicationService,
     private actionSheetController: ActionSheetController,
     private dataCache: DataCacheService,
     private loadingController: LoadingController,
@@ -65,15 +71,8 @@ export class MapPage implements AfterViewInit {
     private directionService: DirectionService,
     private trackingService: TrackingService,
     private lastPositionSrv: LastPositionService) {
-    this.navService.position.subscribe(position => this.onPositionChange(position), err => { this.onError(err); });
-    this.navService.heading.subscribe(rotation => this.onHeadingChange(rotation), err => { this.onError(err); });
-    this.navService.speed.subscribe(speed => { this.currentSpeed = speed?.toFixed(1) || '-'; }, err => { this.onError(err); });
-    this.navService.altitude.subscribe(alt => { this.currentAltitude = alt?.toFixed(0) || '-'; }, err => { this.onError(err); });
-    this.trackingService.distance$.subscribe(distance => {
-      this.zone.run(() => {
-        this.currentDistance = distance;
-      });
-    });
+    this.navService.position.subscribe(position => this.onPositionChange(position));
+    this.navService.heading.subscribe(rotation => this.onHeadingChange(rotation));
   }
 
   private onMapChange(map: MapEntity) {
@@ -104,7 +103,6 @@ export class MapPage implements AfterViewInit {
   }
 
   public async mileagePress() {
-
     const actionSheet = await this.actionSheetController.create({
       header: 'Activity',
       buttons: [
@@ -182,10 +180,6 @@ export class MapPage implements AfterViewInit {
     this.map.setRotation(rotation);
   }
 
-  private onError(err: any) {
-    console.error(err);
-  }
-
   public async onContext(coords: number[]) {
     let role = await this.presentActionSheet();
     if (role === 'save') {
@@ -238,7 +232,6 @@ export class MapPage implements AfterViewInit {
 
   async storeClick() {
     let urls = this.map.getBoundingBoxTileUrls();
-    console.dir(urls);
     if (urls.length > 250) {
       alert('Zone is too large');
       return;

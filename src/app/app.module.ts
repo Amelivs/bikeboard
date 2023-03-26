@@ -25,6 +25,7 @@ import { DurationPipe } from './core/pipes/duration.pipe';
 import { LocaleDatePipe } from './core/pipes/locale-date.pipe';
 import { ActivitiesComponent } from './features/activities/activities.component';
 import { KilometerPipe } from './core/pipes/kilometer.pipe';
+import { FixedPipe } from './core/pipes/fixed.pipe';
 
 
 @NgModule({
@@ -44,7 +45,8 @@ import { KilometerPipe } from './core/pipes/kilometer.pipe';
     DistancePipe,
     DurationPipe,
     LocaleDatePipe,
-    KilometerPipe
+    KilometerPipe,
+    FixedPipe
   ],
   imports: [
     BrowserModule,

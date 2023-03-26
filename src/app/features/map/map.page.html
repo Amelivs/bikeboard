@@ -28,19 +28,19 @@
     <ion-buttons slot="start">
       <ion-button class="non-clickable">
         <div class="btn-content">
-          <div class="btn-value">{{currentSpeed}}</div>
+          <div class="btn-value">{{currentSpeed | async | fixed:1}}</div>
           <div class="btn-text">Speed</div>
         </div>
       </ion-button>
       <ion-button class="non-clickable">
         <div class="btn-content">
-          <div class="btn-value">{{currentAltitude}}</div>
+          <div class="btn-value">{{currentAltitude | async | fixed:0}}</div>
           <div class="btn-text">Altitude</div>
         </div>
       </ion-button>
       <ion-button (click)="mileagePress()">
         <div class="btn-content">
-          <div class="btn-value">{{currentDistance | km}}</div>
+          <div class="btn-value">{{currentDistance | async | km}}</div>
           <div class="btn-text">Distance</div>
         </div>
       </ion-button>
