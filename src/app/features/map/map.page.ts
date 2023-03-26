@@ -170,9 +170,11 @@ export class MapPage implements AfterViewInit {
     this.trackingMode = 'Navigation';
   }
 
-  private onPositionChange(position: number[]) {
+  private onPositionChange(coords: GeolocationCoordinates) {
+    let position = [coords.longitude, coords.latitude];
     this.map.setPosition(position);
     this.map.setCenter(position);
+    this.map.setAccuracy(position, coords.accuracy);
   }
 
   private onHeadingChange(heading: number) {

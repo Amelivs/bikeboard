@@ -14,7 +14,7 @@ export class NavigationService {
   /** 9km/h */
   private readonly speedThreshold = 2.5;
 
-  private readonly $position = new Subject<number[]>();
+  private readonly $position = new Subject<GeolocationCoordinates>();
   private readonly $heading = new Subject<number>();
   private readonly $speed = new Subject<number>();
   private readonly $altitude = new Subject<number>();
@@ -97,7 +97,7 @@ export class NavigationService {
     let trackedPosition$ = from(this.trackingService.beginSegment()).pipe(switchMap(() => position));
     trackedPosition$.subscribe({
       next: position => {
-        this.$position.next([position.coords.longitude, position.coords.latitude]);
+        this.$position.next(position.coords);
         this.trackingService.addTrackPoint(position);
       },
       error: err => {

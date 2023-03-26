@@ -1,7 +1,7 @@
 import { AfterViewInit, Component, ElementRef, EventEmitter, Input, NgZone, OnInit, Output, ViewChild } from '@angular/core';
 import { Map, Overlay, View, Collection } from 'ol';
-import { fromLonLat, toLonLat } from 'ol/proj';
-import { Style, Stroke } from 'ol/style';
+import { fromLonLat, METERS_PER_UNIT, toLonLat } from 'ol/proj';
+import { Style, Stroke, Fill } from 'ol/style';
 import { ScaleLine, } from 'ol/control';
 import { defaults as defaultInteractions } from 'ol/interaction';
 import TileLayer from 'ol/layer/Tile';
@@ -20,8 +20,9 @@ import MapboxVector from 'ol/layer/MapboxVector';
 import { DirectionResult } from 'src/app/core/services/direction.service';
 import { ReadOptions } from 'ol/format/Feature';
 import Feature from 'ol/Feature';
-import { Geometry } from 'ol/geom';
+import { Circle, Geometry } from 'ol/geom';
 import { Type } from 'ol/geom/Geometry';
+import { getPointResolution } from 'ol/proj';
 
 @Component({
   selector: 'app-map-viewer',
@@ -57,6 +58,8 @@ export class MapViewerComponent implements OnInit, AfterViewInit {
     interactions: defaultInteractions({ doubleClickZoom: false })
   });
 
+  private accuracyCircle: Circle;
+
   private readonly layers = new LayerGroup();
   private readonly gpxLayers = new LayerGroup();
   private readonly directionLayers = new LayerGroup();
@@ -77,6 +80,12 @@ export class MapViewerComponent implements OnInit, AfterViewInit {
         width: 8,
       }),
     }),
+    Circle: new Style({
+      fill: new Fill({ color: 'rgb(66 133 244 / 15%)' }),
+      stroke: new Stroke({
+        color: 'transparent'
+      }),
+    })
   };
 
   private resizeObserver = new ResizeObserver(() => this.onResize());
@@ -129,11 +138,34 @@ export class MapViewerComponent implements OnInit, AfterViewInit {
     let projectedPosition = fromLonLat(position, this.view.getProjection());
     this.view.setCenter(projectedPosition);
     this.positionMarker.setPosition(projectedPosition);
+    this.accuracyCircle?.setCenter(projectedPosition);
   }
 
   public setCenter(position: number[]) {
     let projectedPosition = fromLonLat(position, this.view.getProjection());
     this.view.setCenter(projectedPosition);
+  }
+
+  public setAccuracy(position: number[], accuracy: number) {
+    let projectedPosition = fromLonLat(position, this.view.getProjection());
+
+    let projection = this.view.getProjection();
+    let resolutionAtEquator = this.view.getResolution();
+    let pointResolution = getPointResolution(projection, resolutionAtEquator, projectedPosition);
+    let radius = (accuracy / METERS_PER_UNIT.m) * (resolutionAtEquator / pointResolution);
+
+    if (this.accuracyCircle == null) {
+      this.accuracyCircle = new Circle(projectedPosition);
+      let vectorLayer = new VectorLayer({
+        source: new VectorSource({
+          features: [new Feature(this.accuracyCircle)]
+        }),
+        style: feature => this.gpxStyle[feature.getGeometry().getType()]
+      });
+      this.map.addLayer(vectorLayer);
+    }
+
+    this.accuracyCircle.setRadius(radius);
   }
 
   public setZoom(zoom: number) {

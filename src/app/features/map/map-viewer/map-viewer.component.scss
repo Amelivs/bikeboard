@@ -9,26 +9,17 @@
 }
 
 .position-marker {
-  border-radius: 50%;
-  padding: 6px;
-  width: 30px;
-  height: 30px;
-  background-color: rgb(66 133 244 / 20%);
-}
-
-.position-marker::after {
   border: 2px solid white;
   box-sizing: border-box;
-  content: "";
   border-radius: 50%;
   background-color: rgb(66 133 244);
-  width: 100%;
-  height: 100%;
+  width: 18px;
+  height: 18px;
   display: block;
 }
 
 .position-marker.disabled {
-  background-color: rgb(126 126 126 / 20%);
+  background-color: rgb(126 126 126);
 }
 
 .position-marker.disabled::after {
