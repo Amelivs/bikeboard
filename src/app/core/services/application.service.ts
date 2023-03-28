@@ -33,9 +33,16 @@ export class ApplicationService {
       .subscribe();
   }
 
-  public async lockScreen() {
+  public lockScreen() {
     if (this.wakeLock == null || this.wakeLock.released) {
-      await this.tryLockScreen();
+      this.tryLockScreen();
+    }
+  }
+
+  public releaseScreen() {
+    if (this.wakeLock != null || !this.wakeLock.released) {
+      this.wakeLock.release();
+      this.wakeLock = null;
     }
   }
 }

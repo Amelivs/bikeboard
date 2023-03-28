@@ -6,6 +6,7 @@ import { CompassService } from './compass.service';
 import { LocationService } from './location.service';
 import { LastPositionService } from './last-position.service';
 import { TrackingService } from './tracking.service';
+import { ApplicationService } from './application.service';
 
 @Injectable({
   providedIn: 'root'
@@ -24,7 +25,7 @@ export class NavigationService {
 
   private isTracking = false;
 
-  public constructor(private locationSrv: LocationService, private compassSrv: CompassService, private lastPositionSrv: LastPositionService, private trackingService: TrackingService) { }
+  public constructor(private app: ApplicationService, private locationSrv: LocationService, private compassSrv: CompassService, private lastPositionSrv: LastPositionService, private trackingService: TrackingService) { }
 
   public readonly position = this.$position.asObservable();
   public readonly heading = this.$heading.asObservable();
@@ -33,6 +34,7 @@ export class NavigationService {
 
   public startTracking() {
     this.stopTracking();
+    this.app.lockScreen();
 
     let position = this.locationSrv.watchPosition.pipe(takeUntil(this.unsubscribeLocation));
 
@@ -56,6 +58,7 @@ export class NavigationService {
         },
         complete: () => {
           this.$speed.next(null);
+          this.app.releaseScreen();
         }
       });
 

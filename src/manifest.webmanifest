@@ -1,4 +1,6 @@
 {
+  "$schema": "http://json.schemastore.org/web-manifest",
+  "id": "com.amelivs.bikeboard",
   "name": "Bikeboard",
   "short_name": "Bikeboard",
   "theme_color": "#000000",
