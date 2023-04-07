@@ -16,14 +16,14 @@ export class DataContext {
 
   private readonly databaseName = 'bikeboard';
   private readonly versionNumber = 1;
-  private database: IDBDatabase;
+  private database!: IDBDatabase;
 
-  private version: ObjectStore;
+  private version!: ObjectStore;
 
-  public maps: TableStore<MapEntity>;
-  public paths: TableStore<PathEntity>;
-  public preferences: ObjectStore;
-  public activities: TableStore<Activity>;
+  public maps!: TableStore<MapEntity>;
+  public paths!: TableStore<PathEntity>;
+  public preferences!: ObjectStore;
+  public activities!: TableStore<Activity>;
 
   constructor(private storageFactory: Storage) { }
 
@@ -113,7 +113,7 @@ export class DataContext {
     let request = indexedDB.open(this.databaseName, this.versionNumber);
 
     request.onupgradeneeded = event => {
-      this.upgrade(request.result, event.oldVersion, event.newVersion);
+      this.upgrade(request.result, event.oldVersion, event.newVersion!);
     };
 
     request.onsuccess = () => {

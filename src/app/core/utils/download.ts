@@ -27,11 +27,11 @@ export class DownloadUtils {
   }
 
   private static downloadByLink(data: Blob, fileName: string) {
-    let url = window.URL.createObjectURL(data);
+    let url = URL.createObjectURL(data);
     let a = document.createElement('a');
     a.href = url;
     a.download = fileName;
     a.click();
-    window.URL.revokeObjectURL(url);
+    URL.revokeObjectURL(url);
   }
 }

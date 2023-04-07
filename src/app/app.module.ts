@@ -1,3 +1,4 @@
+/* eslint-disable no-restricted-globals */
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
@@ -11,7 +12,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { environment } from '../environments/environment';
 import { SettingsComponent } from './features/settings/settings.component';
 import { MenuComponent } from './features/menu/menu.component';
-import { LongPressDirective } from './core/directives/longPress';
+import { LongPressDirective } from './core/directives/long-press';
 import { MapViewerComponent } from './features/map/map-viewer/map-viewer.component';
 import { MapPage } from './features/map/map.page';
 import { ImportPathComponent } from './features/import-path/import-path.component';
@@ -62,7 +63,11 @@ import { FixedPipe } from './core/pipes/fixed.pipe';
       registrationStrategy: 'registerWhenStable:10000'
     })
   ],
-  providers: [DataContext, { provide: Window, useValue: window }, { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
+  providers: [
+    DataContext,
+    { provide: Window, useValue: window },
+    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -40,10 +40,10 @@ export const MigrationSteps: ReadonlyArray<MigrationStep> = [
       return;
     }
     let track: Activity = {
-      id: null,
-      startDate: null,
-      distance: null,
-      duration: null,
+      id: null!,
+      startDate: null!,
+      distance: null!,
+      duration: null!,
       segments: [{ points: currentTrack.points }]
     };
     await storage.set('currentTrack', track);

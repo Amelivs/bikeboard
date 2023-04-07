@@ -15,14 +15,14 @@ export class CompassService {
     if (this.platform.is('desktop')) {
       return 'deviceorientation';
     }
-    if ('ondeviceorientationabsolute' in window) {
+    if ('ondeviceorientationabsolute' in this.window) {
       return 'deviceorientationabsolute';
     }
     return 'deviceorientation';
   }
 
   private createObservable() {
-    return fromEvent<DeviceOrientationEvent>(window, this.orientationEvent)
+    return fromEvent<DeviceOrientationEvent>(this.window, this.orientationEvent)
       .pipe(map(event => {
         if ((event.absolute || this.platform.is('desktop')) && event.alpha != null) {
           return -1 * event.alpha;
@@ -31,7 +31,7 @@ export class CompassService {
       }));
   }
 
-  public constructor(private platform: Platform) {
+  public constructor(private platform: Platform, private window: Window) {
     this.heading = this.createObservable().pipe(share());
   }
 

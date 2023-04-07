@@ -57,8 +57,14 @@
         "@typescript-eslint/naming-convention": "off",
         "@typescript-eslint/no-unused-vars": "off",
         "@typescript-eslint/prefer-for-of": "off",
+        "@typescript-eslint/no-shadow": "off",
+        "@typescript-eslint/no-non-null-assertion": "off",
         "prefer-arrow/prefer-arrow-functions": "off",
         "arrow-body-style": "off",
+        "curly": [
+          "error",
+          "multi-line"
+        ],
         "import/order": [
           "error",
           {
@@ -94,6 +100,13 @@
         ],
         "no-bitwise": "off",
         "no-fallthrough": "off",
+        "no-restricted-globals": [
+          "error",
+          "window",
+          "alert",
+          "confirm",
+          "prompt"
+        ],
         "prefer-const": "off",
         "filename-rules/match": [
           "error",
@@ -107,7 +120,7 @@
           {
             "vars": "all",
             "varsIgnorePattern": "^_",
-            "args": "after-used",
+            "args": "none",
             "argsIgnorePattern": "^_"
           }
         ],

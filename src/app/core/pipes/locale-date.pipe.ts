@@ -12,7 +12,7 @@ export class LocaleDatePipe implements PipeTransform {
 
   transform(date: Date): string {
     if (date == null) {
-      return null;
+      return '';
     }
     return this.formatter.format(date);
   }

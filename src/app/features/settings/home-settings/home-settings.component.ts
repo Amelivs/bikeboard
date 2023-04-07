@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { IonNav, ModalController } from '@ionic/angular';
 import { UnlockService } from 'src/app/core/services/unlock.service';
+import { DialogService } from 'src/app/core/services/dialog.service';
 
 import { environment } from '../../../../environments/environment';
 import { AttributionsComponent } from '../attributions/attributions.component';
@@ -13,10 +14,10 @@ import { SettingsService } from '../settings.service';
 })
 export class HomeSettingsComponent implements OnInit {
 
-  constructor(private modalCtrl: ModalController, private service: SettingsService, private unlockService: UnlockService, private nav: IonNav) { }
+  constructor(private modalCtrl: ModalController, private service: SettingsService, private unlockService: UnlockService, private nav: IonNav, private dialogSrv: DialogService) { }
 
   appVersion = environment.appVersion;
-  cachedTilesCount: number;
+  cachedTilesCount = 0;
 
   async ngOnInit() {
     this.cachedTilesCount = await this.service.countCachedTiles();
@@ -27,7 +28,7 @@ export class HomeSettingsComponent implements OnInit {
   }
 
   async resetClick() {
-    if (!confirm('All application settings and data will be lost.')) {
+    if (!this.dialogSrv.confirm('All application settings and data will be lost.')) {
       return;
     }
     await this.service.reset();
@@ -36,15 +37,15 @@ export class HomeSettingsComponent implements OnInit {
 
   async unlockClick() {
     try {
-      let key = prompt('Enter key');
+      let key = this.dialogSrv.prompt('Enter key');
       if (key != null) {
         await this.unlockService.unlock(key);
-        alert('Advanced features unlocked successfully.');
+        this.dialogSrv.alert('Advanced features unlocked successfully.');
       }
     }
     catch (err) {
       console.error(err);
-      alert('Advanced features could not be unlocked.');
+      this.dialogSrv.alert('Advanced features could not be unlocked.');
     }
   }
 

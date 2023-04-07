@@ -4,6 +4,7 @@ import { ReplaySubject } from 'rxjs';
 import { DataContext } from '../data/data-context';
 import { MapEntity } from '../data/entities/map';
 import { PathEntity } from '../data/entities/path';
+import { DialogService } from './dialog.service';
 
 @Injectable({
   providedIn: 'root'
@@ -18,10 +19,12 @@ export class DataCacheService {
   private async loadMaps() {
     let maps = await this.context.maps.getAll();
     maps = maps.sort((left, right) => left.name > right.name ? 1 : right.name > left.name ? -1 : 0);
+    this.maps$.next(maps);
     let activeMapId = await this.context.preferences.get('activeMapId');
     let activeMap = maps.find(map => map.id === activeMapId);
-    this.activeMap$.next(activeMap);
-    this.maps$.next(maps);
+    if (activeMap != null) {
+      this.activeMap$.next(activeMap);
+    }
   }
 
   private async loadPaths() {
@@ -33,13 +36,13 @@ export class DataCacheService {
     this.paths$.next(paths);
   }
 
-  constructor(private context: DataContext) {
+  constructor(private context: DataContext, private dialogSrv: DialogService) {
     try {
       this.loadMaps();
       this.loadPaths();
     } catch (err) {
       console.error(err);
-      alert(err instanceof Error ? err.message : err);
+      this.dialogSrv.alert(err);
     }
   }
 

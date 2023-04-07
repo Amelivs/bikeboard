@@ -6,6 +6,7 @@ import { DataContext } from '../data/data-context';
 import { Activity, ActivityPoint } from '../data/entities/activity';
 import { DistanceUtil } from '../utils/distance';
 import { UUID } from '../utils/uuid';
+import { DialogService } from './dialog.service';
 
 const MAX_COORDS_ACCURACY = 20;
 
@@ -15,11 +16,11 @@ const MAX_COORDS_ACCURACY = 20;
 })
 export class TrackingService {
 
-  private activity: Activity;
+  private activity: Activity | nil;
 
   public readonly distance$ = new ReplaySubject<number>(1);
 
-  public constructor(public dataContext: DataContext, private platform: Platform) { }
+  public constructor(public dataContext: DataContext, private platform: Platform, private dialogSrv: DialogService) { }
 
   public async initialize(newActivity = false) {
     if (!newActivity) {
@@ -28,7 +29,7 @@ export class TrackingService {
         this.activity = await this.dataContext.activities.get(activityId);
       }
     }
-    if (this.activity == null || newActivity == true) {
+    if (this.activity == null || newActivity === true) {
       this.activity = { id: UUID.next(), segments: [], startDate: new Date(), distance: 0, duration: 0 };
       await this.dataContext.activities.save(this.activity);
       await this.dataContext.preferences.save('currentActivityId', this.activity.id);
@@ -38,7 +39,7 @@ export class TrackingService {
   }
 
   public async beginSegment() {
-    this.activity.segments.push({ points: [] });
+    this.activity!.segments.push({ points: [] });
   }
 
   public addTrackPoint(position: GeolocationPosition) {
@@ -49,31 +50,31 @@ export class TrackingService {
     {
       latitude: position.coords.latitude,
       longitude: position.coords.longitude,
-      altitude: position.coords.altitude,
-      heading: position.coords.heading,
-      speed: position.coords.speed,
+      altitude: position.coords.altitude ?? 0,
+      heading: position.coords.heading ?? 0,
+      speed: position.coords.speed ?? 0,
       timestamp: position.timestamp
     };
 
-    let segment = this.activity.segments[this.activity.segments.length - 1];
+    let segment = this.activity!.segments[this.activity!.segments.length - 1];
     let lastPoint = segment.points[segment.points.length - 1];
 
     if (lastPoint != null) {
-      this.activity.distance += DistanceUtil.getDistanceBetween(lastPoint, point);
-      this.distance$.next(this.activity.distance);
+      this.activity!.distance += DistanceUtil.getDistanceBetween(lastPoint, point);
+      this.distance$.next(this.activity!.distance);
     }
 
     segment.points.push(point);
 
-    this.activity.duration = DistanceUtil.getDuration(this.activity);
+    this.activity!.duration = DistanceUtil.getDuration(this.activity!);
   }
 
   public async saveTrack() {
-    await this.dataContext.activities.save(this.activity);
+    await this.dataContext.activities.save(this.activity!);
   }
 
   public async startNewActivity() {
-    if (!confirm('Start a new activity?')) {
+    if (!this.dialogSrv.confirm('Start a new activity?')) {
       return;
     }
     await this.initialize(true);

@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
 import { DataContext } from 'src/app/core/data/data-context';
+import { DialogService } from 'src/app/core/services/dialog.service';
 
 
 @Injectable()
 export class ActivitiesServices {
 
-  public constructor(private context: DataContext) { }
+  public constructor(private context: DataContext, private dialogSrv: DialogService) { }
 
   public async getActivities() {
     let activities = await this.context.activities.getAll();
@@ -16,7 +17,7 @@ export class ActivitiesServices {
   public async deleteActivity(activityId: string) {
     let currentActivityId = await this.context.preferences.get('currentActivityId');
     if (activityId === currentActivityId) {
-      alert('Cannot delete current activity');
+      this.dialogSrv.alert('Cannot delete current activity');
       return;
     }
     await this.context.activities.delete(activityId);
@@ -25,7 +26,7 @@ export class ActivitiesServices {
   public async export(activityId: string) {
     let activity = await this.context.activities.get(activityId);
     if (activity == null) {
-      return;
+      throw new Error('Activity not found');
     }
 
     let lines = [];

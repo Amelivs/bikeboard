@@ -4,6 +4,7 @@ import { firstValueFrom, Observable } from 'rxjs';
 import { MapEntity } from 'src/app/core/data/entities/map';
 import { PathEntity } from 'src/app/core/data/entities/path';
 import { DataCacheService } from 'src/app/core/services/data-cache.service';
+import { DialogService } from 'src/app/core/services/dialog.service';
 
 
 @Component({
@@ -16,10 +17,10 @@ export class MenuComponent implements OnInit {
   readonly maps$: Observable<MapEntity[]>;
   readonly paths$: Observable<PathEntity[]>;
 
-  selectedMap: MapEntity;
+  selectedMap: MapEntity | nil;
   selectedPaths: PathEntity[] = [];
 
-  constructor(private service: DataCacheService, private menu: MenuController) {
+  constructor(private service: DataCacheService, private menu: MenuController, private dialogSrv: DialogService) {
     this.maps$ = service.maps;
     this.paths$ = service.paths;
   }
@@ -31,7 +32,9 @@ export class MenuComponent implements OnInit {
 
   selectionChange() {
     this.menu.close();
-    this.service.setActiveMap(this.selectedMap);
+    if (this.selectedMap != null) {
+      this.service.setActiveMap(this.selectedMap);
+    }
   }
 
   isChecked(path: PathEntity) {
@@ -60,14 +63,14 @@ export class MenuComponent implements OnInit {
 
   async deleteMap(slidingItem: IonItemSliding, map: MapEntity) {
     slidingItem.close();
-    if (confirm(`Map '${map.name}' will be permanently deleted.`)) {
+    if (this.dialogSrv.confirm(`Map '${map.name}' will be permanently deleted.`)) {
       await this.service.deleteMap(map.id);
     }
   }
 
   async deletePath(slidingItem: IonItemSliding, path: PathEntity) {
     slidingItem.close();
-    if (confirm(`Path '${path.name}' will be permanently deleted.`)) {
+    if (this.dialogSrv.confirm(`Path '${path.name}' will be permanently deleted.`)) {
       await this.service.deletePath(path.id);
     }
   }

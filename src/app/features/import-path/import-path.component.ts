@@ -19,12 +19,12 @@ export class ImportPathComponent implements OnInit {
     });
   }
 
-  private nativefileInput: HTMLInputElement;
+  private nativefileInput: HTMLInputElement | nil;
 
   readonly form = new FormGroup({
-    fileName: new FormControl<string>(null, [Validators.required]),
-    file: new FormControl<File>(null, [Validators.required]),
-    name: new FormControl<string>(null, [Validators.required])
+    fileName: new FormControl<string | null>(null, [Validators.required]),
+    file: new FormControl<File | null>(null, [Validators.required]),
+    name: new FormControl<string | null>(null, [Validators.required])
   });
 
   constructor(private modalCtrl: ModalController, private dataCache: DataCacheService) { }
@@ -32,7 +32,7 @@ export class ImportPathComponent implements OnInit {
   ngOnInit() { }
 
   browse() {
-    this.nativefileInput.click();
+    this.nativefileInput?.click();
   }
 
   onFileChange(event: any) {
@@ -51,8 +51,8 @@ export class ImportPathComponent implements OnInit {
   }
 
   async importClick() {
-    let data = await this.toDataUrl(this.form.controls['file'].value);
-    let name = this.form.controls['name'].value;
+    let data = await this.toDataUrl(this.form.controls['file'].value!);
+    let name = this.form.controls['name'].value!;
 
     let path: PathEntity = {
       id: UUID.next(),
@@ -72,7 +72,7 @@ export class ImportPathComponent implements OnInit {
         resolve(reader.result as string);
       }, false);
       reader.addEventListener('error', () => {
-        reject(reader.error.message);
+        reject(reader.error?.message);
       }, false);
       reader.readAsDataURL(blob);
     });

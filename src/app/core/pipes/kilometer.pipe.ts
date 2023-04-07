@@ -2,7 +2,10 @@ import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({ name: 'km' })
 export class KilometerPipe implements PipeTransform {
-  transform(value: number): string {
+  transform(value: number | null): string {
+    if (value == null) {
+      return '';
+    }
     if (value < 1000) {
       return Math.round(value).toString();
     }

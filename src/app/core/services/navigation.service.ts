@@ -17,8 +17,8 @@ export class NavigationService {
 
   private readonly $position = new Subject<GeolocationCoordinates>();
   private readonly $heading = new Subject<number>();
-  private readonly $speed = new Subject<number>();
-  private readonly $altitude = new Subject<number>();
+  private readonly $speed = new Subject<number | nil>();
+  private readonly $altitude = new Subject<number | nil>();
 
   private readonly unsubscribeLocation = new Subject<void>();
   private readonly unsubscribeHeading = new Subject<void>();
@@ -41,6 +41,7 @@ export class NavigationService {
     position
       .pipe(map(position => position.coords.speed))
       .pipe(filter(speed => typeof (speed) === 'number' && !isNaN(speed)))
+      .pipe(map(speed => speed ?? 0))
       .pipe(bufferTime(3000, null, 3))
       .pipe(map(speeds => {
         if (speeds.length === 0) {
@@ -64,7 +65,8 @@ export class NavigationService {
 
     let alt = position
       .pipe(map(position => position.coords.altitude))
-      .pipe(filter(altitude => typeof (altitude) === 'number' && !isNaN(altitude)));
+      .pipe(filter(altitude => typeof (altitude) === 'number' && !isNaN(altitude)))
+      .pipe(map(altitude => altitude ?? 0));
 
     alt.pipe(defaultIfEmpty(null), first()).subscribe(first => {
       this.$altitude.next(first);
@@ -137,11 +139,11 @@ export class NavigationService {
       }
     }
 
-    let previousSpeed: number = null;
+    let previousSpeed: number | nil;
 
     this.locationSrv.watchPosition
       .pipe(map(position => position.coords.speed))
-      .pipe(map(speed => isNaN(speed) || speed == null ? 0 : speed))
+      .pipe(map(speed => speed == null || isNaN(speed) ? 0 : speed))
       .pipe(bufferCount(3))
       .pipe(startWith<number[]>([]))
       .pipe(map(speeds => {
@@ -169,7 +171,7 @@ export class NavigationService {
         }
         else {
           console.debug('Switching to GPS heading');
-          return this.locationSrv.watchPosition.pipe(map(position => position.coords.heading));
+          return this.locationSrv.watchPosition.pipe(map(position => position.coords.heading ?? 0));
         }
       }))
       .pipe(takeUntil(this.unsubscribeHeading))

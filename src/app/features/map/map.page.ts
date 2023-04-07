@@ -7,6 +7,7 @@ import { DataCacheService } from 'src/app/core/services/data-cache.service';
 import { TrackingService } from 'src/app/core/services/tracking.service';
 import { LoadingController } from '@ionic/angular';
 import { DirectionService } from 'src/app/core/services/direction.service';
+import { DialogService } from 'src/app/core/services/dialog.service';
 
 import { NavigationService } from '../../core/services/navigation.service';
 import { LastPositionService } from '../../core/services/last-position.service';
@@ -21,14 +22,14 @@ type TrackingMode = 'Free' | 'Centered' | 'Navigation';
 })
 export class MapPage implements AfterViewInit {
 
-  @ViewChild('map') map: MapViewerComponent;
+  @ViewChild('map') map!: MapViewerComponent;
 
   public rotation = 0;
-  public attributions: string;
+  public attributions: string | nil;
 
-  public origin: number[];
+  public origin: number[] | nil;
   public waypoints: number[][] = [];
-  public destination: number[];
+  public destination: number[] | nil;
 
   public trackingMode: TrackingMode = 'Free';
 
@@ -70,6 +71,7 @@ export class MapPage implements AfterViewInit {
     private modalController: ModalController,
     private directionService: DirectionService,
     private trackingService: TrackingService,
+    private dialogSrv: DialogService,
     private lastPositionSrv: LastPositionService) {
     this.navService.position.subscribe(position => this.onPositionChange(position));
     this.navService.heading.subscribe(rotation => this.onHeadingChange(rotation));
@@ -187,30 +189,22 @@ export class MapPage implements AfterViewInit {
     }
     if (role === 'defineOriginPoint') {
       this.origin = coords;
-      if (this.origin && this.origin.length > 0 && this.destination && this.destination.length > 0) {
-        this.calculateDirection();
-      }
+      this.calculateDirection();
     }
     if (role === 'defineDestinationPoint') {
       this.destination = coords;
       if (this.origin == null) {
         this.origin = this.map.getGeographicPosition();
       }
-      if (this.origin && this.origin.length > 0 && this.destination && this.destination.length > 0) {
-        this.calculateDirection();
-      }
+      this.calculateDirection();
     }
     if (role === 'addWaypoint') {
       this.waypoints.push(coords);
-      if (this.origin && this.origin.length > 0 && this.destination && this.destination.length > 0) {
-        this.calculateDirection();
-      }
+      this.calculateDirection();
     }
     if (role === 'removeWaypoint') {
       this.waypoints.pop();
-      if (this.origin && this.origin.length > 0 && this.destination && this.destination.length > 0) {
-        this.calculateDirection();
-      }
+      this.calculateDirection();
     }
     let points = [...this.waypoints];
     if (this.origin != null) {
@@ -233,7 +227,7 @@ export class MapPage implements AfterViewInit {
   async storeClick() {
     let urls = this.map.getBoundingBoxTileUrls();
     if (urls.length > 250) {
-      alert('Zone is too large');
+      this.dialogSrv.alert('Zone is too large');
       return;
     }
     let fetchTasks = urls.map(url => fetch(url, { mode: 'cors' }));
@@ -242,7 +236,7 @@ export class MapPage implements AfterViewInit {
     }
     catch (err) {
       console.error(err);
-      alert(err);
+      this.dialogSrv.alert(err);
     }
   }
 
@@ -266,6 +260,9 @@ export class MapPage implements AfterViewInit {
   }
 
   async calculateDirection() {
+    if (this.origin == null || this.destination == null || this.origin.length <= 0 || this.destination.length <= 0) {
+      return;
+    }
     let loading = await this.loadingController.create({ message: 'Calculating directions...' });
     loading.present();
 
@@ -275,7 +272,7 @@ export class MapPage implements AfterViewInit {
 
     } catch (err) {
       console.error(err);
-      alert(err instanceof Error ? err.message : err);
+      this.dialogSrv.alert(err);
     }
     finally {
       loading.dismiss();

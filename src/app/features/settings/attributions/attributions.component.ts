@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { DialogService } from 'src/app/core/services/dialog.service';
 
 import { AttributionsService } from './attributions.service';
 
@@ -10,9 +11,9 @@ import { AttributionsService } from './attributions.service';
 })
 export class AttributionsComponent implements OnInit {
 
-  atttributions: string;
+  atttributions: string | nil;
 
-  constructor(private service: AttributionsService) { }
+  constructor(private service: AttributionsService, private dialogSrv: DialogService) { }
 
   async ngOnInit() {
     try {
@@ -20,7 +21,7 @@ export class AttributionsComponent implements OnInit {
     }
     catch (err) {
       console.error(err);
-      alert(err instanceof Error ? err.message : err);
+      this.dialogSrv.alert(err);
     }
   }
 }

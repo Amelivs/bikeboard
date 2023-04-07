@@ -7,7 +7,7 @@ import { filter, switchMap } from 'rxjs/operators';
 })
 export class ApplicationService {
 
-  private wakeLock: WakeLockSentinel;
+  private wakeLock: WakeLockSentinel | nil;
 
   private get wakeLockSupported() {
     return 'wakeLock' in navigator;
@@ -28,7 +28,7 @@ export class ApplicationService {
     fromEvent(window.document, 'visibilitychange')
       .pipe(
         filter(() => window.document.visibilityState === 'visible'),
-        filter(() => this.wakeLock?.released),
+        filter(() => this.wakeLock?.released ?? false),
         switchMap(() => this.tryLockScreen()))
       .subscribe();
   }
@@ -40,7 +40,7 @@ export class ApplicationService {
   }
 
   public releaseScreen() {
-    if (this.wakeLock != null || !this.wakeLock.released) {
+    if (this.wakeLock != null && !this.wakeLock.released) {
       this.wakeLock.release();
       this.wakeLock = null;
     }

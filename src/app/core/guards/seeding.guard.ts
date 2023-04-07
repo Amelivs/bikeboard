@@ -4,13 +4,14 @@ import { ActivatedRouteSnapshot, CanActivate, RouterStateSnapshot } from '@angul
 import SeedingData from '../../../seeding.json';
 import { DataContext } from '../data/data-context';
 import { TrackingService } from '../services/tracking.service';
+import { DialogService } from '../services/dialog.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SeedingGuard implements CanActivate {
 
-  constructor(private context: DataContext, private trackingService: TrackingService) { }
+  constructor(private context: DataContext, private trackingService: TrackingService, private dialogSrv: DialogService) { }
 
   async canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
     try {
@@ -22,7 +23,7 @@ export class SeedingGuard implements CanActivate {
     }
     catch (err) {
       console.error(err);
-      alert(err instanceof Error ? err.message : err);
+      this.dialogSrv.alert(err);
     }
     return true;
   }

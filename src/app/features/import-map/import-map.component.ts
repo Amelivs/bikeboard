@@ -14,9 +14,9 @@ import { UUID } from 'src/app/core/utils/uuid';
 export class ImportMapComponent implements OnInit {
 
   readonly form = new FormGroup({
-    type: new FormControl<string>(null, [Validators.required]),
-    url: new FormControl<string>(null, [Validators.required,]),
-    name: new FormControl<string>(null, [Validators.required])
+    type: new FormControl<string | null>(null, [Validators.required]),
+    url: new FormControl<string | null>(null, [Validators.required,]),
+    name: new FormControl<string | null>(null, [Validators.required])
   }, ImportMapComponent.urlValidator);
 
   get urlError() {
@@ -35,11 +35,10 @@ export class ImportMapComponent implements OnInit {
   async importClick() {
     let map: MapEntity = {
       id: UUID.next(),
-      name: this.form.value.name,
-      attributions: null,
+      name: this.form.value.name!,
       layers: [{
-        type: this.form.value.type,
-        url: this.form.value.url
+        type: this.form.value.type!,
+        url: this.form.value.url!
       }]
     };
     await this.dataCache.saveMap(map);
@@ -47,11 +46,11 @@ export class ImportMapComponent implements OnInit {
   }
 
   static urlValidator: ValidatorFn = (formGroup: AbstractControl) => {
-    const type = formGroup.get('type');
-    const url = formGroup.get('url');
+    const type = formGroup.get('type')!;
+    const url = formGroup.get('url')!;
     let value = url.value as string;
     if (!value) {
-      return;
+      return null;
     }
     let inputControl = document.createElement('input');
     inputControl.type = 'url';
@@ -68,5 +67,6 @@ export class ImportMapComponent implements OnInit {
       url.setErrors({ message: 'URL must include {X}, {y} and {z} placeholders' });
       return null;
     }
+    return null;
   };
 }

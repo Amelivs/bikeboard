@@ -31,8 +31,8 @@ import { getPointResolution } from 'ol/proj';
 })
 export class MapViewerComponent implements OnInit, AfterViewInit {
 
-  @ViewChild('map') mapElement: ElementRef;
-  @ViewChild('positionMarker') positionMarkerElement: ElementRef;
+  @ViewChild('map') mapElement!: ElementRef;
+  @ViewChild('positionMarker') positionMarkerElement!: ElementRef;
 
   @Input() markerDisabled = true;
   @Output() mapMove = new EventEmitter<void>();
@@ -58,7 +58,7 @@ export class MapViewerComponent implements OnInit, AfterViewInit {
     interactions: defaultInteractions({ doubleClickZoom: false })
   });
 
-  private accuracyCircle: Circle;
+  private accuracyCircle: Circle | nil;
 
   private readonly layers = new LayerGroup();
   private readonly gpxLayers = new LayerGroup();
@@ -126,12 +126,12 @@ export class MapViewerComponent implements OnInit, AfterViewInit {
   }
 
   public getPosition() {
-    return this.positionMarker.getPosition();
+    return this.positionMarker.getPosition()!;
   }
 
   public getGeographicPosition() {
     let coordinates = this.positionMarker.getPosition();
-    return toLonLat(coordinates, this.view.getProjection());
+    return toLonLat(coordinates!, this.view.getProjection());
   }
 
   public setPosition(position: number[]) {
@@ -150,7 +150,7 @@ export class MapViewerComponent implements OnInit, AfterViewInit {
     let projectedPosition = fromLonLat(position, this.view.getProjection());
 
     let projection = this.view.getProjection();
-    let resolutionAtEquator = this.view.getResolution();
+    let resolutionAtEquator = this.view.getResolution()!;
     let pointResolution = getPointResolution(projection, resolutionAtEquator, projectedPosition);
     let radius = (accuracy / METERS_PER_UNIT.m) * (resolutionAtEquator / pointResolution);
 
@@ -160,7 +160,7 @@ export class MapViewerComponent implements OnInit, AfterViewInit {
         source: new VectorSource({
           features: [new Feature(this.accuracyCircle)]
         }),
-        style: feature => this.gpxStyle[feature.getGeometry().getType()]
+        style: feature => this.gpxStyle[feature.getGeometry()!.getType()]
       });
       this.map.addLayer(vectorLayer);
     }
@@ -173,12 +173,11 @@ export class MapViewerComponent implements OnInit, AfterViewInit {
   }
 
   public setRotation(rotation: number, animate = false) {
-    animate ?
-      this.view.animate({ rotation, duration: 300 }) :
-      this.view.setRotation(rotation);
+    if (animate === true) { this.view.animate({ rotation, duration: 300 }); }
+    else { this.view.setRotation(rotation); }
   }
 
-  public setPoints(points: number[][]) {
+  public setPoints(points: number[][] | null) {
     this.pointOverlays.forEach(po => this.map.removeOverlay(po));
     this.points.length = 0;
     this.pointOverlays.length = 0;
@@ -242,14 +241,14 @@ export class MapViewerComponent implements OnInit, AfterViewInit {
           url: path.url,
           format: new GPX(),
         }),
-        style: feature => this.gpxStyle[feature.getGeometry().getType()],
+        style: feature => this.gpxStyle[feature.getGeometry()!.getType()],
       });
       layers.push(layer);
     }
     this.gpxLayers.setLayers(new Collection(layers));
   }
 
-  public setDirection(direction: DirectionResult) {
+  public setDirection(direction: DirectionResult | null) {
     let layers: BaseLayer[] = [];
 
     if (direction == null) {
@@ -281,7 +280,7 @@ export class MapViewerComponent implements OnInit, AfterViewInit {
       source: new VectorSource({
         features,
       }),
-      style: feature => this.gpxStyle[feature.getGeometry().getType()],
+      style: feature => this.gpxStyle[feature.getGeometry()!.getType()],
     });
 
     layers.push(vector);
@@ -290,13 +289,13 @@ export class MapViewerComponent implements OnInit, AfterViewInit {
 
   public getBoundingBoxTileUrls(zoom = 15) {
     let layer = this.layers.getLayers().getArray()[0] as TileLayer<TileDebug>;
-    let source = layer.getSource();
-    let tileGrid = source.getTileGrid();
+    let source = layer.getSource()!;
+    let tileGrid = source.getTileGrid()!;
     let urlFunc = source.getTileUrlFunction();
     let tileURLs: string[] = [];
     let extent = this.view.calculateExtent(this.map.getSize());
     tileGrid.forEachTileCoord(extent, zoom, tileCoord => {
-      let url = urlFunc(tileCoord, 1, source.getProjection());
+      let url = urlFunc(tileCoord, 1, source.getProjection()!)!;
       tileURLs.push(url);
     });
     return tileURLs;
@@ -308,7 +307,9 @@ export class MapViewerComponent implements OnInit, AfterViewInit {
       pixelCoords = [event.x, event.y];
     }
     else {
-      pixelCoords = [event.touches.item(0).clientX, event.touches.item(0).clientY];
+      let touch = event.touches.item(0);
+      if (touch == null) return;
+      pixelCoords = [touch.clientX, touch.clientY];
     }
     let coordinates = this.map.getCoordinateFromPixel(pixelCoords);
     let geoCoords = toLonLat(coordinates, this.view.getProjection());

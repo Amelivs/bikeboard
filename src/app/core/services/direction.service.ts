@@ -13,7 +13,7 @@ export interface DirectionResult {
 export class DirectionService {
 
   public async getDirection(origin: number[], waypoints: number[][], destination: number[], providerName: string): Promise<DirectionResult> {
-    let provider = SeedingData.directionProviders.find(p => p.name === providerName);
+    const provider = SeedingData.directionProviders.find(p => p.name === providerName);
     if (provider == null) {
       throw new Error(`Direction provider ${providerName} not found`);
     }

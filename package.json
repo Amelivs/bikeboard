@@ -1,6 +1,6 @@
 {
   "name": "bikeboard",
-  "version": "2023.3.28",
+  "version": "2023.4.7",
   "author": "Guillaume Erhart",
   "homepage": "https://github.com/Amelivs/bikeboard",
   "scripts": {
@@ -15,8 +15,7 @@
     "lint": "ng lint --fix",
     "stylelint": "npx stylelint src/**/*.scss --fix",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test",
-    "preinstall": "npx force-resolutions"
+    "test": "ng test"
   },
   "private": true,
   "dependencies": {

@@ -59,3 +59,5 @@ interface WakeLock {
 interface Navigator {
   readonly wakeLock: WakeLock;
 }
+
+type nil = null | undefined;

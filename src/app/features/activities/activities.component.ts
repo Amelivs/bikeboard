@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { IonItemSliding, ModalController } from '@ionic/angular';
 import { BehaviorSubject } from 'rxjs';
 import { Activity } from 'src/app/core/data/entities/activity';
-import { DataCacheService } from 'src/app/core/services/data-cache.service';
 import { DownloadUtils } from 'src/app/core/utils/download';
+import { DialogService } from 'src/app/core/services/dialog.service';
 
 import { ActivitiesServices } from './activities.service';
 
@@ -21,7 +21,7 @@ export class ActivitiesComponent implements OnInit {
     this.activities$.next(activities);
   }
 
-  constructor(private modalCtrl: ModalController, private service: ActivitiesServices, private dataCache: DataCacheService) { }
+  constructor(private modalCtrl: ModalController, private service: ActivitiesServices, private dialogSrv: DialogService) { }
 
   readonly activities$ = new BehaviorSubject<Activity[]>([]);
 
@@ -44,7 +44,7 @@ export class ActivitiesComponent implements OnInit {
   }
 
   async deleteActivity(item: IonItemSliding, activity: Activity) {
-    if (confirm(`This activity will be lost. Are you sure?`)) {
+    if (this.dialogSrv.confirm(`This activity will be lost. Are you sure?`)) {
       await this.service.deleteActivity(activity.id);
     }
     item.close();
