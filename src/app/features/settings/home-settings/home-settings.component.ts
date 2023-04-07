@@ -14,7 +14,13 @@ import { SettingsService } from '../settings.service';
 })
 export class HomeSettingsComponent implements OnInit {
 
-  constructor(private modalCtrl: ModalController, private service: SettingsService, private unlockService: UnlockService, private nav: IonNav, private dialogSrv: DialogService) { }
+  constructor(
+    private modalCtrl: ModalController,
+    private service: SettingsService,
+    private unlockService: UnlockService,
+    private nav: IonNav,
+    private window: Window,
+    private dialogSrv: DialogService) { }
 
   appVersion = environment.appVersion;
   cachedTilesCount = 0;
@@ -32,7 +38,7 @@ export class HomeSettingsComponent implements OnInit {
       return;
     }
     await this.service.reset();
-    location.reload();
+    this.window.location.reload();
   }
 
   async unlockClick() {
