@@ -4,6 +4,7 @@ import { ImportPathComponent } from 'src/app/features/import-path/import-path.co
 import { SettingsComponent } from 'src/app/features/settings/settings.component';
 
 import { ImportMapComponent } from '../import-map/import-map.component';
+import { DebuggingComponent } from '../debugging/debugging.component';
 
 @Component({
   selector: 'app-home',
@@ -16,9 +17,15 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void { }
 
-  async mapSettingsClick() {
+  mapSettingsClick() {
     this.modalController
       .create({ component: SettingsComponent })
+      .then(modal => modal.present());
+  }
+
+  titlePress() {
+    this.modalController
+      .create({ component: DebuggingComponent })
       .then(modal => modal.present());
   }
 

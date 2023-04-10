@@ -138,8 +138,7 @@
           }
         ],
         "radix": "off",
-        "no-underscore-dangle": "off",
-        "no-console": "off"
+        "no-underscore-dangle": "off"
       }
     },
     {

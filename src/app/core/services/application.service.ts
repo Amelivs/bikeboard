@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { fromEvent } from 'rxjs';
 import { filter, switchMap } from 'rxjs/operators';
 
+import { LoggingService } from './logging.service';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -17,14 +19,14 @@ export class ApplicationService {
     if (!this.wakeLockSupported) { return; }
     try {
       this.wakeLock = await navigator.wakeLock.request('screen');
-      console.info('Screen wake lock successfully acquired');
+      this.logging.info('Screen wake lock successfully acquired');
     }
     catch (err) {
-      console.error('Screen wake lock could not be acquired\n', err);
+      this.logging.error(err, 'Screen wake lock could not be acquired');
     }
   }
 
-  constructor(private window: Window) {
+  constructor(private window: Window, private logging: LoggingService) {
     fromEvent(window.document, 'visibilitychange')
       .pipe(
         filter(() => window.document.visibilityState === 'visible'),

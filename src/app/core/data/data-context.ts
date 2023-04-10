@@ -9,6 +9,7 @@ import { MigrationSteps } from './migration-steps';
 import { ObjectStore } from './stores/object-store';
 import { TableStore } from './stores/table-store';
 import { UpgradeSteps } from './upgrade-steps';
+import { LoggingService } from '../services/logging.service';
 
 
 @Injectable()
@@ -25,7 +26,7 @@ export class DataContext {
   public preferences!: ObjectStore;
   public activities!: TableStore<Activity>;
 
-  constructor(private storageFactory: Storage) { }
+  constructor(private storageFactory: Storage, private logging: LoggingService) { }
 
   public async initialize() {
     this.database = await this.openDatabase();
@@ -80,11 +81,11 @@ export class DataContext {
       return;
     }
 
-    console.info(`Database upgrade from ${oldVersion} to ${newVersion}`);
+    this.logging.info(`Database upgrade from ${oldVersion} to ${newVersion}`);
 
     for (let stepIndex = oldVersion; stepIndex < newVersion; stepIndex++) {
       UpgradeSteps[stepIndex](db);
-      console.info(`Database upgrade to ${stepIndex + 1} successful`);
+      this.logging.info(`Database upgrade to ${stepIndex + 1} successful`);
     }
   }
 
@@ -97,13 +98,13 @@ export class DataContext {
       return;
     }
 
-    console.info(`Database migration from ${oldVersion} to ${newVersion}`);
+    this.logging.info(`Database migration from ${oldVersion} to ${newVersion}`);
 
     for (let stepIndex = oldVersion; stepIndex < newVersion; stepIndex++) {
       await MigrationSteps[stepIndex](storage, this.database);
       await this.version.save('version', stepIndex + 1);
 
-      console.info(`Database migration to ${stepIndex + 1} successful`);
+      this.logging.info(`Database migration to ${stepIndex + 1} successful`);
     }
   }
 

@@ -7,6 +7,7 @@ import { LocationService } from './location.service';
 import { LastPositionService } from './last-position.service';
 import { TrackingService } from './tracking.service';
 import { ApplicationService } from './application.service';
+import { LoggingService } from './logging.service';
 
 @Injectable({
   providedIn: 'root'
@@ -25,7 +26,13 @@ export class NavigationService {
 
   private isTracking = false;
 
-  public constructor(private app: ApplicationService, private locationSrv: LocationService, private compassSrv: CompassService, private lastPositionSrv: LastPositionService, private trackingService: TrackingService) { }
+  public constructor(
+    private app: ApplicationService,
+    private logging: LoggingService,
+    private locationSrv: LocationService,
+    private compassSrv: CompassService,
+    private lastPositionSrv: LastPositionService,
+    private trackingService: TrackingService) { }
 
   public readonly position = this.$position.asObservable();
   public readonly heading = this.$heading.asObservable();
@@ -55,7 +62,7 @@ export class NavigationService {
         },
         error: err => {
           this.$speed.error(err);
-          console.error(err);
+          this.logging.error(err);
         },
         complete: () => {
           this.$speed.next(null);
@@ -85,7 +92,7 @@ export class NavigationService {
         },
         error: err => {
           this.$altitude.error(err);
-          console.error(err);
+          this.logging.error(err);
         },
         complete: () => {
           this.$altitude.next(null);
@@ -107,7 +114,7 @@ export class NavigationService {
       },
       error: err => {
         this.$position.error(err);
-        console.error(err);
+        this.logging.error(err);
       },
       complete: async () => {
         this.isTracking = false;
@@ -154,11 +161,11 @@ export class NavigationService {
       }))
       .pipe(filter(speed => {
         if (speed < this.speedThreshold && previousSpeed != null && previousSpeed < this.speedThreshold) {
-          console.debug('Keeping compass heading');
+          this.logging.debug('Keeping compass heading');
           return false;
         }
         if (speed >= this.speedThreshold && previousSpeed != null && previousSpeed >= this.speedThreshold) {
-          console.debug('Keeping GPS heading');
+          this.logging.debug('Keeping GPS heading');
           return false;
         }
         previousSpeed = speed;
@@ -166,11 +173,11 @@ export class NavigationService {
       }))
       .pipe(switchMap(speed => {
         if (speed < this.speedThreshold) {
-          console.debug('Switching to compass heading');
+          this.logging.debug('Switching to compass heading');
           return this.compassSrv.heading;
         }
         else {
-          console.debug('Switching to GPS heading');
+          this.logging.debug('Switching to GPS heading');
           return this.locationSrv.watchPosition.pipe(map(position => position.coords.heading ?? 0));
         }
       }))
@@ -180,7 +187,7 @@ export class NavigationService {
           this.$heading.next(heading);
         },
         error: err => {
-          console.error(err);
+          this.logging.error(err);
         }
       });
 

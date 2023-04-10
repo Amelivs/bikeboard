@@ -1,7 +1,9 @@
 <ion-menu contentId="main-content" type="overlay" [swipeGesture]="false">
   <ion-header>
     <ion-toolbar>
-      <ion-title>Bikeboard</ion-title>
+      <ion-buttons slot="start">
+        <ion-button fill="clear" (click)="titlePress()">Bikeboard</ion-button>
+      </ion-buttons>
     </ion-toolbar>
   </ion-header>
   <ion-content>

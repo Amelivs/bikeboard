@@ -1,0 +1,18 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="end">
+      <ion-button (click)="okClick()">Close</ion-button>
+    </ion-buttons>
+    <ion-title>Debugging</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list *ngIf="logEntries$ | async as logEntries">
+    <ion-item *ngFor="let entry of logEntries">
+      <ion-label class="ion-text-wrap" [ngClass]="entry.level.toLocaleLowerCase()">
+        {{entry.value}}
+      </ion-label>
+    </ion-item>
+  </ion-list>
+</ion-content>
