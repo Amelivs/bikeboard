@@ -4,8 +4,8 @@ import { ReplaySubject } from 'rxjs';
 
 import { DataContext } from '../data/data-context';
 import { Activity, ActivityPoint } from '../data/entities/activity';
-import { DistanceUtil } from '../utils/distance';
-import { UUID } from '../utils/uuid';
+import { DistanceUtil } from '../../shared/utils/distance';
+import { UUID } from '../../shared/utils/uuid';
 import { DialogService } from './dialog.service';
 
 const MAX_COORDS_ACCURACY = 20;

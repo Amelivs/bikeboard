@@ -2,11 +2,11 @@ import { Storage } from '@ionic/storage-angular';
 import { firstValueFrom, Subject } from 'rxjs';
 
 import SeedingData from '../../../seeding.json';
-import { UUID } from '../utils/uuid';
+import { UUID } from '../../shared/utils/uuid';
 import { MapEntity } from './entities/map';
 import { PreferencesEntity } from './entities/settings';
 import { Activity } from './entities/activity';
-import { DistanceUtil } from '../utils/distance';
+import { DistanceUtil } from '../../shared/utils/distance';
 
 export type MigrationStep = (storage: Storage, db: IDBDatabase) => Promise<void>;
 

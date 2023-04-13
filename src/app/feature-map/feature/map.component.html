@@ -1,0 +1,49 @@
+<ion-content [scrollY]="false">
+  <app-ol-map-viewer #map [markerDisabled]="isTracking" (mapMove)="onMapDrag()" (mapDblClick)="onMapDblClick()"
+    (viewRotate)="onViewRotate($event)" (context)="onContext($event)"></app-ol-map-viewer>
+
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button (click)="navigateClick()" color="light" class="btn-navigate">
+      <ion-icon color="primary" [name]="navIcon"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
+  <ion-fab vertical="top" horizontal="start" slot="fixed">
+    <ion-fab-button (click)="menuClick()" color="light" class="btn-small">
+      <ion-icon color="primary" name="menu-outline"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
+  <ion-fab vertical="top" horizontal="end" slot="fixed">
+    <ion-fab-button (click)="compassClick()" color="light" class="btn-small">
+      <ion-icon [style.transform]="'rotate('+rotation+'rad) scale(1.8)'" src="assets/icons/compass.svg"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
+  <div class="attributions" *ngIf="attributions">{{attributions}}</div>
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar color="black">
+    <ion-buttons slot="start">
+      <ion-button class="non-clickable">
+        <div class="btn-content">
+          <div class="btn-value">{{currentSpeed | async | fixed:1}}</div>
+          <div class="btn-text">Speed</div>
+        </div>
+      </ion-button>
+      <ion-button class="non-clickable">
+        <div class="btn-content">
+          <div class="btn-value">{{currentAltitude | async | fixed:0}}</div>
+          <div class="btn-text">Altitude</div>
+        </div>
+      </ion-button>
+      <ion-button (click)="mileagePress()">
+        <div class="btn-content">
+          <div class="btn-value">{{currentDistance | async | km}}</div>
+          <div class="btn-text">Distance</div>
+        </div>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-footer>
