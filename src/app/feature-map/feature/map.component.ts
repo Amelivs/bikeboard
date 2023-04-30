@@ -1,6 +1,5 @@
 import { AfterViewInit, Component, ViewChild } from '@angular/core';
 import { ActionSheetController, MenuController, ModalController } from '@ionic/angular';
-import { toRadians } from 'ol/math';
 import { MapEntity } from 'src/app/core/data/entities/map';
 import { PathEntity } from 'src/app/core/data/entities/path';
 import { DataCacheService } from 'src/app/core/services/data-cache.service';
@@ -12,7 +11,7 @@ import { ActivitiesComponent } from 'src/app/feature-activities/feature/activiti
 
 import { NavigationService } from '../../core/services/navigation.service';
 import { LastPositionService } from '../../core/services/last-position.service';
-import { MapViewer } from '../model/map-viewer';
+import { MapViewerComponent } from '../ui/map-viewer/map-viewer.component';
 
 
 type TrackingMode = 'Free' | 'Centered' | 'Navigation';
@@ -23,10 +22,11 @@ type TrackingMode = 'Free' | 'Centered' | 'Navigation';
 })
 export class MapComponent implements AfterViewInit {
 
-  @ViewChild('map') map!: MapViewer;
+  @ViewChild(MapViewerComponent) mapViewer!: MapViewerComponent;
 
   public rotation = 0;
   public attributions: string | nil;
+  public elevationAvailable = false;
 
   public origin: number[] | nil;
   public waypoints: number[][] = [];
@@ -80,13 +80,12 @@ export class MapComponent implements AfterViewInit {
 
   private onMapChange(map: MapEntity) {
     if (map != null) {
-      this.attributions = map.attributions;
-      this.map.setXyzSources(map);
+      this.mapViewer.setXyzSources(map);
     }
   }
 
   private onPathsChange(paths: PathEntity[]) {
-    this.map.setGpxSources(paths);
+    this.mapViewer.setGpxSources(paths);
   }
 
   async ngAfterViewInit() {
@@ -94,7 +93,7 @@ export class MapComponent implements AfterViewInit {
     this.dataCache.activePaths.subscribe(paths => this.onPathsChange(paths));
 
     let lastPosition = await this.lastPositionSrv.getLastPosition();
-    this.map.setPosition(lastPosition);
+    this.mapViewer.setPosition(lastPosition);
   }
 
   public menuClick() {
@@ -102,7 +101,15 @@ export class MapComponent implements AfterViewInit {
   }
 
   public compassClick() {
-    this.map.setRotation(0, true);
+    this.mapViewer.setRotation(0, true);
+  }
+
+  public elevationClick() {
+    this.mapViewer.toggleElevation();
+  }
+
+  public onElevationAvailable(enabled: boolean) {
+    this.elevationAvailable = enabled;
   }
 
   public async mileagePress() {
@@ -135,8 +142,6 @@ export class MapComponent implements AfterViewInit {
   public async navigateClick() {
     if (this.trackingMode === 'Free') {
       this.navService.startTracking();
-      let lastPosition = this.map.getPosition();
-      this.map.setCenter(lastPosition);
       this.trackingMode = 'Centered';
       return;
     }
@@ -150,7 +155,7 @@ export class MapComponent implements AfterViewInit {
     }
     if (this.trackingMode === 'Navigation') {
       this.navService.stoptHeadingTracking();
-      this.map.setRotation(0);
+      this.mapViewer.setRotation(0);
       this.trackingMode = 'Centered';
       return;
     }
@@ -173,21 +178,15 @@ export class MapComponent implements AfterViewInit {
 
   private onPositionChange(coords: GeolocationCoordinates) {
     let position = [coords.longitude, coords.latitude];
-    this.map.setPosition(position);
-    this.map.setCenter(position);
-    this.map.setAccuracy(position, coords.accuracy);
+    this.mapViewer.setPosition(position);
   }
 
   private onHeadingChange(heading: number) {
-    let rotation = -1 * toRadians(heading);
-    this.map.setRotation(rotation);
+    this.mapViewer.setRotation(heading);
   }
 
   public async onContext(coords: number[]) {
     let role = await this.presentActionSheet();
-    if (role === 'save') {
-      await this.storeClick();
-    }
     if (role === 'defineOriginPoint') {
       this.origin = coords;
       this.calculateDirection();
@@ -195,7 +194,7 @@ export class MapComponent implements AfterViewInit {
     if (role === 'defineDestinationPoint') {
       this.destination = coords;
       if (this.origin == null) {
-        this.origin = this.map.getGeographicPosition();
+        this.origin = this.mapViewer.getPosition();
       }
       this.calculateDirection();
     }
@@ -215,29 +214,13 @@ export class MapComponent implements AfterViewInit {
     if (this.destination != null) {
       points.push(this.destination);
     }
-    this.map.setPoints(points);
+    this.mapViewer.setPoints(points);
     if (role === 'clear') {
-      this.map.setDirection(null);
+      this.mapViewer.setDirection(null);
       this.origin = null;
       this.destination = null;
       this.waypoints.length = 0;
-      this.map.setPoints(null);
-    }
-  }
-
-  async storeClick() {
-    let urls = this.map.getBoundingBoxTileUrls();
-    if (urls.length > 250) {
-      this.dialogSrv.alert('Zone is too large');
-      return;
-    }
-    let fetchTasks = urls.map(url => fetch(url, { mode: 'cors' }));
-    try {
-      await Promise.all(fetchTasks);
-    }
-    catch (err) {
-      console.error(err);
-      this.dialogSrv.alert(err);
+      this.mapViewer.setPoints(null);
     }
   }
 
@@ -245,7 +228,6 @@ export class MapComponent implements AfterViewInit {
     const actionSheet = await this.actionSheetController.create({
       header: 'Map',
       buttons: [
-        { role: 'save', text: 'Save map for offline use', icon: 'cloud-offline-outline' },
         { role: 'defineOriginPoint', text: 'Define origin point', icon: 'location-outline' },
         { role: 'defineDestinationPoint', text: 'Define destination point', icon: 'location-outline' },
         { role: 'addWaypoint', text: 'Add waypoint', icon: 'location-outline' },
@@ -269,7 +251,7 @@ export class MapComponent implements AfterViewInit {
 
     try {
       let direction = await this.directionService.getDirection(this.origin, this.waypoints, this.destination, 'geoapify');
-      this.map.setDirection(direction);
+      this.mapViewer.setDirection(direction);
 
     } catch (err) {
       console.error(err);

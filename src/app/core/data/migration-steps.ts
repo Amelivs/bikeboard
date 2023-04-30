@@ -186,5 +186,38 @@ export const MigrationSteps: ReadonlyArray<MigrationStep> = [
     };
 
     return firstValueFrom(result$);
+  }, async (storage, db) => {
+    let result$ = new Subject<void>();
+
+    let transaction = db.transaction(['paths'], 'readwrite');
+    let activityStore = transaction.objectStore('paths');
+
+    activityStore.delete('00000000-0000-0000-0000-7fe955f63983');
+
+    transaction.oncomplete = () => {
+      result$.next();
+    };
+
+    transaction.onerror = () => {
+      result$.error(transaction.error);
+    };
+
+    return firstValueFrom(result$);
+  }, async (storage, db) => {
+
+    let result$ = new Subject<void>();
+
+    let transaction = db.transaction(['maps'], 'readwrite');
+    let store = transaction.objectStore('maps');
+
+    store.clear();
+
+    transaction.oncomplete = () => {
+      result$.next();
+    };
+
+    transaction.onerror = () => {
+      result$.error(transaction.error);
+    };
   }
 ];

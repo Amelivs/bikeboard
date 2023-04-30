@@ -1,0 +1,25 @@
+﻿{
+  "version": 8,
+  "name": "CyclOSM",
+  "sources": {
+    "tiles": {
+      "type": "raster",
+      "tiles": [
+        "https://a.tile-cyclosm.openstreetmap.fr/cyclosm/{z}/{x}/{y}.png",
+        "https://b.tile-cyclosm.openstreetmap.fr/cyclosm/{z}/{x}/{y}.png",
+        "https://c.tile-cyclosm.openstreetmap.fr/cyclosm/{z}/{x}/{y}.png"
+      ],
+      "minzoom": 2,
+      "maxzoom": 20,
+      "tileSize": 256,
+      "attribution": "© Contributeurs d'OpenStreetMap"
+    }
+  },
+  "layers": [
+    {
+      "id": "layer-tiles",
+      "type": "raster",
+      "source": "tiles"
+    }
+  ]
+}

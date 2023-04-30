@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { IonNav, ModalController } from '@ionic/angular';
-import { UnlockService } from 'src/app/core/services/unlock.service';
 import { DialogService } from 'src/app/core/services/dialog.service';
 
 import { environment } from '../../../../environments/environment';
@@ -18,7 +17,6 @@ export class SettingsComponent implements OnInit {
   constructor(
     private modalCtrl: ModalController,
     private service: SettingsService,
-    private unlockService: UnlockService,
     private nav: IonNav,
     private window: Window,
     private dialogSrv: DialogService) { }
@@ -40,20 +38,6 @@ export class SettingsComponent implements OnInit {
     }
     await this.service.reset();
     this.window.location.reload();
-  }
-
-  async unlockClick() {
-    try {
-      let key = this.dialogSrv.prompt('Enter key');
-      if (key != null) {
-        await this.unlockService.unlock(key);
-        this.dialogSrv.alert('Advanced features unlocked successfully.');
-      }
-    }
-    catch (err) {
-      console.error(err);
-      this.dialogSrv.alert('Advanced features could not be unlocked.');
-    }
   }
 
   attributionClick() {

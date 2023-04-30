@@ -1,5 +1,5 @@
 /* eslint-disable no-restricted-globals */
-import { NgModule } from '@angular/core';
+import { ErrorHandler, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
@@ -11,6 +11,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { environment } from '../environments/environment';
 import { DataContext } from './core/data/data-context';
 import { HomeModule } from './feature-home/home.module';
+import { GlobalErrorHandler } from './core/handlers/global-error-handler';
 
 
 @NgModule({
@@ -33,6 +34,7 @@ import { HomeModule } from './feature-home/home.module';
   providers: [
     DataContext,
     { provide: Window, useValue: window },
+    { provide: ErrorHandler, useClass: GlobalErrorHandler },
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent]

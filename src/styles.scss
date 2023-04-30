@@ -16,16 +16,11 @@
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
 
-@import "~ol/ol.css";
+@import "~maplibre-gl/dist/maplibre-gl.css";
 
 body {
   touch-action: none;
   overflow: hidden;
-}
-
-.ol-scale-line-inner {
-  color: #333 !important;
-  border-color: #333;
 }
 
 ion-item-divider.ios {
@@ -45,4 +40,8 @@ ion-list.ios {
   color: var(--ion-color-danger);
   width: 2em;
   height: 2em;
+}
+
+.maplibregl-ctrl-attrib {
+  color: #000;
 }

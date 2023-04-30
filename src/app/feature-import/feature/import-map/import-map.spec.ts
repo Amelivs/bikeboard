@@ -38,9 +38,9 @@ describe('ImportMapComponent', () => {
   describe('.importClick()', () => {
     it('should save map and close modal', async () => {
       component.form.patchValue({
-        name: 'map 1',
-        type: 'Raster',
-        url: 'http://test.com'
+        fileName: 'map 1',
+        file: null,
+        name: 'http://test.com'
       });
       await component.importClick();
       expect(mockDataCache.saveMap).toHaveBeenCalled();

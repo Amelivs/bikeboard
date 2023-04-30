@@ -1,6 +1,6 @@
 {
   "name": "bikeboard",
-  "version": "2023.4.13",
+  "version": "2023.4.30",
   "author": "Guillaume Erhart",
   "homepage": "https://github.com/Amelivs/bikeboard",
   "scripts": {
@@ -30,7 +30,8 @@
     "@angular/service-worker": "^14.3.0",
     "@ionic/angular": "^6.7.0",
     "@ionic/storage-angular": "^3.0.6",
-    "ol": "^7.3.0",
+    "@turf/helpers": "^6.5.0",
+    "maplibre-gl": "^2.4.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.4.0",
     "zone.js": "~0.11.8"

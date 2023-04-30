@@ -1,0 +1,23 @@
+﻿{
+  "version": 8,
+  "name": "IGN Aérien",
+  "sources": {
+    "tiles": {
+      "type": "raster",
+      "tiles": [
+        "https://wxs.ign.fr/decouverte/geoportail/wmts?gp-ol-ext=3.1.0&layer=ORTHOIMAGERY.ORTHOPHOTOS&style=normal&tilematrixset=PM&Service=WMTS&Request=GetTile&Version=1.0.0&Format=image%2Fjpeg&TileMatrix={z}&TileCol={x}&TileRow={y}"
+      ],
+      "minzoom": 2,
+      "maxzoom": 19,
+      "tileSize": 256,
+      "attribution": "© IGN 2022"
+    }
+  },
+  "layers": [
+    {
+      "id": "layer-tiles",
+      "type": "raster",
+      "source": "tiles"
+    }
+  ]
+}

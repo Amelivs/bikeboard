@@ -60,8 +60,8 @@
       "name": "tiles",
       "version": 1,
       "cacheConfig": {
-        "maxAge": "60d",
-        "maxSize": 4000,
+        "maxAge": "120d",
+        "maxSize": 8000,
         "strategy": "performance"
       },
       "urls": [
@@ -69,7 +69,8 @@
         "*.openstreetmap.*",
         "*.geoapify.com",
         "*.mapbox.com",
-        "wxs.ign.fr"
+        "wxs.ign.fr",
+        "api.maptiler.com"
       ]
     }
   ]

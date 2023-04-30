@@ -3,82 +3,27 @@
     {
       "id": "00000000-0000-0000-0000-201c214521d6",
       "name": "OpenStreetMap",
-      "maxZoom": null,
-      "attributions": "© Contributeurs d'OpenStreetMap",
-      "layers": [
-        {
-          "type": "raster",
-          "url": "https://{a-c}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png"
-        }
-      ]
+      "styleUrl": "assets/styles/openstreetmap.json"
     },
     {
       "id": "00000000-0000-0000-0000-ee47d3d2e897",
       "name": "CyclOSM",
-      "maxZoom": null,
-      "attributions": "© Contributeurs d'OpenStreetMap",
-      "layers": [
-        {
-          "type": "raster",
-          "url": "https://{a-c}.tile-cyclosm.openstreetmap.fr/cyclosm/{z}/{x}/{y}.png"
-        }
-      ]
+      "styleUrl": "assets/styles/cyclosm.json"
     },
     {
       "id": "00000000-0000-0000-0000-05548b4a86f9",
       "name": "IGN Plan",
-      "maxZoom": 20,
-      "attributions": "© IGN 2022",
-      "layers": [
-        {
-          "type": "vector",
-          "url": "assets/maps/plan_ign.json"
-        }
-      ]
+      "styleUrl": "assets/styles/ign_plan.json"
     },
     {
       "id": "00000000-0000-0000-0000-4f1e6f995312",
-      "name": "IGN Photos",
-      "maxZoom": null,
-      "attributions": "© IGN 2022",
-      "layers": [
-        {
-          "type": "raster",
-          "url": "https://wxs.ign.fr/decouverte/geoportail/wmts?gp-ol-ext=3.1.0&layer=ORTHOIMAGERY.ORTHOPHOTOS&style=normal&tilematrixset=PM&Service=WMTS&Request=GetTile&Version=1.0.0&Format=image%2Fjpeg&TileMatrix={z}&TileCol={x}&TileRow={y}"
-        }
-      ]
+      "name": "IGN Aérien",
+      "styleUrl": "assets/styles/ign_aerien.json"
     },
     {
       "id": "00000000-0000-0000-0000-8425ff7d610e",
       "name": "IGN Cadastre",
-      "maxZoom": null,
-      "attributions": "© IGN 2022",
-      "layers": [
-        {
-          "type": "vector",
-          "url": "https://wxs.ign.fr/static/vectorTiles/styles/PLAN.IGN/essentiels/standard.json"
-        },
-        {
-          "type": "raster",
-          "url": "https://wxs.ign.fr/parcellaire/geoportail/wmts?layer=CADASTRALPARCELS.PARCELLAIRE_EXPRESS&style=PCI%20vecteur&tilematrixset=PM&Service=WMTS&Request=GetTile&Version=1.0.0&Format=image%2Fpng&TileMatrix={z}&TileCol={x}&TileRow={y}"
-        }
-      ]
-    },
-    {
-      "id": "00000000-0000-0000-0000-624a9606613c",
-      "name": "IGN Restrictions drones",
-      "maxZoom": 15,
-      "attributions": "© IGN 2022",
-      "layers": [
-        {
-          "type": "vector",
-          "url": "https://wxs.ign.fr/static/vectorTiles/styles/PLAN.IGN/essentiels/standard.json"
-        },
-        {
-          "type": "raster",
-          "url": "https://wxs.ign.fr/transports/geoportail/wmts?layer=TRANSPORTS.DRONES.RESTRICTIONS&style=normal&tilematrixset=PM&Service=WMTS&Request=GetTile&Version=1.0.0&Format=image%2Fpng&TileMatrix={z}&TileCol={x}&TileRow={y}"
-        }
-      ]
+      "styleUrl": "assets/styles/ign_cadastre.json"
     }
   ],
   "defaultPaths": [
@@ -86,11 +31,6 @@
       "id": "00000000-0000-0000-0000-7618c49c3a5c",
       "name": "EuroVelo 5",
       "url": "assets/gpx/EuroVelo-5.gpx"
-    },
-    {
-      "id": "00000000-0000-0000-0000-7fe955f63983",
-      "name": "EuroVelo 6",
-      "url": "assets/gpx/EuroVelo-6.gpx"
     },
     {
       "id": "00000000-0000-0000-0000-66e7f91c7fd3",

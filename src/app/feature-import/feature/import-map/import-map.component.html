@@ -9,17 +9,10 @@
 
 <ion-content>
   <ion-list [formGroup]="form">
-    <ion-item>
-      <ion-label>Type</ion-label>
-      <ion-select placeholder="Select One" formControlName="type">
-        <ion-select-option value="raster">Raster</ion-select-option>
-        <ion-select-option value="vector">Vector</ion-select-option>
-      </ion-select>
-    </ion-item>
-    <ion-item>
-      <ion-label position="stacked">Url</ion-label>
-      <ion-input placeholder="https://exemple.com/{z}/{x}/{y}" type="url" formControlName="url"></ion-input>
-      <ion-note slot="error">{{urlError}}</ion-note>
+    <ion-item button detail="false" (click)="browse()">
+      <ion-label position="stacked">Style file</ion-label>
+      <ion-input readonly formControlName="fileName" placeholder="Select a file" class="no-pointer"></ion-input>
+      <ion-input #fileInput type="file" (change)="onFileChange($event)" accept=".json" class="ion-hide"></ion-input>
     </ion-item>
     <ion-item>
       <ion-label position="stacked">Name</ion-label>

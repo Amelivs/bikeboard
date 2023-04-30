@@ -21,9 +21,8 @@
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
             "allowedCommonJsDependencies": [
-              "pbf",
-              "rbush",
-              "localforage"
+              "localforage",
+              "maplibre-gl"
             ],
             "outputPath": "www",
             "index": "src/index.html",
