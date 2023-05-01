@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActionSheetController, MenuController, ModalController } from '@ionic/angular';
 import { MapEntity } from 'src/app/core/data/entities/map';
 import { PathEntity } from 'src/app/core/data/entities/path';
@@ -10,19 +10,18 @@ import { DialogService } from 'src/app/core/services/dialog.service';
 import { ActivitiesComponent } from 'src/app/feature-activities/feature/activities.component';
 
 import { NavigationService } from '../../core/services/navigation.service';
-import { LastPositionService } from '../../core/services/last-position.service';
 import { MapViewerComponent } from '../ui/map-viewer/map-viewer.component';
 
 
-type TrackingMode = 'Free' | 'Centered' | 'Navigation';
+type TrackingMode = 'None' | 'Follow' | 'FollowWithHeading';
 
 @Component({
   templateUrl: './map.component.html',
   styleUrls: ['./map.component.scss'],
 })
-export class MapComponent implements AfterViewInit {
+export class MapComponent implements OnInit {
 
-  @ViewChild(MapViewerComponent) mapViewer!: MapViewerComponent;
+  @ViewChild(MapViewerComponent, { static: true }) mapViewer!: MapViewerComponent;
 
   public rotation = 0;
   public attributions: string | nil;
@@ -32,16 +31,16 @@ export class MapComponent implements AfterViewInit {
   public waypoints: number[][] = [];
   public destination: number[] | nil;
 
-  public trackingMode: TrackingMode = 'Free';
+  public trackingMode: TrackingMode = 'None';
 
   public get navIcon() {
-    if (this.trackingMode === 'Free') {
+    if (this.trackingMode === 'None') {
       return 'navigate-outline';
     }
-    if (this.trackingMode === 'Centered') {
+    if (this.trackingMode === 'Follow') {
       return 'navigate';
     }
-    if (this.trackingMode === 'Navigation') {
+    if (this.trackingMode === 'FollowWithHeading') {
       return 'compass';
     }
     return null;
@@ -72,11 +71,7 @@ export class MapComponent implements AfterViewInit {
     private modalController: ModalController,
     private directionService: DirectionService,
     private trackingService: TrackingService,
-    private dialogSrv: DialogService,
-    private lastPositionSrv: LastPositionService) {
-    this.navService.position.subscribe(position => this.onPositionChange(position));
-    this.navService.heading.subscribe(rotation => this.onHeadingChange(rotation));
-  }
+    private dialogSrv: DialogService) { }
 
   private onMapChange(map: MapEntity) {
     if (map != null) {
@@ -88,12 +83,20 @@ export class MapComponent implements AfterViewInit {
     this.mapViewer.setGpxSources(paths);
   }
 
-  async ngAfterViewInit() {
+  private onPositionChange(coords: number[]) {
+    let position = [coords[0], coords[1]];
+    this.mapViewer.setPosition(position);
+  }
+
+  private onHeadingChange(heading: number) {
+    this.mapViewer.setRotation(heading);
+  }
+
+  ngOnInit() {
     this.dataCache.activeMap.subscribe(map => this.onMapChange(map));
     this.dataCache.activePaths.subscribe(paths => this.onPathsChange(paths));
-
-    let lastPosition = await this.lastPositionSrv.getLastPosition();
-    this.mapViewer.setPosition(lastPosition);
+    this.navService.position.subscribe(position => this.onPositionChange(position));
+    this.navService.heading.subscribe(rotation => this.onHeadingChange(rotation));
   }
 
   public menuClick() {
@@ -140,30 +143,30 @@ export class MapComponent implements AfterViewInit {
   }
 
   public async navigateClick() {
-    if (this.trackingMode === 'Free') {
+    if (this.trackingMode === 'None') {
       this.navService.startTracking();
-      this.trackingMode = 'Centered';
+      this.trackingMode = 'Follow';
       return;
     }
-    if (this.trackingMode === 'Centered') {
+    if (this.trackingMode === 'Follow') {
       let ok = await this.navService.startHeadingTracking();
       if (!ok) {
         return;
       }
-      this.trackingMode = 'Navigation';
+      this.trackingMode = 'FollowWithHeading';
       return;
     }
-    if (this.trackingMode === 'Navigation') {
+    if (this.trackingMode === 'FollowWithHeading') {
       this.navService.stoptHeadingTracking();
       this.mapViewer.setRotation(0);
-      this.trackingMode = 'Centered';
+      this.trackingMode = 'Follow';
       return;
     }
   }
 
   public onMapDrag() {
     this.navService.stopTracking();
-    this.trackingMode = 'Free';
+    this.trackingMode = 'None';
   }
 
   public onViewRotate(rotation: number) {
@@ -173,16 +176,7 @@ export class MapComponent implements AfterViewInit {
   public async onMapDblClick() {
     this.navService.startTracking();
     await this.navService.startHeadingTracking();
-    this.trackingMode = 'Navigation';
-  }
-
-  private onPositionChange(coords: GeolocationCoordinates) {
-    let position = [coords.longitude, coords.latitude];
-    this.mapViewer.setPosition(position);
-  }
-
-  private onHeadingChange(heading: number) {
-    this.mapViewer.setRotation(heading);
+    this.trackingMode = 'FollowWithHeading';
   }
 
   public async onContext(coords: number[]) {

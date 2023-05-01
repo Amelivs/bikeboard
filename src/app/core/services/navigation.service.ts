@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { from, merge, Subject } from 'rxjs';
+import { concat, from, merge, Subject } from 'rxjs';
 import { bufferCount, bufferTime, defaultIfEmpty, filter, first, last, map, startWith, switchMap, takeUntil } from 'rxjs/operators';
 
 import { CompassService } from './compass.service';
@@ -34,7 +34,7 @@ export class NavigationService {
     private lastPositionSrv: LastPositionService,
     private trackingService: TrackingService) { }
 
-  public readonly position = this.$position.asObservable();
+  public readonly position = concat(this.lastPositionSrv.getLastPosition(), this.$position.pipe(map(coords => [coords.longitude, coords.latitude])));
   public readonly heading = this.$heading.asObservable();
   public readonly speed = this.$speed.asObservable();
   public readonly altitude = this.$altitude.asObservable();
