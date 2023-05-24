@@ -1,7 +1,7 @@
 <ion-content [scrollY]="false">
   <app-map-viewer [markerDisabled]="isTracking" (mapMove)="onMapDrag()" (mapDblClick)="onMapDblClick()"
     (viewRotate)="onViewRotate($event)" (context)="onContext($event)"
-    (elevationAvailable)="onElevationAvailable($event)"></app-map-viewer>
+    (terrainAvailable)="onTerrainAvailable($event)"></app-map-viewer>
 
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">
     <ion-fab-button (click)="navigateClick()" color="light" class="btn-navigate">
@@ -21,8 +21,8 @@
     </ion-fab-button>
   </ion-fab>
 
-  <ion-fab vertical="center" horizontal="end" slot="fixed" *ngIf="elevationAvailable">
-    <ion-fab-button (click)="elevationClick()" color="light" class="btn-small">
+  <ion-fab vertical="center" horizontal="end" slot="fixed" *ngIf="terrainAvailable">
+    <ion-fab-button (click)="terrainClick()" color="light" class="btn-small">
       <ion-icon color="primary" src="assets/icons/peak.svg"></ion-icon>
     </ion-fab-button>
   </ion-fab>

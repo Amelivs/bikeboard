@@ -25,7 +25,7 @@ export class MapComponent implements OnInit {
 
   public rotation = 0;
   public attributions: string | nil;
-  public elevationAvailable = false;
+  public terrainAvailable = false;
 
   public origin: number[] | nil;
   public waypoints: number[][] = [];
@@ -107,12 +107,12 @@ export class MapComponent implements OnInit {
     this.mapViewer.setRotation(0, true);
   }
 
-  public elevationClick() {
-    this.mapViewer.toggleElevation();
+  public terrainClick() {
+    this.mapViewer.toggleTerrain();
   }
 
-  public onElevationAvailable(enabled: boolean) {
-    this.elevationAvailable = enabled;
+  public onTerrainAvailable(enabled: boolean) {
+    this.terrainAvailable = enabled;
   }
 
   public async mileagePress() {

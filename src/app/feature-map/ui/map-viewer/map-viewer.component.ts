@@ -23,7 +23,7 @@ export class MapViewerComponent implements OnInit {
   @Output() mapDblClick = new EventEmitter<void>();
   @Output() viewRotate = new EventEmitter<number>();
   @Output() context = new EventEmitter<number[]>();
-  @Output() elevationAvailable = new EventEmitter<boolean>();
+  @Output() terrainAvailable = new EventEmitter<boolean>();
 
   constructor(private layerService: LayerService) { }
 
@@ -102,7 +102,7 @@ export class MapViewerComponent implements OnInit {
       .subscribe(data => {
         let [style] = data;
         this.layerService.appendLayers(style);
-        this.elevationAvailable.emit(style.sources['elevation'] != null);
+        this.terrainAvailable.emit(style.sources['terrain-rgb'] != null);
         // Reset terrain before switching style to avoid map drag and zoom issues.
         this.map?.setTerrain(null as any);
         this.map!.setStyle(style);
@@ -171,11 +171,11 @@ export class MapViewerComponent implements OnInit {
     }
   }
 
-  toggleElevation() {
+  toggleTerrain() {
     if (this.map!.getTerrain() == null) {
-      if (this.map!.getSource('elevation') != null) {
+      if (this.map!.getSource('terrain-rgb') != null) {
         this.map?.setTerrain({
-          source: 'elevation',
+          source: 'terrain-rgb',
           exaggeration: 1.5,
         });
       }
