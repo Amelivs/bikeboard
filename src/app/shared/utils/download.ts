@@ -16,7 +16,7 @@ export class DownloadUtils {
         await navigator.share(shareData);
       }
       catch (err) {
-        if (err instanceof DOMException && err.code !== DOMException.ABORT_ERR) {
+        if (err instanceof DOMException && err.name !== 'AbortError') {
           this.downloadByLink(data, fileName);
         }
       }

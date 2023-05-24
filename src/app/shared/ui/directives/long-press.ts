@@ -9,8 +9,7 @@ export class LongPressDirective implements OnDestroy {
   private eventSubscribe: Subscription;
   threshold = 500;
 
-  @Output()
-  mouseLongPress = new EventEmitter<MouseEvent | TouchEvent>();
+  @Output() mouseLongPress = new EventEmitter<MouseEvent | TouchEvent>();
 
   constructor(elementRef: ElementRef) {
     const mousedown = fromEvent<MouseEvent>(elementRef.nativeElement, 'mousedown')

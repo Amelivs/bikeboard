@@ -3,7 +3,6 @@ import { IonicModule, IonNav, ModalController } from '@ionic/angular';
 import { DialogService } from 'src/app/core/services/dialog.service';
 import { DataContext } from 'src/app/core/data/data-context';
 
-import { SettingsService } from './settings.service';
 import { SettingsComponent } from './settings.component';
 import { AttributionsComponent } from '../attributions/attributions.component';
 
@@ -25,18 +24,13 @@ describe('HomeSettingsComponent', () => {
     dialogSpy = jasmine.createSpyObj<DialogService>(['alert', 'confirm', 'prompt']);
     dataContextSpy = jasmine.createSpyObj<DataContext>(['reset']);
 
-    TestBed.configureTestingModule({
-      declarations: [SettingsComponent],
-      imports: [IonicModule.forRoot()],
-      providers: [
-        SettingsService,
-        { provide: ModalController, useValue: modalCtrlSpy },
-        { provide: IonNav, useValue: navSpy },
-        { provide: Window, useValue: windowSpy },
-        { provide: DialogService, useValue: dialogSpy },
-        { provide: DataContext, useValue: dataContextSpy }
-      ],
-    }).compileComponents();
+    TestBed.configureTestingModule({ declarations: [SettingsComponent], imports: [IonicModule.forRoot()] })
+      .overrideProvider(ModalController, { useValue: modalCtrlSpy })
+      .overrideProvider(IonNav, { useValue: navSpy })
+      .overrideProvider(Window, { useValue: windowSpy })
+      .overrideProvider(DialogService, { useValue: dialogSpy })
+      .overrideProvider(DataContext, { useValue: dataContextSpy })
+      .compileComponents();
 
     fixture = TestBed.createComponent(SettingsComponent);
     component = fixture.componentInstance;

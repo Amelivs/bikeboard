@@ -10,8 +10,7 @@
         </ion-item-option>
       </ion-item-options>
       <ion-item>
-        <ion-label>{{map.name}}</ion-label>
-        <ion-radio slot="end" [value]="map"></ion-radio>
+        <ion-radio [value]="map" justify="space-between">{{map.name}}</ion-radio>
       </ion-item>
     </ion-item-sliding>
   </ion-radio-group>
@@ -27,8 +26,7 @@
       </ion-item-option>
     </ion-item-options>
     <ion-item>
-      <ion-label>{{path.name}}</ion-label>
-      <ion-checkbox slot="end" [checked]="isChecked(path)" (ionChange)="checkedChange($event, path)"></ion-checkbox>
+      <ion-checkbox justify="space-between" [checked]="isChecked(path)" (ionChange)="checkedChange($event, path)">{{path.name}}</ion-checkbox>
     </ion-item>
   </ion-item-sliding>
 </ion-list>

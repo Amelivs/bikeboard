@@ -1,59 +1,57 @@
-import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, CanActivate, RouterStateSnapshot } from '@angular/router';
+import { inject } from '@angular/core';
 
 import SeedingData from '../../../seeding.json';
 import { DataContext } from '../data/data-context';
 import { TrackingService } from '../services/tracking.service';
 import { DialogService } from '../services/dialog.service';
+import { LoggingService } from '../services/logging.service';
 
-@Injectable({
-  providedIn: 'root'
-})
-export class SeedingGuard implements CanActivate {
 
-  constructor(private context: DataContext, private trackingService: TrackingService, private dialogSrv: DialogService) { }
+export const seedingGuard = async () => {
+  const context = inject(DataContext);
+  const trackingService = inject(TrackingService)
+  const dialogSrv = inject(DialogService)
+  const loggingSrv = inject(LoggingService)
 
-  async canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-    try {
-      await this.context.initialize();
-      await this.trackingService.initialize();
-      await this.seedMaps();
-      await this.seedPaths();
-      await this.seedSettings();
-    }
-    catch (err) {
-      console.error(err);
-      this.dialogSrv.alert(err);
-    }
-    return true;
+  try {
+    await context.initialize();
+    await trackingService.initialize();
+    await seedMaps(context);
+    await seedPaths(context);
+    await seedSettings(context);
   }
-
-  private async seedMaps() {
-    let existingMaps = await this.context.maps.getAll();
-    if (existingMaps.length > 0) {
-      return;
-    }
-    for (let map of SeedingData.defaultMaps) {
-      await this.context.maps.save(map);
-    }
+  catch (err) {
+    loggingSrv.error(err);
+    dialogSrv.alert(err);
   }
+  return true;
+}
 
-  private async seedPaths() {
-    let existingPaths = await this.context.paths.getAll();
-    if (existingPaths.length > 0) {
-      return;
-    }
-    for (let path of SeedingData.defaultPaths) {
-      await this.context.paths.save(path);
-    }
+const seedMaps = async (context: DataContext) => {
+  let existingMaps = await context.maps.getAll();
+  if (existingMaps.length > 0) {
+    return;
   }
+  for (let map of SeedingData.defaultMaps) {
+    await context.maps.save(map);
+  }
+}
 
-  private async seedSettings() {
-    if (!this.context.preferences.get<string>('activeMapId')) {
-      await this.context.preferences.save('activeMapId', SeedingData.defaultMaps[0]?.id);
-    }
-    if (!this.context.preferences.get<string[]>('activePathIds')) {
-      await this.context.preferences.save('activePathIds', []);
-    }
+const seedPaths = async (context: DataContext) => {
+  let existingPaths = await context.paths.getAll();
+  if (existingPaths.length > 0) {
+    return;
+  }
+  for (let path of SeedingData.defaultPaths) {
+    await context.paths.save(path);
+  }
+}
+
+const seedSettings = async (context: DataContext) => {
+  if (!context.preferences.get<string>('activeMapId')) {
+    await context.preferences.save('activeMapId', SeedingData.defaultMaps[0]?.id);
+  }
+  if (!context.preferences.get<string[]>('activePathIds')) {
+    await context.preferences.save('activePathIds', []);
   }
 }

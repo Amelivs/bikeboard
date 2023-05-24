@@ -43,7 +43,7 @@ export class ImportMapComponent implements OnInit {
 
       try {
         let style = JSON.parse(await file.text()) as StyleSpecification;
-        if (!!style.name) {
+        if (style.name) {
           name = style.name;
         }
       }

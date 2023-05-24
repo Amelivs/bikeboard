@@ -5,7 +5,7 @@
     "baseUrl": "./",
     "outDir": "./dist/out-tsc",
     "forceConsistentCasingInFileNames": true,
-    "useDefineForClassFields": true,
+    "useDefineForClassFields": false,
     "strict": true,
     "skipLibCheck": true,
     "sourceMap": true,
@@ -16,11 +16,11 @@
     "resolveJsonModule": true,
     "importHelpers": true,
     "esModuleInterop": true,
-    "target": "es2020",
-    "module": "es2020",
+    "target": "ES2022",
+    "module": "ES2020",
     "lib": [
-      "es2020",
-      "dom"
+      "ES2020",
+      "DOM"
     ]
   },
   "angularCompilerOptions": {

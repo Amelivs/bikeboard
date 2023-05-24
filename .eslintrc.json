@@ -4,7 +4,8 @@
     "projects/**/*"
   ],
   "plugins": [
-    "filename-rules",
+    "deprecation",
+    "import",
     "unused-imports"
   ],
   "overrides": [
@@ -20,8 +21,9 @@
         "createDefaultProgram": true
       },
       "extends": [
-        "plugin:@angular-eslint/ng-cli-compat",
-        "plugin:@angular-eslint/ng-cli-compat--formatting-add-on",
+        "eslint:recommended",
+        "plugin:@typescript-eslint/recommended",
+        "plugin:@angular-eslint/recommended",
         "plugin:@angular-eslint/template/process-inline-templates"
       ],
       "rules": {
@@ -52,21 +54,28 @@
         ],
         "@angular-eslint/no-input-rename": "off",
         "@angular-eslint/no-output-rename": "off",
+        "@angular-eslint/no-empty-lifecycle-method": "off",
         "@typescript-eslint/dot-notation": "off",
         "@typescript-eslint/member-ordering": "off",
         "@typescript-eslint/naming-convention": "off",
         "@typescript-eslint/no-unused-vars": "off",
         "@typescript-eslint/prefer-for-of": "off",
         "@typescript-eslint/no-shadow": "off",
+        "@typescript-eslint/no-explicit-any": "off",
+        "@typescript-eslint/no-empty-function": "off",
         "@typescript-eslint/no-non-null-assertion": "off",
-        "prefer-arrow/prefer-arrow-functions": "off",
         "arrow-body-style": "off",
+        "deprecation/deprecation": "warn",
         "curly": [
           "error",
           "multi-line"
         ],
+        "indent": [
+          "warn",
+          2
+        ],
         "import/order": [
-          "error",
+          "warn",
           {
             "groups": [
               [
@@ -100,6 +109,12 @@
         ],
         "no-bitwise": "off",
         "no-fallthrough": "off",
+        "no-empty": [
+          "error",
+          {
+            "allowEmptyCatch": true
+          }
+        ],
         "no-restricted-globals": [
           "error",
           "window",
@@ -108,12 +123,6 @@
           "prompt"
         ],
         "prefer-const": "off",
-        "filename-rules/match": [
-          "error",
-          {
-            ".ts": "kebabcase"
-          }
-        ],
         "unused-imports/no-unused-imports": "warn",
         "unused-imports/no-unused-vars": [
           "warn",
@@ -125,7 +134,7 @@
           }
         ],
         "no-multiple-empty-lines": [
-          "error",
+          "warn",
           {
             "max": 2
           }
@@ -146,7 +155,8 @@
         "*.html"
       ],
       "extends": [
-        "plugin:@angular-eslint/template/recommended"
+        "plugin:@angular-eslint/template/recommended",
+        "plugin:@angular-eslint/template/accessibility"
       ],
       "rules": {}
     }

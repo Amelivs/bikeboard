@@ -8,7 +8,6 @@ import { ObjectStore } from 'src/app/core/data/stores/object-store';
 import { DialogService } from 'src/app/core/services/dialog.service';
 
 import { ActivitiesComponent } from './activities.component';
-import { ActivitiesServices } from './activities.service';
 
 describe('ActivitiesComponent', () => {
   let component: ActivitiesComponent;
@@ -27,15 +26,11 @@ describe('ActivitiesComponent', () => {
       preferences: mockPreferences
     });
 
-    TestBed.configureTestingModule({
-      declarations: [ActivitiesComponent],
-      providers: [
-        { provide: ModalController, useValue: mockModalCtrl },
-        { provide: DataContext, useValue: mockDataContext },
-        { provide: DialogService, useValue: dialogSrvSpy },
-        ActivitiesServices
-      ]
-    }).compileComponents();
+    TestBed.configureTestingModule({ declarations: [ActivitiesComponent] })
+      .overrideProvider(ModalController, { useValue: mockModalCtrl })
+      .overrideProvider(DataContext, { useValue: mockDataContext })
+      .overrideProvider(DialogService, { useValue: dialogSrvSpy })
+      .compileComponents();
   }));
 
   beforeEach(() => {

@@ -10,13 +10,11 @@
 <ion-content>
   <ion-list [formGroup]="form">
     <ion-item button detail="false" (click)="browse()">
-      <ion-label position="stacked">GPX file</ion-label>
-      <ion-input readonly formControlName="fileName" placeholder="Select a file" class="no-pointer"></ion-input>
+      <ion-input readonly formControlName="fileName" placeholder="Select a file" class="no-pointer" label="GPX file" labelPlacement="stacked"></ion-input>
       <ion-input #fileInput type="file" (change)="onFileChange($event)" accept=".gpx" class="ion-hide"></ion-input>
     </ion-item>
     <ion-item>
-      <ion-label position="stacked">Name</ion-label>
-      <ion-input placeholder="Enter a name" formControlName="name"></ion-input>
+      <ion-input placeholder="Enter a name" formControlName="name" label="Name" labelPlacement="stacked"></ion-input>
     </ion-item>
     <ion-item lines="none" (click)="importClick()">
       <ion-button shape="round" [disabled]="form.invalid" class="btn-import">Import</ion-button>

@@ -14,13 +14,9 @@ describe('ImportMapComponent', () => {
     mockModalCtrl = jasmine.createSpyObj<ModalController>(['dismiss']);
     mockDataCache = jasmine.createSpyObj<DataCacheService>(['saveMap']);
 
-    TestBed.configureTestingModule({
-      declarations: [ImportMapComponent],
-      providers: [
-        { provide: ModalController, useValue: mockModalCtrl },
-        { provide: DataCacheService, useValue: mockDataCache }
-      ]
-    })
+    TestBed.configureTestingModule({ declarations: [ImportMapComponent] })
+      .overrideProvider(ModalController, { useValue: mockModalCtrl })
+      .overrideProvider(DataCacheService, { useValue: mockDataCache })
       .compileComponents();
   }));
 
