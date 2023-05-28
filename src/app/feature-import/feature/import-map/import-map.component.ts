@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { IonInput, ModalController } from '@ionic/angular';
+import { FormControl, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { IonInput, ModalController, IonicModule } from '@ionic/angular';
 import { StyleSpecification } from 'maplibre-gl';
 import { MapEntity } from 'src/app/core/data/entities/map';
 import { DataCacheService } from 'src/app/core/services/data-cache.service';
@@ -11,6 +11,8 @@ import { UUID } from 'src/app/shared/utils/uuid';
   selector: 'app-import-map',
   templateUrl: './import-map.component.html',
   styleUrls: ['./import-map.component.scss'],
+  standalone: true,
+  imports: [IonicModule, ReactiveFormsModule],
 })
 export class ImportMapComponent implements OnInit {
 

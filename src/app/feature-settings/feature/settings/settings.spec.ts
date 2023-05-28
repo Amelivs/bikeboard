@@ -24,7 +24,7 @@ describe('HomeSettingsComponent', () => {
     dialogSpy = jasmine.createSpyObj<DialogService>(['alert', 'confirm', 'prompt']);
     dataContextSpy = jasmine.createSpyObj<DataContext>(['reset']);
 
-    TestBed.configureTestingModule({ declarations: [SettingsComponent], imports: [IonicModule.forRoot()] })
+    TestBed.configureTestingModule({ imports: [IonicModule.forRoot(), SettingsComponent] })
       .overrideProvider(ModalController, { useValue: modalCtrlSpy })
       .overrideProvider(IonNav, { useValue: navSpy })
       .overrideProvider(Window, { useValue: windowSpy })

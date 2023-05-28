@@ -5,13 +5,17 @@ import { DirectionResult } from 'src/app/core/services/direction.service';
 import maplibre, { AttributionControl } from 'maplibre-gl';
 import { ReplaySubject, Subject, combineLatest, map, mergeMap, startWith, throttleTime } from 'rxjs';
 import { Marker } from 'maplibre-gl';
+import { NgClass } from '@angular/common';
 
 import { LayerService } from '../../services/layer.service';
+import { LongPressDirective } from '../../../shared/ui/directives/long-press';
 
 @Component({
   selector: 'app-map-viewer',
   templateUrl: './map-viewer.component.html',
-  styleUrls: ['./map-viewer.component.scss']
+  styleUrls: ['./map-viewer.component.scss'],
+  standalone: true,
+  imports: [NgClass, LongPressDirective]
 })
 export class MapViewerComponent implements OnInit {
 

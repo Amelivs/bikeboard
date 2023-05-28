@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { IonInput, ModalController } from '@ionic/angular';
+import { FormControl, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { IonInput, ModalController, IonicModule } from '@ionic/angular';
 import { PathEntity } from 'src/app/core/data/entities/path';
 import { DataCacheService } from 'src/app/core/services/data-cache.service';
 import { UUID } from 'src/app/shared/utils/uuid';
@@ -10,6 +10,8 @@ import { UUID } from 'src/app/shared/utils/uuid';
   selector: 'app-import-path',
   templateUrl: './import-path.component.html',
   styleUrls: ['./import-path.component.scss'],
+  standalone: true,
+  imports: [IonicModule, ReactiveFormsModule],
 })
 export class ImportPathComponent implements OnInit {
 

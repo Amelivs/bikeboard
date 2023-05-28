@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { ActionSheetController, MenuController, ModalController } from '@ionic/angular';
+import { ActionSheetController, MenuController, ModalController, IonicModule } from '@ionic/angular';
 import { MapEntity } from 'src/app/core/data/entities/map';
 import { PathEntity } from 'src/app/core/data/entities/path';
 import { DataCacheService } from 'src/app/core/services/data-cache.service';
@@ -8,9 +8,12 @@ import { LoadingController } from '@ionic/angular';
 import { DirectionService } from 'src/app/core/services/direction.service';
 import { DialogService } from 'src/app/core/services/dialog.service';
 import { ActivitiesComponent } from 'src/app/feature-activities/feature/activities.component';
+import { NgIf, AsyncPipe } from '@angular/common';
 
 import { NavigationService } from '../../core/services/navigation.service';
 import { MapViewerComponent } from '../ui/map-viewer/map-viewer.component';
+import { KilometerPipe } from '../../shared/ui/pipes/kilometer.pipe';
+import { FixedPipe } from '../../shared/ui/pipes/fixed.pipe';
 
 
 type TrackingMode = 'None' | 'Follow' | 'FollowWithHeading';
@@ -18,6 +21,15 @@ type TrackingMode = 'None' | 'Follow' | 'FollowWithHeading';
 @Component({
   templateUrl: './map.component.html',
   styleUrls: ['./map.component.scss'],
+  standalone: true,
+  imports: [
+    IonicModule,
+    MapViewerComponent,
+    NgIf,
+    AsyncPipe,
+    FixedPipe,
+    KilometerPipe,
+  ],
 })
 export class MapComponent implements OnInit {
 

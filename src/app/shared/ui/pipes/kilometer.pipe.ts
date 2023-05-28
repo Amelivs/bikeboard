@@ -1,6 +1,9 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
-@Pipe({ name: 'km' })
+@Pipe({
+  name: 'km',
+  standalone: true
+})
 export class KilometerPipe implements PipeTransform {
   transform(value: number | null): string {
     if (value == null) {

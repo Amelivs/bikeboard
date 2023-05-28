@@ -1,12 +1,15 @@
 import { Component, OnInit } from '@angular/core';
-import { ModalController } from '@ionic/angular';
+import { ModalController, IonicModule } from '@ionic/angular';
 import { scan } from 'rxjs';
 import { LogEntry, LoggingService } from 'src/app/core/services/logging.service';
+import { NgIf, NgFor, NgClass, AsyncPipe } from '@angular/common';
 
 @Component({
   selector: 'app-debugging',
   templateUrl: './debugging.component.html',
-  styleUrls: ['./debugging.component.scss']
+  styleUrls: ['./debugging.component.scss'],
+  standalone: true,
+  imports: [IonicModule, NgIf, NgFor, NgClass, AsyncPipe]
 })
 export class DebuggingComponent implements OnInit {
 

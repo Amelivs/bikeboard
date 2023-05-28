@@ -1,16 +1,26 @@
 import { Component, OnInit } from '@angular/core';
-import { IonItemSliding, MenuController } from '@ionic/angular';
+import { IonItemSliding, MenuController, IonicModule } from '@ionic/angular';
 import { firstValueFrom, Observable } from 'rxjs';
 import { MapEntity } from 'src/app/core/data/entities/map';
 import { PathEntity } from 'src/app/core/data/entities/path';
 import { DataCacheService } from 'src/app/core/services/data-cache.service';
 import { DialogService } from 'src/app/core/services/dialog.service';
+import { NgFor, AsyncPipe } from '@angular/common';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
 
 @Component({
   selector: 'app-menu',
   templateUrl: './menu.component.html',
   styleUrls: ['./menu.component.scss'],
+  standalone: true,
+  imports: [
+    IonicModule,
+    ReactiveFormsModule,
+    FormsModule,
+    NgFor,
+    AsyncPipe,
+  ],
 })
 export class MenuComponent implements OnInit {
 

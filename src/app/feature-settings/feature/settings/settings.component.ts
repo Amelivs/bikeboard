@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { IonNav, ModalController } from '@ionic/angular';
+import { IonNav, ModalController, IonicModule } from '@ionic/angular';
 import { DialogService } from 'src/app/core/services/dialog.service';
 
 import { environment } from '../../../../environments/environment';
@@ -10,7 +10,9 @@ import { SettingsService } from './settings.service';
   selector: 'app-settings',
   templateUrl: './settings.component.html',
   styleUrls: ['./settings.component.scss'],
-  providers: [SettingsService]
+  providers: [SettingsService],
+  standalone: true,
+  imports: [IonicModule]
 })
 export class SettingsComponent implements OnInit {
 

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { DialogService } from 'src/app/core/services/dialog.service';
+import { IonicModule } from '@ionic/angular';
 
 import { AttributionsService } from './attributions.service';
 
@@ -7,7 +8,9 @@ import { AttributionsService } from './attributions.service';
   selector: 'app-attributions',
   templateUrl: './attributions.component.html',
   styleUrls: ['./attributions.component.scss'],
-  providers: [AttributionsService]
+  providers: [AttributionsService],
+  standalone: true,
+  imports: [IonicModule]
 })
 export class AttributionsComponent implements OnInit {
 

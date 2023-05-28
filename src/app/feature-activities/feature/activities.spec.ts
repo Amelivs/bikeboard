@@ -26,7 +26,7 @@ describe('ActivitiesComponent', () => {
       preferences: mockPreferences
     });
 
-    TestBed.configureTestingModule({ declarations: [ActivitiesComponent] })
+    TestBed.configureTestingModule({ imports: [ActivitiesComponent] })
       .overrideProvider(ModalController, { useValue: mockModalCtrl })
       .overrideProvider(DataContext, { useValue: mockDataContext })
       .overrideProvider(DialogService, { useValue: dialogSrvSpy })

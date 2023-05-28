@@ -3,7 +3,8 @@ import { fromEvent, merge, Subscription, timer } from 'rxjs';
 import { filter, map, switchMap, takeUntil } from 'rxjs/operators';
 
 @Directive({
-  selector: '[longPress]'
+  selector: '[longPress]',
+  standalone: true
 })
 export class LongPressDirective implements OnDestroy {
   private eventSubscribe: Subscription;

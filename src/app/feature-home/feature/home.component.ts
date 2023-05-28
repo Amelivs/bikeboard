@@ -1,15 +1,18 @@
 import { Component, OnInit } from '@angular/core';
-import { ActionSheetController, ModalController } from '@ionic/angular';
+import { ActionSheetController, ModalController, IonicModule } from '@ionic/angular';
 import { SettingsNavComponent } from 'src/app/feature-settings/settings-nav.component';
 
 import { ImportMapComponent } from '../../feature-import/feature/import-map/import-map.component';
 import { DebuggingComponent } from '../../feature-debugging/feature/debugging.component';
 import { ImportPathComponent } from '../../feature-import/feature/import-path/import-path.component';
+import { MenuComponent } from '../ui/menu/menu.component';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.scss']
+  styleUrls: ['./home.component.scss'],
+  standalone: true,
+  imports: [IonicModule, MenuComponent]
 })
 export class HomeComponent implements OnInit {
 

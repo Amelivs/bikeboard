@@ -1,18 +1,24 @@
 import { Component, OnInit } from '@angular/core';
-import { IonItemSliding, ModalController } from '@ionic/angular';
+import { IonItemSliding, ModalController, IonicModule } from '@ionic/angular';
 import { BehaviorSubject } from 'rxjs';
 import { Activity } from 'src/app/core/data/entities/activity';
 import { DownloadUtils } from 'src/app/shared/utils/download';
 import { DialogService } from 'src/app/core/services/dialog.service';
+import { NgFor, AsyncPipe } from '@angular/common';
 
 import { ActivitiesServices } from './activities.service';
+import { LocaleDatePipe } from '../../shared/ui/pipes/locale-date.pipe';
+import { DurationPipe } from '../../shared/ui/pipes/duration.pipe';
+import { DistancePipe } from '../../shared/ui/pipes/distance.pipe';
 
 
 @Component({
   selector: 'app-activities',
   templateUrl: './activities.component.html',
   styleUrls: ['./activities.component.scss'],
-  providers: [ActivitiesServices]
+  providers: [ActivitiesServices],
+  standalone: true,
+  imports: [IonicModule, NgFor, AsyncPipe, DistancePipe, DurationPipe, LocaleDatePipe]
 })
 export class ActivitiesComponent implements OnInit {
 
