@@ -1,16 +1,13 @@
 import { Routes } from '@angular/router';
 
-import { HomeComponent } from './feature-home/feature/home.component';
-import { seedingGuard } from './core/guards/seeding.guard';
-import { mapRoutes } from './feature-map/map.routes';
+import { ShellComponent } from './shell/shell.component';
 
 
 export const appRoutes: Routes = [
   {
-    path: '', canActivate: [seedingGuard], component: HomeComponent, children: [
-      {
-        path: '', loadChildren: () => mapRoutes
-      }
-    ]
+    path: '', component: ShellComponent
+  },
+  {
+    path: 'app', loadChildren: () => import('./feature-home/home.routes').then(m => m.homeRoutes)
   }
 ];

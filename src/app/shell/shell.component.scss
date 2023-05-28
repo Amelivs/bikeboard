@@ -1,0 +1,22 @@
+:host {
+  pointer-events: none;
+}
+
+ion-footer ion-button {
+  text-transform: none;
+  height: 64px;
+  width: 110px;
+  overflow: hidden;
+}
+
+.btn-content {
+  .btn-value {
+    font-family: monospace, "Courier New", Courier;
+    font-size: 2em;
+  }
+
+  .btn-text {
+    margin-top: 0.4em;
+    font-size: 0.9em;
+  }
+}
