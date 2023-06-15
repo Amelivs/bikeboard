@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { ActionSheetController, MenuController, ModalController, IonicModule } from '@ionic/angular';
+import { ActionSheetController, MenuController,  IonicModule } from '@ionic/angular';
 import { MapEntity } from 'src/app/core/data/entities/map';
 import { PathEntity } from 'src/app/core/data/entities/path';
 import { DataCacheService } from 'src/app/core/services/data-cache.service';
@@ -9,6 +9,7 @@ import { DirectionService } from 'src/app/core/services/direction.service';
 import { DialogService } from 'src/app/core/services/dialog.service';
 import { ActivitiesComponent } from 'src/app/feature-activities/feature/activities.component';
 import { NgIf, AsyncPipe } from '@angular/common';
+import { OverlayService } from 'src/app/core/services/overlay.service';
 
 import { NavigationService } from '../../core/services/navigation.service';
 import { MapViewerComponent } from '../ui/map-viewer/map-viewer.component';
@@ -80,7 +81,7 @@ export class MapComponent implements OnInit {
     private actionSheetController: ActionSheetController,
     private dataCache: DataCacheService,
     private loadingController: LoadingController,
-    private modalController: ModalController,
+    private overlaySrv: OverlayService,
     private directionService: DirectionService,
     private trackingService: TrackingService,
     private dialogSrv: DialogService) { }
@@ -144,9 +145,7 @@ export class MapComponent implements OnInit {
           icon: 'analytics',
           handler: async () => {
             actionSheet.dismiss();
-            this.modalController
-              .create({ component: ActivitiesComponent })
-              .then(modal => modal.present());
+            this.overlaySrv.showModal(ActivitiesComponent);
           }
         }
       ]

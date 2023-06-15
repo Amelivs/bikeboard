@@ -1,19 +1,23 @@
-import { ErrorHandler, Injectable } from '@angular/core';
+import { ErrorHandler, Injectable, Injector } from '@angular/core';
 
-import { ToastService } from '../services/toast.service';
 import { LoggingService } from '../services/logging.service';
+import { OverlayService } from '../services/overlay.service';
 
 @Injectable()
 export class GlobalErrorHandler implements ErrorHandler {
 
-  constructor(private toastService: ToastService, private loggingSrv: LoggingService) { }
+  constructor(private injector: Injector) { }
 
   handleError(error: any) {
+    const loggingSrv = this.injector.get(LoggingService);
+    const overlaySrv = this.injector.get(OverlayService);
+
     if (error.promise && error.rejection) {
       // Promise rejection wrapped by zone.js
       error = error.rejection;
     }
-    this.loggingSrv.error(error);
-    this.toastService.present(error.message);
+
+    loggingSrv.error(error);
+    overlaySrv.showToast(error.message);
   }
 }

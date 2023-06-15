@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { ActionSheetController, ModalController, IonicModule } from '@ionic/angular';
+import { ActionSheetController, IonicModule } from '@ionic/angular';
 import { SettingsNavComponent } from 'src/app/feature-settings/settings-nav.component';
+import { OverlayService } from 'src/app/core/services/overlay.service';
 
 import { ImportMapComponent } from '../../feature-import/feature/import-map/import-map.component';
 import { DebuggingComponent } from '../../feature-debugging/feature/debugging.component';
@@ -16,20 +17,16 @@ import { MenuComponent } from '../ui/menu/menu.component';
 })
 export class HomeComponent implements OnInit {
 
-  constructor(private modalController: ModalController, public actionSheetController: ActionSheetController) { }
+  constructor(private overlaySrv: OverlayService, public actionSheetController: ActionSheetController) { }
 
   ngOnInit(): void { }
 
   mapSettingsClick() {
-    this.modalController
-      .create({ component: SettingsNavComponent })
-      .then(modal => modal.present());
+    this.overlaySrv.showModal(SettingsNavComponent)
   }
 
   titlePress() {
-    this.modalController
-      .create({ component: DebuggingComponent })
-      .then(modal => modal.present());
+    this.overlaySrv.showModal(DebuggingComponent)
   }
 
   async addClick() {
@@ -40,18 +37,14 @@ export class HomeComponent implements OnInit {
           text: 'Import a new map',
           icon: 'map-outline',
           handler: () => {
-            this.modalController
-              .create({ component: ImportMapComponent })
-              .then(modal => modal.present());
+            this.overlaySrv.showModal(ImportMapComponent)
           }
         },
         {
           text: 'Import a new path',
           icon: 'analytics-outline',
           handler: () => {
-            this.modalController
-              .create({ component: ImportPathComponent })
-              .then(modal => modal.present());
+            this.overlaySrv.showModal(ImportPathComponent)
           }
         }]
     });
