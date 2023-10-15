@@ -53,7 +53,7 @@
       },
       "urls": [
         "/assets/gpx/**",
-        "/assets/maps/**"
+        "/assets/styles/**"
       ]
     },
     {
