@@ -96,7 +96,7 @@ export class MapViewerComponent implements OnInit {
       this.mapDblClick.emit();
     });
 
-    this.marker = new Marker(markerElement.nativeElement);
+    this.marker = new Marker({ element: markerElement.nativeElement });
 
     let style$ = this.mapEntity$.pipe(mergeMap(map => fetch(map.styleUrl).then<maplibregl.StyleSpecification>(res => res.json())));
     let paths$ = this.pathEntities$.pipe(mergeMap((paths) => this.layerService.setPathLayers(paths)));
