@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { LayerSpecification, SourceSpecification, StyleSpecification } from 'maplibre-gl';
-import { PathEntity } from 'src/app/core/data/entities/path';
-import { DirectionResult } from 'src/app/core/services/direction.service';
-import { GeoJsonUtil } from 'src/app/shared/utils/geojson';
+
+import { PathEntity } from '../../core/data/entities/path';
+import { DirectionResult } from '../../core/services/direction.service';
+import { GeoJsonUtil } from '../../shared/utils/geojson';
 
 @Injectable()
 export class LayerService {

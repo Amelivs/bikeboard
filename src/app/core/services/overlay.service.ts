@@ -1,14 +1,14 @@
-import { Injectable, Type } from '@angular/core';
+import { Injectable, Type, inject } from '@angular/core';
 import { ModalController, ToastController } from '@ionic/angular';
 
 @Injectable({
   providedIn: 'root'
 })
 export class OverlayService {
+  private readonly modalController = inject(ModalController);
+  private readonly toastController = inject(ToastController);
 
   private currentToast: Promise<HTMLIonToastElement> | nil;
-
-  constructor(private modalController: ModalController, private toastController: ToastController) { }
 
   async showModal<TComponent, TResult>(component: Type<TComponent>, componentProps?: Partial<TComponent>) {
     const modal = await this.modalController

@@ -1,18 +1,19 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { IonItemSliding, MenuController, IonicModule } from '@ionic/angular';
 import { firstValueFrom, Observable } from 'rxjs';
-import { MapEntity } from 'src/app/core/data/entities/map';
-import { PathEntity } from 'src/app/core/data/entities/path';
-import { DataCacheService } from 'src/app/core/services/data-cache.service';
-import { DialogService } from 'src/app/core/services/dialog.service';
 import { NgFor, AsyncPipe } from '@angular/common';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+
+import { MapEntity } from '../../../core/data/entities/map';
+import { PathEntity } from '../../../core/data/entities/path';
+import { DataCacheService } from '../../../core/services/data-cache.service';
+import { DialogService } from '../../../core/services/dialog.service';
 
 
 @Component({
   selector: 'app-menu',
   templateUrl: './menu.component.html',
-  styleUrls: ['./menu.component.scss'],
+  styleUrl: './menu.component.scss',
   standalone: true,
   imports: [
     IonicModule,
@@ -23,6 +24,9 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
   ],
 })
 export class MenuComponent implements OnInit {
+  private readonly service = inject(DataCacheService);
+  private readonly menu = inject(MenuController);
+  private readonly dialogSrv = inject(DialogService);
 
   readonly maps$: Observable<MapEntity[]>;
   readonly paths$: Observable<PathEntity[]>;
@@ -30,9 +34,9 @@ export class MenuComponent implements OnInit {
   selectedMap: MapEntity | nil;
   selectedPaths: PathEntity[] = [];
 
-  constructor(private service: DataCacheService, private menu: MenuController, private dialogSrv: DialogService) {
-    this.maps$ = service.maps;
-    this.paths$ = service.paths;
+  constructor() {
+    this.maps$ = this.service.maps;
+    this.paths$ = this.service.paths;
   }
 
   async ngOnInit() {

@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
 import { share } from 'rxjs/operators';
 
@@ -8,6 +8,7 @@ import { LoggingService } from './logging.service';
   providedIn: 'root'
 })
 export class LocationService {
+  private readonly logging = inject(LoggingService);
 
   public readonly watchPosition: Observable<GeolocationPosition>;
 
@@ -30,7 +31,7 @@ export class LocationService {
     });
   }
 
-  public constructor(private logging: LoggingService) {
+  public constructor() {
     this.watchPosition = this.createPositionWatcher().pipe(share());
   }
 }

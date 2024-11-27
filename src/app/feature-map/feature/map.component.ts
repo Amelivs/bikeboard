@@ -1,16 +1,15 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { ActionSheetController, MenuController,  IonicModule } from '@ionic/angular';
-import { MapEntity } from 'src/app/core/data/entities/map';
-import { PathEntity } from 'src/app/core/data/entities/path';
-import { DataCacheService } from 'src/app/core/services/data-cache.service';
-import { TrackingService } from 'src/app/core/services/tracking.service';
-import { LoadingController } from '@ionic/angular';
-import { DirectionService } from 'src/app/core/services/direction.service';
-import { DialogService } from 'src/app/core/services/dialog.service';
-import { ActivitiesComponent } from 'src/app/feature-activities/feature/activities.component';
+import { Component, OnInit, ViewChild, inject } from '@angular/core';
+import { ActionSheetController, MenuController, IonicModule, LoadingController } from '@ionic/angular';
 import { NgIf, AsyncPipe } from '@angular/common';
-import { OverlayService } from 'src/app/core/services/overlay.service';
 
+import { MapEntity } from '../../core/data/entities/map';
+import { PathEntity } from '../../core/data/entities/path';
+import { DataCacheService } from '../../core/services/data-cache.service';
+import { TrackingService } from '../../core/services/tracking.service';
+import { DirectionService } from '../../core/services/direction.service';
+import { DialogService } from '../../core/services/dialog.service';
+import { ActivitiesComponent } from '../../feature-activities/feature/activities.component';
+import { OverlayService } from '../../core/services/overlay.service';
 import { NavigationService } from '../../core/services/navigation.service';
 import { MapViewerComponent } from '../ui/map-viewer/map-viewer.component';
 import { KilometerPipe } from '../../shared/ui/pipes/kilometer.pipe';
@@ -21,23 +20,24 @@ type TrackingMode = 'None' | 'Follow' | 'FollowWithHeading';
 
 @Component({
   templateUrl: './map.component.html',
-  styleUrls: ['./map.component.scss'],
+  styleUrl: './map.component.scss',
   standalone: true,
-  imports: [
-    IonicModule,
-    MapViewerComponent,
-    NgIf,
-    AsyncPipe,
-    FixedPipe,
-    KilometerPipe,
-  ],
+  imports: [IonicModule, MapViewerComponent, NgIf, AsyncPipe, FixedPipe, KilometerPipe]
 })
 export class MapComponent implements OnInit {
+  private readonly menu = inject(MenuController);
+  private readonly navService = inject(NavigationService);
+  private readonly actionSheetController = inject(ActionSheetController);
+  private readonly dataCache = inject(DataCacheService);
+  private readonly loadingController = inject(LoadingController);
+  private readonly overlaySrv = inject(OverlayService);
+  private readonly directionService = inject(DirectionService);
+  private readonly trackingService = inject(TrackingService);
+  private readonly dialogSrv = inject(DialogService);
 
   @ViewChild(MapViewerComponent, { static: true }) mapViewer!: MapViewerComponent;
 
   public rotation = 0;
-  public attributions: string | nil;
   public terrainAvailable = false;
 
   public origin: number[] | nil;
@@ -74,17 +74,6 @@ export class MapComponent implements OnInit {
   public get currentDistance() {
     return this.trackingService.distance$;
   }
-
-  constructor(
-    private menu: MenuController,
-    private navService: NavigationService,
-    private actionSheetController: ActionSheetController,
-    private dataCache: DataCacheService,
-    private loadingController: LoadingController,
-    private overlaySrv: OverlayService,
-    private directionService: DirectionService,
-    private trackingService: TrackingService,
-    private dialogSrv: DialogService) { }
 
   private onMapChange(map: MapEntity) {
     if (map != null) {

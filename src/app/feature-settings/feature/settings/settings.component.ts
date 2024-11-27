@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { IonNav, ModalController, IonicModule } from '@ionic/angular';
-import { DialogService } from 'src/app/core/services/dialog.service';
 
+import { DialogService } from '../../../core/services/dialog.service';
 import { environment } from '../../../../environments/environment';
 import { AttributionsComponent } from '../attributions/attributions.component';
 import { SettingsService } from './settings.service';
@@ -9,19 +9,17 @@ import { SettingsService } from './settings.service';
 @Component({
   selector: 'app-settings',
   templateUrl: './settings.component.html',
-  styleUrls: ['./settings.component.scss'],
+  styleUrl: './settings.component.scss',
   providers: [SettingsService],
   standalone: true,
   imports: [IonicModule]
 })
 export class SettingsComponent implements OnInit {
-
-  constructor(
-    private modalCtrl: ModalController,
-    private service: SettingsService,
-    private nav: IonNav,
-    private window: Window,
-    private dialogSrv: DialogService) { }
+  private readonly modalCtrl = inject(ModalController);
+  private readonly service = inject(SettingsService);
+  private readonly nav = inject(IonNav);
+  private readonly window = inject(Window);
+  private readonly dialogSrv = inject(DialogService);
 
   appVersion = environment.appVersion;
   cachedTilesCount = 0;

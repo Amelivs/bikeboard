@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { concat, from, merge, Subject } from 'rxjs';
 import { bufferCount, bufferTime, defaultIfEmpty, filter, first, last, map, startWith, switchMap, takeUntil } from 'rxjs/operators';
 
@@ -13,6 +13,13 @@ import { LoggingService } from './logging.service';
   providedIn: 'root'
 })
 export class NavigationService {
+  private readonly app = inject(ApplicationService);
+  private readonly logging = inject(LoggingService);
+  private readonly locationSrv = inject(LocationService);
+  private readonly compassSrv = inject(CompassService);
+  private readonly lastPositionSrv = inject(LastPositionService);
+  private readonly trackingService = inject(TrackingService);
+
   /** 9km/h */
   private readonly speedThreshold = 2.5;
 
@@ -25,14 +32,6 @@ export class NavigationService {
   private readonly unsubscribeHeading = new Subject<void>();
 
   private isTracking = false;
-
-  public constructor(
-    private app: ApplicationService,
-    private logging: LoggingService,
-    private locationSrv: LocationService,
-    private compassSrv: CompassService,
-    private lastPositionSrv: LastPositionService,
-    private trackingService: TrackingService) { }
 
   public readonly position = concat(this.lastPositionSrv.getLastPosition(), this.$position.pipe(map(coords => [coords.longitude, coords.latitude])));
   public readonly heading = this.$heading.asObservable();

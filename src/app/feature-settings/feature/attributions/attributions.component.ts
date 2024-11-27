@@ -1,22 +1,22 @@
-import { Component, OnInit } from '@angular/core';
-import { DialogService } from 'src/app/core/services/dialog.service';
+import { Component, OnInit, inject } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
 
+import { DialogService } from '../../../core/services/dialog.service';
 import { AttributionsService } from './attributions.service';
 
 @Component({
   selector: 'app-attributions',
   templateUrl: './attributions.component.html',
-  styleUrls: ['./attributions.component.scss'],
+  styleUrl: './attributions.component.scss',
   providers: [AttributionsService],
   standalone: true,
   imports: [IonicModule]
 })
 export class AttributionsComponent implements OnInit {
+  private readonly service = inject(AttributionsService);
+  private readonly dialogSrv = inject(DialogService);
 
   atttributions: string | nil;
-
-  constructor(private service: AttributionsService, private dialogSrv: DialogService) { }
 
   async ngOnInit() {
     try {

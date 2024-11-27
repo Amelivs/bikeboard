@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 
 import { DataContext } from '../data/data-context';
 import { LoggingService } from './logging.service';
@@ -7,6 +7,8 @@ import { LoggingService } from './logging.service';
   providedIn: 'root'
 })
 export class LastPositionService {
+  private readonly storage = inject(DataContext);
+  private readonly logging = inject(LoggingService);
 
   private readonly initialPosition = [7.360836658509982, 48.07617984027771];
 
@@ -16,8 +18,6 @@ export class LastPositionService {
       typeof (position[0]) === 'number' &&
       typeof (position[1]) === 'number';
   }
-
-  public constructor(private storage: DataContext, private logging: LoggingService) { }
 
   public async getLastPosition() {
     let position = await this.storage.preferences.get<number[]>('position');

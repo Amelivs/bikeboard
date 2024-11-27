@@ -1,11 +1,10 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DialogService {
-
-  constructor(private window: Window) { }
+  private readonly window = inject(Window);
 
   public alert(data: unknown) {
     let message: string;

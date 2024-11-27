@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { fromEvent } from 'rxjs';
 import { filter, switchMap } from 'rxjs/operators';
 
@@ -8,6 +8,8 @@ import { LoggingService } from './logging.service';
   providedIn: 'root'
 })
 export class ApplicationService {
+  private readonly window = inject(Window);
+  private readonly logging = inject(LoggingService);
 
   private wakeLock: WakeLockSentinel | nil;
 
@@ -26,7 +28,9 @@ export class ApplicationService {
     }
   }
 
-  constructor(private window: Window, private logging: LoggingService) {
+  constructor() {
+    const window = this.window;
+
     fromEvent(window.document, 'visibilitychange')
       .pipe(
         filter(() => window.document.visibilityState === 'visible'),

@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { ReplaySubject } from 'rxjs';
 
 import { DataContext } from '../data/data-context';
@@ -10,6 +10,8 @@ import { DialogService } from './dialog.service';
   providedIn: 'root'
 })
 export class DataCacheService {
+  private readonly context = inject(DataContext);
+  private readonly dialogSrv = inject(DialogService);
 
   private readonly maps$ = new ReplaySubject<MapEntity[]>(1);
   private readonly activeMap$ = new ReplaySubject<MapEntity>(1);
@@ -36,7 +38,7 @@ export class DataCacheService {
     this.paths$.next(paths);
   }
 
-  constructor(private context: DataContext, private dialogSrv: DialogService) {
+  constructor() {
     try {
       this.loadMaps();
       this.loadPaths();

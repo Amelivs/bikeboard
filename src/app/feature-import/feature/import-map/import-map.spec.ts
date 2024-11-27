@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { ModalController } from '@ionic/angular';
-import { DataCacheService } from 'src/app/core/services/data-cache.service';
 
+import { DataCacheService } from '../../../core/services/data-cache.service';
 import { ImportMapComponent } from './import-map.component';
 
 describe('ImportMapComponent', () => {

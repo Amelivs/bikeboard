@@ -1,12 +1,12 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { firstValueFrom, skip } from 'rxjs';
 import { IonItemSliding, ModalController } from '@ionic/angular';
-import { Activity } from 'src/app/core/data/entities/activity';
-import { DataContext } from 'src/app/core/data/data-context';
-import { TableStore } from 'src/app/core/data/stores/table-store';
-import { ObjectStore } from 'src/app/core/data/stores/object-store';
-import { DialogService } from 'src/app/core/services/dialog.service';
 
+import { Activity } from '../../core/data/entities/activity';
+import { DataContext } from '../../core/data/data-context';
+import { TableStore } from '../../core/data/stores/table-store';
+import { ObjectStore } from '../../core/data/stores/object-store';
+import { DialogService } from '../../core/services/dialog.service';
 import { ActivitiesComponent } from './activities.component';
 
 describe('ActivitiesComponent', () => {

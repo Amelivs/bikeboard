@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Storage } from '@ionic/storage-angular';
 import { firstValueFrom, Subject } from 'rxjs';
 
@@ -14,6 +14,8 @@ import { LoggingService } from '../services/logging.service';
 
 @Injectable()
 export class DataContext {
+  private readonly storageFactory = inject(Storage);
+  private readonly logging = inject(LoggingService);
 
   private readonly databaseName = 'bikeboard';
   private readonly versionNumber = 1;
@@ -25,8 +27,6 @@ export class DataContext {
   public paths!: TableStore<PathEntity>;
   public preferences!: ObjectStore;
   public activities!: TableStore<Activity>;
-
-  constructor(private storageFactory: Storage, private logging: LoggingService) { }
 
   public async initialize() {
     this.database = await this.openDatabase();

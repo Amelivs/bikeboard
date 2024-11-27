@@ -1,11 +1,11 @@
-import { Injectable } from '@angular/core';
-import { DataContext } from 'src/app/core/data/data-context';
+import { Injectable, inject } from '@angular/core';
+
+import { DataContext } from '../../../core/data/data-context';
 
 
 @Injectable()
 export class SettingsService {
-
-  constructor(private context: DataContext) { }
+  private readonly context = inject(DataContext);
 
   public async reset() {
     await this.context.reset();

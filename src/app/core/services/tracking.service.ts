@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Platform } from '@ionic/angular';
 import { ReplaySubject } from 'rxjs';
 
@@ -15,12 +15,13 @@ const MAX_COORDS_ACCURACY = 20;
   providedIn: 'root'
 })
 export class TrackingService {
+  private readonly dataContext = inject(DataContext);
+  private readonly platform = inject(Platform);
+  private readonly dialogSrv = inject(DialogService);
 
   private activity: Activity | nil;
 
   public readonly distance$ = new ReplaySubject<number>(1);
-
-  public constructor(public dataContext: DataContext, private platform: Platform, private dialogSrv: DialogService) { }
 
   public async initialize(newActivity = false) {
     if (!newActivity) {

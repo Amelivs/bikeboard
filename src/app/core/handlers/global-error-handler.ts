@@ -1,12 +1,11 @@
-import { ErrorHandler, Injectable, Injector } from '@angular/core';
+import { ErrorHandler, Injectable, Injector, inject } from '@angular/core';
 
 import { LoggingService } from '../services/logging.service';
 import { OverlayService } from '../services/overlay.service';
 
 @Injectable()
 export class GlobalErrorHandler implements ErrorHandler {
-
-  constructor(private injector: Injector) { }
+  private readonly injector = inject(Injector);
 
   handleError(error: any) {
     const loggingSrv = this.injector.get(LoggingService);

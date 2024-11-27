@@ -1,12 +1,13 @@
-import { Injectable } from '@angular/core';
-import { DataContext } from 'src/app/core/data/data-context';
-import { DialogService } from 'src/app/core/services/dialog.service';
+import { Injectable, inject } from '@angular/core';
+
+import { DataContext } from '../../core/data/data-context';
+import { DialogService } from '../../core/services/dialog.service';
 
 
 @Injectable()
 export class ActivitiesServices {
-
-  public constructor(private context: DataContext, private dialogSrv: DialogService) { }
+  private readonly context = inject(DataContext);
+  private readonly dialogSrv = inject(DialogService);
 
   public async getActivities() {
     let activities = await this.context.activities.getAll();

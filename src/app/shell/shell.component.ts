@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
@@ -9,12 +9,11 @@ import { environment } from 'src/environments/environment';
   selector: 'app-shell',
   standalone: true,
   templateUrl: './shell.component.html',
-  styleUrls: ['./shell.component.scss'],
+  styleUrl: './shell.component.scss',
   imports: [CommonModule, IonicModule]
 })
 export class ShellComponent implements OnInit {
-
-  constructor(private router: Router) { }
+  private readonly router = inject(Router);
 
   ngOnInit() {
     setTimeout(() => {

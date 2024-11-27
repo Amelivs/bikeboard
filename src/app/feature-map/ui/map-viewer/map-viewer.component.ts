@@ -1,23 +1,24 @@
-import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
-import { MapEntity } from 'src/app/core/data/entities/map';
-import { PathEntity } from 'src/app/core/data/entities/path';
-import { DirectionResult } from 'src/app/core/services/direction.service';
+import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild, inject } from '@angular/core';
 import maplibre, { AttributionControl } from 'maplibre-gl';
 import { ReplaySubject, Subject, combineLatest, map, mergeMap, startWith, throttleTime } from 'rxjs';
 import { Marker } from 'maplibre-gl';
 import { NgClass } from '@angular/common';
 
+import { DirectionResult } from '../../../core/services/direction.service';
+import { PathEntity } from '../../../core/data/entities/path';
+import { MapEntity } from '../../../core/data/entities/map';
 import { LayerService } from '../../services/layer.service';
 import { LongPressDirective } from '../../../shared/ui/directives/long-press';
 
 @Component({
   selector: 'app-map-viewer',
   templateUrl: './map-viewer.component.html',
-  styleUrls: ['./map-viewer.component.scss'],
+  styleUrl: './map-viewer.component.scss',
   standalone: true,
   imports: [NgClass, LongPressDirective]
 })
 export class MapViewerComponent implements OnInit {
+  private readonly layerService = inject(LayerService);
 
   @ViewChild('map', { static: true }) mapElement!: ElementRef<HTMLElement>;
   @ViewChild('positionMarker', { static: true }) positionMarkerElement!: ElementRef;
@@ -28,8 +29,6 @@ export class MapViewerComponent implements OnInit {
   @Output() viewRotate = new EventEmitter<number>();
   @Output() context = new EventEmitter<number[]>();
   @Output() terrainAvailable = new EventEmitter<boolean>();
-
-  constructor(private layerService: LayerService) { }
 
   private marker: maplibregl.Marker | nil;
   private map: maplibregl.Map | nil;

@@ -1,8 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { IonicModule, IonNav, ModalController } from '@ionic/angular';
-import { DialogService } from 'src/app/core/services/dialog.service';
-import { DataContext } from 'src/app/core/data/data-context';
 
+import { DialogService } from '../../../core/services/dialog.service';
+import { DataContext } from '../../../core/data/data-context';
 import { SettingsComponent } from './settings.component';
 import { AttributionsComponent } from '../attributions/attributions.component';
 

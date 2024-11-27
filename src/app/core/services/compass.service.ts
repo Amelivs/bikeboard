@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Platform } from '@ionic/angular';
 import { fromEvent, Observable } from 'rxjs';
 import { map, share } from 'rxjs/operators';
@@ -7,6 +7,8 @@ import { map, share } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class CompassService {
+  private readonly platform = inject(Platform);
+  private readonly window = inject(Window);
 
   private permissionState: PermissionState = 'prompt';
   public readonly heading: Observable<number>;
@@ -31,7 +33,7 @@ export class CompassService {
       }));
   }
 
-  public constructor(private platform: Platform, private window: Window) {
+  public constructor() {
     this.heading = this.createObservable().pipe(share());
   }
 

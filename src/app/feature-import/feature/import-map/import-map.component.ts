@@ -1,20 +1,23 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, inject } from '@angular/core';
 import { FormControl, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { IonInput, ModalController, IonicModule } from '@ionic/angular';
 import { StyleSpecification } from 'maplibre-gl';
-import { MapEntity } from 'src/app/core/data/entities/map';
-import { DataCacheService } from 'src/app/core/services/data-cache.service';
-import { UUID } from 'src/app/shared/utils/uuid';
+
+import { MapEntity } from '../../../core/data/entities/map';
+import { DataCacheService } from '../../../core/services/data-cache.service';
+import { UUID } from '../../../shared/utils/uuid';
 
 
 @Component({
   selector: 'app-import-map',
   templateUrl: './import-map.component.html',
-  styleUrls: ['./import-map.component.scss'],
+  styleUrl: './import-map.component.scss',
   standalone: true,
   imports: [IonicModule, ReactiveFormsModule],
 })
 export class ImportMapComponent implements OnInit {
+  private readonly modalCtrl = inject(ModalController);
+  private readonly dataCache = inject(DataCacheService);
 
   @ViewChild('fileInput') set fileInput(input: IonInput) {
     input.getInputElement().then(nativeInput => {
@@ -29,8 +32,6 @@ export class ImportMapComponent implements OnInit {
     file: new FormControl<File | null>(null, [Validators.required]),
     name: new FormControl<string | null>(null, [Validators.required])
   });
-
-  constructor(private modalCtrl: ModalController, private dataCache: DataCacheService) { }
 
   ngOnInit() { }
 
