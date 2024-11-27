@@ -1,8 +1,9 @@
 import { Component, OnInit, inject } from '@angular/core';
-import { IonicModule } from '@ionic/angular';
+import { IonContent, IonToolbar, IonButtons, IonHeader, IonBackButton, IonTitle } from '@ionic/angular/standalone';
 
 import { DialogService } from '../../../core/services/dialog.service';
 import { AttributionsService } from './attributions.service';
+
 
 @Component({
   selector: 'app-attributions',
@@ -10,7 +11,7 @@ import { AttributionsService } from './attributions.service';
   styleUrl: './attributions.component.scss',
   providers: [AttributionsService],
   standalone: true,
-  imports: [IonicModule]
+  imports: [IonContent, IonToolbar, IonButtons, IonHeader, IonBackButton, IonTitle]
 })
 export class AttributionsComponent implements OnInit {
   private readonly service = inject(AttributionsService);

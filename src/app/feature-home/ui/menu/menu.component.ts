@@ -1,8 +1,8 @@
 import { Component, OnInit, inject } from '@angular/core';
-import { IonItemSliding, MenuController, IonicModule } from '@ionic/angular';
+import { IonItemSliding, MenuController, IonList, IonItemDivider, IonLabel, IonItem, IonCheckbox, IonRadio, IonItemOptions, IonItemOption, IonIcon, IonRadioGroup } from '@ionic/angular/standalone';
 import { firstValueFrom, Observable } from 'rxjs';
 import { NgFor, AsyncPipe } from '@angular/common';
-import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 
 import { MapEntity } from '../../../core/data/entities/map';
 import { PathEntity } from '../../../core/data/entities/path';
@@ -15,13 +15,7 @@ import { DialogService } from '../../../core/services/dialog.service';
   templateUrl: './menu.component.html',
   styleUrl: './menu.component.scss',
   standalone: true,
-  imports: [
-    IonicModule,
-    ReactiveFormsModule,
-    FormsModule,
-    NgFor,
-    AsyncPipe,
-  ],
+  imports: [FormsModule, NgFor, AsyncPipe, IonList, IonItemDivider, IonLabel, IonItemSliding, IonItem, IonCheckbox, IonRadio, IonRadioGroup, IonItemOptions, IonItemOption, IonIcon],
 })
 export class MenuComponent implements OnInit {
   private readonly service = inject(DataCacheService);

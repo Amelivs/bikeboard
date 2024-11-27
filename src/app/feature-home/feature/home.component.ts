@@ -1,5 +1,5 @@
 import { Component, OnInit, inject } from '@angular/core';
-import { ActionSheetController, IonicModule } from '@ionic/angular';
+import { ActionSheetController, IonMenu, IonHeader, IonToolbar, IonTitle, IonContent, IonFooter, IonButtons, IonButton, IonIcon, IonRouterOutlet } from '@ionic/angular/standalone';
 
 import { SettingsNavComponent } from '../../feature-settings/settings-nav.component';
 import { OverlayService } from '../../core/services/overlay.service';
@@ -13,7 +13,7 @@ import { MenuComponent } from '../ui/menu/menu.component';
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
   standalone: true,
-  imports: [IonicModule, MenuComponent]
+  imports: [MenuComponent, IonMenu, IonHeader, IonToolbar, IonTitle, IonContent, IonFooter, IonButtons, IonButton, IonIcon, IonRouterOutlet]
 })
 export class HomeComponent implements OnInit {
   private readonly overlaySrv = inject(OverlayService);

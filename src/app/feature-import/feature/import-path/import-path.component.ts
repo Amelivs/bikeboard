@@ -1,6 +1,6 @@
-import { Component, OnInit, ViewChild, inject } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild, inject } from '@angular/core';
 import { FormControl, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
-import { IonInput, ModalController, IonicModule } from '@ionic/angular';
+import { IonInput, ModalController, IonContent, IonHeader, IonToolbar, IonButton, IonButtons, IonTitle, IonItem } from '@ionic/angular/standalone';
 
 import { PathEntity } from '../../../core/data/entities/path';
 import { DataCacheService } from '../../../core/services/data-cache.service';
@@ -12,16 +12,14 @@ import { UUID } from '../../../shared/utils/uuid';
   templateUrl: './import-path.component.html',
   styleUrl: './import-path.component.scss',
   standalone: true,
-  imports: [IonicModule, ReactiveFormsModule],
+  imports: [ReactiveFormsModule, IonContent, IonToolbar, IonButton, IonButtons, IonTitle, IonHeader, IonItem, IonInput],
 })
 export class ImportPathComponent implements OnInit {
   private readonly modalCtrl = inject(ModalController);
   private readonly dataCache = inject(DataCacheService);
 
-  @ViewChild('fileInput') set fileInput(input: IonInput) {
-    input.getInputElement().then(nativeInput => {
-      this.nativefileInput = nativeInput;
-    });
+  @ViewChild('fileInput') set fileInput(input: ElementRef) {
+    this.nativefileInput = input.nativeElement;
   }
 
   private nativefileInput: HTMLInputElement | nil;

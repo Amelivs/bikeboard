@@ -1,5 +1,5 @@
 import { Component, OnInit, inject } from '@angular/core';
-import { ModalController, IonicModule } from '@ionic/angular';
+import { ModalController, IonHeader, IonToolbar, IonContent, IonButton, IonButtons, IonTitle, IonList, IonItem } from '@ionic/angular/standalone';
 import { scan } from 'rxjs';
 import { NgIf, NgFor, NgClass, AsyncPipe } from '@angular/common';
 
@@ -10,7 +10,7 @@ import { LogEntry, LoggingService } from '../../core/services/logging.service';
   templateUrl: './debugging.component.html',
   styleUrl: './debugging.component.scss',
   standalone: true,
-  imports: [IonicModule, NgIf, NgFor, NgClass, AsyncPipe]
+  imports: [NgIf, NgFor, NgClass, AsyncPipe, IonHeader, IonToolbar, IonContent, IonButton, IonButtons, IonTitle, IonList, IonItem]
 })
 export class DebuggingComponent implements OnInit {
   private readonly modalCtrl = inject(ModalController);

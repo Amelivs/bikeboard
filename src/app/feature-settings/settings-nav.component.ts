@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicModule } from '@ionic/angular';
+import { IonNav } from '@ionic/angular/standalone';
 
 import { SettingsComponent } from './feature/settings/settings.component';
 
@@ -8,7 +8,7 @@ import { SettingsComponent } from './feature/settings/settings.component';
   selector: 'app-settings-nav',
   template: '<ion-nav [root]="rootPage"></ion-nav>',
   standalone: true,
-  imports: [IonicModule]
+  imports: [IonNav]
 })
 export class SettingsNavComponent {
 

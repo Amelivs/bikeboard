@@ -1,5 +1,5 @@
 import { Component, OnInit, inject } from '@angular/core';
-import { IonItemSliding, ModalController, IonicModule } from '@ionic/angular';
+import { IonItemSliding, IonItemOption, IonItemOptions, ModalController, IonHeader, IonToolbar, IonContent, IonButton, IonButtons, IonTitle, IonList, IonItem, IonIcon, IonLabel } from '@ionic/angular/standalone';
 import { BehaviorSubject } from 'rxjs';
 import { NgFor, AsyncPipe } from '@angular/common';
 
@@ -18,7 +18,7 @@ import { DistancePipe } from '../../shared/ui/pipes/distance.pipe';
   styleUrl: './activities.component.scss',
   providers: [ActivitiesServices],
   standalone: true,
-  imports: [IonicModule, NgFor, AsyncPipe, DistancePipe, DurationPipe, LocaleDatePipe]
+  imports: [NgFor, AsyncPipe, DistancePipe, DurationPipe, LocaleDatePipe, IonHeader, IonToolbar, IonContent, IonButton, IonButtons, IonTitle, IonList, IonItem, IonItemSliding, IonItemOption, IonItemOptions, IonIcon, IonLabel]
 })
 export class ActivitiesComponent implements OnInit {
   private readonly modalCtrl = inject(ModalController);

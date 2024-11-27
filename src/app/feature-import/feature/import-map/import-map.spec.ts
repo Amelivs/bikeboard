@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { ModalController } from '@ionic/angular';
+import { ModalController } from '@ionic/angular/standalone';
 
 import { DataCacheService } from '../../../core/services/data-cache.service';
 import { ImportMapComponent } from './import-map.component';

@@ -1,5 +1,5 @@
 import { Component, OnInit, inject } from '@angular/core';
-import { IonNav, ModalController, IonicModule } from '@ionic/angular';
+import { ModalController, IonNav, IonContent, IonToolbar, IonButtons, IonHeader, IonButton, IonTitle, IonList, IonListHeader, IonLabel, IonItem, IonText } from '@ionic/angular/standalone';
 
 import { DialogService } from '../../../core/services/dialog.service';
 import { environment } from '../../../../environments/environment';
@@ -12,7 +12,7 @@ import { SettingsService } from './settings.service';
   styleUrl: './settings.component.scss',
   providers: [SettingsService],
   standalone: true,
-  imports: [IonicModule]
+  imports: [IonContent, IonToolbar, IonButtons, IonHeader, IonButton, IonTitle, IonList, IonListHeader, IonLabel, IonItem, IonText]
 })
 export class SettingsComponent implements OnInit {
   private readonly modalCtrl = inject(ModalController);

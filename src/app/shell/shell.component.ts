@@ -1,7 +1,7 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
-import { IonicModule } from '@ionic/angular';
+import { IonContent, IonFooter, IonToolbar, IonButton, IonButtons } from '@ionic/angular/standalone';
 import { environment } from 'src/environments/environment';
 
 
@@ -10,7 +10,7 @@ import { environment } from 'src/environments/environment';
   standalone: true,
   templateUrl: './shell.component.html',
   styleUrl: './shell.component.scss',
-  imports: [CommonModule, IonicModule]
+  imports: [CommonModule, IonContent, IonFooter, IonToolbar, IonButton, IonButtons]
 })
 export class ShellComponent implements OnInit {
   private readonly router = inject(Router);

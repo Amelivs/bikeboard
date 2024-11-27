@@ -1,5 +1,5 @@
 import { Injectable, Type, inject } from '@angular/core';
-import { ModalController, ToastController } from '@ionic/angular';
+import { ModalController, ToastController } from '@ionic/angular/standalone';
 
 @Injectable({
   providedIn: 'root'

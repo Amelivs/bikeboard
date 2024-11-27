@@ -11,7 +11,7 @@
   <ion-list [formGroup]="form">
     <ion-item button detail="false" (click)="browse()">
       <ion-input readonly formControlName="fileName" placeholder="Select a file" class="no-pointer" label="GPX file" labelPlacement="stacked"></ion-input>
-      <ion-input #fileInput type="file" (change)="onFileChange($event)" accept=".gpx" class="ion-hide"></ion-input>
+      <input #fileInput type="file" (change)="onFileChange($event)" accept=".gpx" class="ion-hide" />
     </ion-item>
     <ion-item>
       <ion-input placeholder="Enter a name" formControlName="name" label="Name" labelPlacement="stacked"></ion-input>

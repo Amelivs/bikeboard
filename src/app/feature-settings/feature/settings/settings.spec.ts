@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { IonicModule, IonNav, ModalController } from '@ionic/angular';
+import { ModalController, IonNav, IonContent, IonToolbar, IonButtons, IonHeader, IonButton, IonTitle, IonList, IonListHeader, IonLabel, IonItem, IonText } from '@ionic/angular/standalone';
 
 import { DialogService } from '../../../core/services/dialog.service';
 import { DataContext } from '../../../core/data/data-context';
@@ -24,7 +24,7 @@ describe('HomeSettingsComponent', () => {
     dialogSpy = jasmine.createSpyObj<DialogService>(['alert', 'confirm', 'prompt']);
     dataContextSpy = jasmine.createSpyObj<DataContext>(['reset']);
 
-    TestBed.configureTestingModule({ imports: [IonicModule.forRoot(), SettingsComponent] })
+    TestBed.configureTestingModule({ imports: [IonContent, IonToolbar, IonButtons, IonHeader, IonButton, IonTitle, IonList, IonListHeader, IonLabel, IonItem, IonText, SettingsComponent] })
       .overrideProvider(ModalController, { useValue: modalCtrlSpy })
       .overrideProvider(IonNav, { useValue: navSpy })
       .overrideProvider(Window, { useValue: windowSpy })

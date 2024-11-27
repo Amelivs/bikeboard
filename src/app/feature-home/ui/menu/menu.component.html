@@ -6,7 +6,7 @@
     <ion-item-sliding #slindingItem *ngFor="let map of maps$ | async" [disabled]="isActiveMap(map)">
       <ion-item-options side="start">
         <ion-item-option color="danger" (click)="deleteMap(slindingItem, map)">
-          <ion-icon slot="icon-only" name="trash"></ion-icon>
+          <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
         </ion-item-option>
       </ion-item-options>
       <ion-item>
@@ -22,7 +22,7 @@
   <ion-item-sliding #slindingItem *ngFor="let path of paths$ | async">
     <ion-item-options side="start">
       <ion-item-option color="danger" (click)="deletePath(slindingItem, path)">
-        <ion-icon slot="icon-only" name="trash"></ion-icon>
+        <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
       </ion-item-option>
     </ion-item-options>
     <ion-item>

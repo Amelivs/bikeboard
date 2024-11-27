@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { firstValueFrom, skip } from 'rxjs';
-import { IonItemSliding, ModalController } from '@ionic/angular';
+import { IonItemSliding, ModalController } from '@ionic/angular/standalone';
 
 import { Activity } from '../../core/data/entities/activity';
 import { DataContext } from '../../core/data/data-context';

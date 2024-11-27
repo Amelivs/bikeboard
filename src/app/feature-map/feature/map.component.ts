@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, inject } from '@angular/core';
-import { ActionSheetController, MenuController, IonicModule, LoadingController } from '@ionic/angular';
+import { ActionSheetController, MenuController, LoadingController, IonContent, IonFooter, IonButton, IonButtons, IonToolbar, IonFab, IonFabButton, IonIcon } from '@ionic/angular/standalone';
 import { NgIf, AsyncPipe } from '@angular/common';
 
 import { MapEntity } from '../../core/data/entities/map';
@@ -22,7 +22,7 @@ type TrackingMode = 'None' | 'Follow' | 'FollowWithHeading';
   templateUrl: './map.component.html',
   styleUrl: './map.component.scss',
   standalone: true,
-  imports: [IonicModule, MapViewerComponent, NgIf, AsyncPipe, FixedPipe, KilometerPipe]
+  imports: [MapViewerComponent, NgIf, AsyncPipe, FixedPipe, KilometerPipe, IonContent, IonFooter, IonButton, IonButtons, IonToolbar, IonFab, IonFabButton, IonIcon]
 })
 export class MapComponent implements OnInit {
   private readonly menu = inject(MenuController);
@@ -123,7 +123,7 @@ export class MapComponent implements OnInit {
       buttons: [
         {
           text: 'New activity',
-          icon: 'refresh',
+          icon: 'refresh-outline',
           handler: async () => {
             await actionSheet.dismiss();
             await this.trackingService.startNewActivity();
@@ -131,7 +131,7 @@ export class MapComponent implements OnInit {
         },
         {
           text: 'Activities',
-          icon: 'analytics',
+          icon: 'analytics-outline',
           handler: async () => {
             actionSheet.dismiss();
             this.overlaySrv.showModal(ActivitiesComponent);
@@ -227,7 +227,7 @@ export class MapComponent implements OnInit {
         { role: 'addWaypoint', text: 'Add waypoint', icon: 'location-outline' },
         { role: 'removeWaypoint', text: 'Remove waypoint', icon: 'location-outline' },
         { role: 'clear', text: 'Clear itinerary', icon: 'trash-outline' },
-        { role: 'cancel', text: 'Cancel', icon: 'close', }
+        { role: 'cancel', text: 'Cancel', icon: 'close-outline', }
       ]
     });
     await actionSheet.present();
