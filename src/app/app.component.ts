@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 
 
@@ -7,6 +6,6 @@ import { IonicModule } from '@ionic/angular';
   selector: 'app-root',
   template: '<ion-app><ion-router-outlet id="root-content" [animated]="false"></ion-router-outlet></ion-app>',
   standalone: true,
-  imports: [IonicModule, RouterOutlet]
+  imports: [IonicModule]
 })
 export class AppComponent { }
