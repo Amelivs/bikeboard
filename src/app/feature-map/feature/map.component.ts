@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, ViewChild, computed, inject, signal } from '@angular/core';
 import { ActionSheetController, MenuController, LoadingController, IonContent, IonFooter, IonButton, IonButtons, IonToolbar, IonFab, IonFabButton, IonIcon } from '@ionic/angular/standalone';
 import { NgIf, AsyncPipe } from '@angular/common';
 
@@ -21,6 +21,7 @@ type TrackingMode = 'None' | 'Follow' | 'FollowWithHeading';
 @Component({
   templateUrl: './map.component.html',
   styleUrl: './map.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   imports: [MapViewerComponent, NgIf, AsyncPipe, FixedPipe, KilometerPipe, IonContent, IonFooter, IonButton, IonButtons, IonToolbar, IonFab, IonFabButton, IonIcon]
 })
@@ -37,42 +38,32 @@ export class MapComponent implements OnInit {
 
   @ViewChild(MapViewerComponent, { static: true }) mapViewer!: MapViewerComponent;
 
-  public rotation = 0;
-  public terrainAvailable = false;
+  readonly rotation = signal(0);
+  readonly terrainAvailable = signal(false);
+  readonly trackingMode = signal<TrackingMode>('None');
+  readonly currentSpeed = this.navService.speed;
+  readonly currentAltitude = this.navService.altitude;
+  readonly currentDistance = this.trackingService.distance$;
 
-  public origin: number[] | nil;
-  public waypoints: number[][] = [];
-  public destination: number[] | nil;
-
-  public trackingMode: TrackingMode = 'None';
-
-  public get navIcon() {
-    if (this.trackingMode === 'None') {
+  readonly navIcon = computed(() => {
+    if (this.trackingMode() === 'None') {
       return 'navigate-outline';
     }
-    if (this.trackingMode === 'Follow') {
+    if (this.trackingMode() === 'Follow') {
       return 'navigate';
     }
-    if (this.trackingMode === 'FollowWithHeading') {
+    if (this.trackingMode() === 'FollowWithHeading') {
       return 'compass';
     }
     return null;
-  }
+  })
+
+  private origin: number[] | nil;
+  private waypoints: number[][] = [];
+  private destination: number[] | nil;
 
   public get isTracking() {
     return !this.navService.getTracking();
-  }
-
-  public get currentSpeed() {
-    return this.navService.speed;
-  }
-
-  public get currentAltitude() {
-    return this.navService.altitude;
-  }
-
-  public get currentDistance() {
-    return this.trackingService.distance$;
   }
 
   private onMapChange(map: MapEntity) {
@@ -114,7 +105,7 @@ export class MapComponent implements OnInit {
   }
 
   public onTerrainAvailable(enabled: boolean) {
-    this.terrainAvailable = enabled;
+    this.terrainAvailable.set(enabled);
   }
 
   public async mileagePress() {
@@ -143,40 +134,40 @@ export class MapComponent implements OnInit {
   }
 
   public async navigateClick() {
-    if (this.trackingMode === 'None') {
+    if (this.trackingMode() === 'None') {
       this.navService.startTracking();
-      this.trackingMode = 'Follow';
+      this.trackingMode.set('Follow');
       return;
     }
-    if (this.trackingMode === 'Follow') {
+    if (this.trackingMode() === 'Follow') {
       let ok = await this.navService.startHeadingTracking();
       if (!ok) {
         return;
       }
-      this.trackingMode = 'FollowWithHeading';
+      this.trackingMode.set('FollowWithHeading');
       return;
     }
-    if (this.trackingMode === 'FollowWithHeading') {
+    if (this.trackingMode() === 'FollowWithHeading') {
       this.navService.stoptHeadingTracking();
       this.mapViewer.setRotation(0);
-      this.trackingMode = 'Follow';
+      this.trackingMode.set('Follow');
       return;
     }
   }
 
   public onMapDrag() {
     this.navService.stopTracking();
-    this.trackingMode = 'None';
+    this.trackingMode.set('None');
   }
 
   public onViewRotate(rotation: number) {
-    this.rotation = rotation;
+    this.rotation.set(rotation);
   }
 
   public async onMapDblClick() {
     this.navService.startTracking();
     await this.navService.startHeadingTracking();
-    this.trackingMode = 'FollowWithHeading';
+    this.trackingMode.set('FollowWithHeading');
   }
 
   public async onContext(coords: number[]) {

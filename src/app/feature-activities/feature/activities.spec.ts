@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { firstValueFrom, skip } from 'rxjs';
 import { IonItemSliding, ModalController } from '@ionic/angular/standalone';
 
 import { Activity } from '../../core/data/entities/activity';
@@ -49,8 +48,8 @@ describe('ActivitiesComponent', () => {
     it('should load activities', async () => {
       let activities: Activity[] = [{ id: '1', distance: 0, duration: 4, segments: [], startDate: new Date() }];
       mockActivities.getAll.and.returnValue(Promise.resolve(activities));
-      component.ngOnInit();
-      await expectAsync(firstValueFrom(component.activities$.pipe(skip(1)))).toBeResolvedTo(activities);
+      await component.ngOnInit();
+      expect(component.activities()).toBe(activities);
     });
   });
 

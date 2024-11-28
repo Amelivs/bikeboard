@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, inject, signal } from '@angular/core';
 import { ModalController, IonNav, IonContent, IonToolbar, IonButtons, IonHeader, IonButton, IonTitle, IonList, IonListHeader, IonLabel, IonItem, IonText } from '@ionic/angular/standalone';
 
 import { DialogService } from '../../../core/services/dialog.service';
@@ -10,9 +10,10 @@ import { SettingsService } from './settings.service';
   selector: 'app-settings',
   templateUrl: './settings.component.html',
   styleUrl: './settings.component.scss',
-  providers: [SettingsService],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [IonContent, IonToolbar, IonButtons, IonHeader, IonButton, IonTitle, IonList, IonListHeader, IonLabel, IonItem, IonText]
+  imports: [IonContent, IonToolbar, IonButtons, IonHeader, IonButton, IonTitle, IonList, IonListHeader, IonLabel, IonItem, IonText],
+  providers: [SettingsService],
 })
 export class SettingsComponent implements OnInit {
   private readonly modalCtrl = inject(ModalController);
@@ -21,11 +22,11 @@ export class SettingsComponent implements OnInit {
   private readonly window = inject(Window);
   private readonly dialogSrv = inject(DialogService);
 
-  appVersion = environment.appVersion;
-  cachedTilesCount = 0;
+  readonly appVersion = environment.appVersion;
+  readonly cachedTilesCount = signal(0);
 
   async ngOnInit() {
-    this.cachedTilesCount = await this.service.countCachedTiles();
+    this.cachedTilesCount.set(await this.service.countCachedTiles());
   }
 
   okClick() {

@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, ViewChild, inject } from '@angular/core';
 import { FormControl, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { IonInput, ModalController, IonContent, IonHeader, IonToolbar, IonButton, IonButtons, IonTitle, IonItem } from '@ionic/angular/standalone';
 import { StyleSpecification } from 'maplibre-gl';
@@ -12,18 +12,15 @@ import { UUID } from '../../../shared/utils/uuid';
   selector: 'app-import-map',
   templateUrl: './import-map.component.html',
   styleUrl: './import-map.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   imports: [ReactiveFormsModule, IonContent, IonToolbar, IonButton, IonButtons, IonTitle, IonHeader, IonItem, IonInput],
 })
-export class ImportMapComponent implements OnInit {
+export class ImportMapComponent {
   private readonly modalCtrl = inject(ModalController);
   private readonly dataCache = inject(DataCacheService);
 
-  @ViewChild('fileInput') set fileInput(input: ElementRef) {
-    this.nativefileInput = input.nativeElement;
-  }
-
-  private nativefileInput: HTMLInputElement | nil;
+  @ViewChild('fileInput') fileInput!: ElementRef<HTMLInputElement>
 
   readonly form = new FormGroup({
     fileName: new FormControl<string | null>(null, [Validators.required]),
@@ -31,10 +28,8 @@ export class ImportMapComponent implements OnInit {
     name: new FormControl<string | null>(null, [Validators.required])
   });
 
-  ngOnInit() { }
-
   browse() {
-    this.nativefileInput?.click();
+    this.fileInput.nativeElement.click();
   }
 
   async onFileChange(event: any) {

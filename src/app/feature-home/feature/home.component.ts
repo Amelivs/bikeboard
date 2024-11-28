@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { ActionSheetController, IonMenu, IonHeader, IonToolbar, IonTitle, IonContent, IonFooter, IonButtons, IonButton, IonIcon, IonRouterOutlet } from '@ionic/angular/standalone';
 
 import { SettingsNavComponent } from '../../feature-settings/settings-nav.component';
@@ -12,14 +12,13 @@ import { MenuComponent } from '../ui/menu/menu.component';
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   imports: [MenuComponent, IonMenu, IonHeader, IonToolbar, IonTitle, IonContent, IonFooter, IonButtons, IonButton, IonIcon, IonRouterOutlet]
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent {
   private readonly overlaySrv = inject(OverlayService);
   private readonly actionSheetController = inject(ActionSheetController);
-
-  ngOnInit(): void { }
 
   mapSettingsClick() {
     this.overlaySrv.showModal(SettingsNavComponent)

@@ -9,7 +9,7 @@
 
 <ion-content>
   <ion-list>
-    <ion-item-sliding #slindingItem *ngFor="let activity of activities$ | async">
+    <ion-item-sliding #slindingItem *ngFor="let activity of activities()">
       <ion-item-options side="start">
         <ion-item-option color="danger" (click)="deleteActivity(slindingItem, activity)">
           <ion-icon slot="icon-only" name="trash-outline"></ion-icon>

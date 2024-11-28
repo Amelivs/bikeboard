@@ -1,7 +1,6 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, inject, signal } from '@angular/core';
 import { IonItemSliding, IonItemOption, IonItemOptions, ModalController, IonHeader, IonToolbar, IonContent, IonButton, IonButtons, IonTitle, IonList, IonItem, IonIcon, IonLabel } from '@ionic/angular/standalone';
-import { BehaviorSubject } from 'rxjs';
-import { NgFor, AsyncPipe } from '@angular/common';
+import { NgFor } from '@angular/common';
 
 import { Activity } from '../../core/data/entities/activity';
 import { DownloadUtils } from '../../shared/utils/download';
@@ -16,24 +15,25 @@ import { DistancePipe } from '../../shared/ui/pipes/distance.pipe';
   selector: 'app-activities',
   templateUrl: './activities.component.html',
   styleUrl: './activities.component.scss',
-  providers: [ActivitiesServices],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [NgFor, AsyncPipe, DistancePipe, DurationPipe, LocaleDatePipe, IonHeader, IonToolbar, IonContent, IonButton, IonButtons, IonTitle, IonList, IonItem, IonItemSliding, IonItemOption, IonItemOptions, IonIcon, IonLabel]
+  imports: [NgFor, DistancePipe, DurationPipe, LocaleDatePipe, IonHeader, IonToolbar, IonContent, IonButton, IonButtons, IonTitle, IonList, IonItem, IonItemSliding, IonItemOption, IonItemOptions, IonIcon, IonLabel],
+  providers: [ActivitiesServices]
 })
 export class ActivitiesComponent implements OnInit {
   private readonly modalCtrl = inject(ModalController);
   private readonly service = inject(ActivitiesServices);
   private readonly dialogSrv = inject(DialogService);
 
+  readonly activities = signal<Activity[]>([]);
+
   private async loadData() {
     let activities = await this.service.getActivities();
-    this.activities$.next(activities);
+    this.activities.set(activities);
   }
 
-  readonly activities$ = new BehaviorSubject<Activity[]>([]);
-
-  ngOnInit() {
-    this.loadData()
+  async ngOnInit() {
+    await this.loadData()
       .catch(err => {
         console.error(err);
       });

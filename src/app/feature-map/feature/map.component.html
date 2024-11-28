@@ -5,7 +5,7 @@
 
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">
     <ion-fab-button (click)="navigateClick()" color="light" class="btn-navigate">
-      <ion-icon color="primary" [name]="navIcon"></ion-icon>
+      <ion-icon color="primary" [name]="navIcon()"></ion-icon>
     </ion-fab-button>
   </ion-fab>
 
@@ -17,11 +17,11 @@
 
   <ion-fab vertical="top" horizontal="end" slot="fixed">
     <ion-fab-button (click)="compassClick()" color="light" class="btn-small">
-      <ion-icon [style.transform]="'rotate('+rotation+'rad) scale(1.8)'" src="assets/icons/compass.svg"></ion-icon>
+      <ion-icon [style.transform]="'rotate(' + rotation() + 'rad) scale(1.8)'" src="assets/icons/compass.svg"></ion-icon>
     </ion-fab-button>
   </ion-fab>
 
-  <ion-fab vertical="center" horizontal="end" slot="fixed" *ngIf="terrainAvailable">
+  <ion-fab vertical="center" horizontal="end" slot="fixed" *ngIf="terrainAvailable()">
     <ion-fab-button (click)="terrainClick()" color="light" class="btn-small">
       <ion-icon color="primary" src="assets/icons/peak.svg"></ion-icon>
     </ion-fab-button>

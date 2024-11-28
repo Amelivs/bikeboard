@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, inject, signal } from '@angular/core';
 import { IonContent, IonToolbar, IonButtons, IonHeader, IonBackButton, IonTitle } from '@ionic/angular/standalone';
 
 import { DialogService } from '../../../core/services/dialog.service';
@@ -9,19 +9,20 @@ import { AttributionsService } from './attributions.service';
   selector: 'app-attributions',
   templateUrl: './attributions.component.html',
   styleUrl: './attributions.component.scss',
-  providers: [AttributionsService],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [IonContent, IonToolbar, IonButtons, IonHeader, IonBackButton, IonTitle]
+  imports: [IonContent, IonToolbar, IonButtons, IonHeader, IonBackButton, IonTitle],
+  providers: [AttributionsService]
 })
 export class AttributionsComponent implements OnInit {
   private readonly service = inject(AttributionsService);
   private readonly dialogSrv = inject(DialogService);
 
-  atttributions: string | nil;
+  readonly atttributions = signal('');
 
   async ngOnInit() {
     try {
-      this.atttributions = await this.service.getAttributions();
+      this.atttributions.set(await this.service.getAttributions());
     }
     catch (err) {
       console.error(err);

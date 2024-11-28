@@ -10,7 +10,6 @@
     "skipLibCheck": true,
     "sourceMap": true,
     "declaration": false,
-    "downlevelIteration": true,
     "experimentalDecorators": true,
     "moduleResolution": "node",
     "resolveJsonModule": true,

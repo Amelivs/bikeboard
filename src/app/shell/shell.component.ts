@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { IonContent, IonFooter, IonToolbar, IonButton, IonButtons } from '@ionic/angular/standalone';
@@ -7,9 +7,10 @@ import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-shell',
-  standalone: true,
   templateUrl: './shell.component.html',
   styleUrl: './shell.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
   imports: [CommonModule, IonContent, IonFooter, IonToolbar, IonButton, IonButtons]
 })
 export class ShellComponent implements OnInit {

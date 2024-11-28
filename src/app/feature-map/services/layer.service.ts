@@ -16,7 +16,7 @@ export class LayerService {
 
   private isCustom(layer: LayerSpecification) {
     let metadata = layer.metadata as any;
-    return metadata?.custom === true ?? false;
+    return metadata?.custom === true;
   }
 
   constructor() { }
