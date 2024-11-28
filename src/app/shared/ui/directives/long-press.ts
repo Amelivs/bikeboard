@@ -1,4 +1,4 @@
-import { Directive, ElementRef, EventEmitter, OnDestroy, Output, inject } from '@angular/core';
+import { Directive, ElementRef, OnDestroy, inject, output } from '@angular/core';
 import { fromEvent, merge, Subscription, timer } from 'rxjs';
 import { filter, map, switchMap, takeUntil } from 'rxjs/operators';
 
@@ -11,7 +11,7 @@ export class LongPressDirective implements OnDestroy {
   private eventSubscribe: Subscription;
   threshold = 500;
 
-  @Output() mouseLongPress = new EventEmitter<MouseEvent | TouchEvent>();
+  readonly mouseLongPress = output<MouseEvent | TouchEvent>();
 
   constructor() {
     const mousedown = fromEvent<MouseEvent>(this.elementRef.nativeElement, 'mousedown')

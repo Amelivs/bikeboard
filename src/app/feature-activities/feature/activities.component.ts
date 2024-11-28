@@ -16,7 +16,6 @@ import { DistancePipe } from '../../shared/ui/pipes/distance.pipe';
   templateUrl: './activities.component.html',
   styleUrl: './activities.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [NgFor, DistancePipe, DurationPipe, LocaleDatePipe, IonHeader, IonToolbar, IonContent, IonButton, IonButtons, IonTitle, IonList, IonItem, IonItemSliding, IonItemOption, IonItemOptions, IonIcon, IonLabel],
   providers: [ActivitiesServices]
 })

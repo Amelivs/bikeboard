@@ -10,7 +10,6 @@ import { LogEntry, LoggingService } from '../../core/services/logging.service';
   templateUrl: './debugging.component.html',
   styleUrl: './debugging.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [NgIf, NgFor, NgClass, AsyncPipe, IonHeader, IonToolbar, IonContent, IonButton, IonButtons, IonTitle, IonList, IonItem]
 })
 export class DebuggingComponent {

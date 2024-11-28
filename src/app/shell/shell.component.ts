@@ -10,7 +10,6 @@ import { environment } from 'src/environments/environment';
   templateUrl: './shell.component.html',
   styleUrl: './shell.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [CommonModule, IonContent, IonFooter, IonToolbar, IonButton, IonButtons]
 })
 export class ShellComponent implements OnInit {

@@ -10,7 +10,6 @@ import { AttributionsService } from './attributions.service';
   templateUrl: './attributions.component.html',
   styleUrl: './attributions.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [IonContent, IonToolbar, IonButtons, IonHeader, IonBackButton, IonTitle],
   providers: [AttributionsService]
 })

@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, ElementRef, ViewChild, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, inject, viewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { IonInput, ModalController, IonContent, IonHeader, IonToolbar, IonButton, IonButtons, IonTitle, IonItem } from '@ionic/angular/standalone';
 
@@ -12,14 +12,13 @@ import { UUID } from '../../../shared/utils/uuid';
   templateUrl: './import-path.component.html',
   styleUrl: './import-path.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
-  imports: [ReactiveFormsModule, IonContent, IonToolbar, IonButton, IonButtons, IonTitle, IonHeader, IonItem, IonInput],
+  imports: [ReactiveFormsModule, IonContent, IonToolbar, IonButton, IonButtons, IonTitle, IonHeader, IonItem, IonInput]
 })
 export class ImportPathComponent {
   private readonly modalCtrl = inject(ModalController);
   private readonly dataCache = inject(DataCacheService);
 
-  @ViewChild('fileInput') fileInput!: ElementRef<HTMLInputElement>
+  readonly fileInput = viewChild<ElementRef<HTMLInputElement>>('fileInput')
 
   readonly form = new FormGroup({
     fileName: new FormControl<string | null>(null, [Validators.required]),
@@ -28,7 +27,7 @@ export class ImportPathComponent {
   });
 
   browse() {
-    this.fileInput.nativeElement.click();
+    this.fileInput()?.nativeElement.click();
   }
 
   onFileChange(event: any) {

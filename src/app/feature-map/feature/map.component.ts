@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnInit, ViewChild, computed, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, computed, inject, signal, viewChild } from '@angular/core';
 import { ActionSheetController, MenuController, LoadingController, IonContent, IonFooter, IonButton, IonButtons, IonToolbar, IonFab, IonFabButton, IonIcon } from '@ionic/angular/standalone';
 import { NgIf, AsyncPipe } from '@angular/common';
 
@@ -22,7 +22,6 @@ type TrackingMode = 'None' | 'Follow' | 'FollowWithHeading';
   templateUrl: './map.component.html',
   styleUrl: './map.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [MapViewerComponent, NgIf, AsyncPipe, FixedPipe, KilometerPipe, IonContent, IonFooter, IonButton, IonButtons, IonToolbar, IonFab, IonFabButton, IonIcon]
 })
 export class MapComponent implements OnInit {
@@ -36,7 +35,7 @@ export class MapComponent implements OnInit {
   private readonly trackingService = inject(TrackingService);
   private readonly dialogSrv = inject(DialogService);
 
-  @ViewChild(MapViewerComponent, { static: true }) mapViewer!: MapViewerComponent;
+  readonly mapViewer = viewChild<MapViewerComponent>(MapViewerComponent);
 
   readonly rotation = signal(0);
   readonly terrainAvailable = signal(false);
@@ -68,21 +67,21 @@ export class MapComponent implements OnInit {
 
   private onMapChange(map: MapEntity) {
     if (map != null) {
-      this.mapViewer.setXyzSources(map);
+      this.mapViewer()?.setXyzSources(map);
     }
   }
 
   private onPathsChange(paths: PathEntity[]) {
-    this.mapViewer.setGpxSources(paths);
+    this.mapViewer()?.setGpxSources(paths);
   }
 
   private onPositionChange(coords: number[]) {
     let position = [coords[0], coords[1]];
-    this.mapViewer.setPosition(position);
+    this.mapViewer()?.setPosition(position);
   }
 
   private onHeadingChange(heading: number) {
-    this.mapViewer.setRotation(heading);
+    this.mapViewer()?.setRotation(heading);
   }
 
   ngOnInit() {
@@ -97,11 +96,11 @@ export class MapComponent implements OnInit {
   }
 
   public compassClick() {
-    this.mapViewer.setRotation(0, true);
+    this.mapViewer()?.setRotation(0, true);
   }
 
   public terrainClick() {
-    this.mapViewer.toggleTerrain();
+    this.mapViewer()?.toggleTerrain();
   }
 
   public onTerrainAvailable(enabled: boolean) {
@@ -149,7 +148,7 @@ export class MapComponent implements OnInit {
     }
     if (this.trackingMode() === 'FollowWithHeading') {
       this.navService.stoptHeadingTracking();
-      this.mapViewer.setRotation(0);
+      this.mapViewer()?.setRotation(0);
       this.trackingMode.set('Follow');
       return;
     }
@@ -179,7 +178,7 @@ export class MapComponent implements OnInit {
     if (role === 'defineDestinationPoint') {
       this.destination = coords;
       if (this.origin == null) {
-        this.origin = this.mapViewer.getPosition();
+        this.origin = this.mapViewer()?.getPosition();
       }
       this.calculateDirection();
     }
@@ -199,13 +198,13 @@ export class MapComponent implements OnInit {
     if (this.destination != null) {
       points.push(this.destination);
     }
-    this.mapViewer.setPoints(points);
+    this.mapViewer()?.setPoints(points);
     if (role === 'clear') {
-      this.mapViewer.setDirection(null);
+      this.mapViewer()?.setDirection(null);
       this.origin = null;
       this.destination = null;
       this.waypoints.length = 0;
-      this.mapViewer.setPoints(null);
+      this.mapViewer()?.setPoints(null);
     }
   }
 
@@ -236,7 +235,7 @@ export class MapComponent implements OnInit {
 
     try {
       let direction = await this.directionService.getDirection(this.origin, this.waypoints, this.destination, 'geoapify');
-      this.mapViewer.setDirection(direction);
+      this.mapViewer()?.setDirection(direction);
 
     } catch (err) {
       console.error(err);

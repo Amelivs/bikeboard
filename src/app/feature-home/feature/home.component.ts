@@ -13,7 +13,6 @@ import { MenuComponent } from '../ui/menu/menu.component';
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [MenuComponent, IonMenu, IonHeader, IonToolbar, IonTitle, IonContent, IonFooter, IonButtons, IonButton, IonIcon, IonRouterOutlet]
 })
 export class HomeComponent {

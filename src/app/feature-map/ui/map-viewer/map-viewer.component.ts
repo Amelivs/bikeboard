@@ -1,4 +1,4 @@
-import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild, inject } from '@angular/core';
+import { Component, ElementRef, OnInit, inject, viewChild, input, output, ChangeDetectionStrategy } from '@angular/core';
 import maplibre, { AttributionControl } from 'maplibre-gl';
 import { ReplaySubject, Subject, combineLatest, map, mergeMap, startWith, throttleTime } from 'rxjs';
 import { Marker } from 'maplibre-gl';
@@ -14,21 +14,21 @@ import { LongPressDirective } from '../../../shared/ui/directives/long-press';
   selector: 'app-map-viewer',
   templateUrl: './map-viewer.component.html',
   styleUrl: './map-viewer.component.scss',
-  standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [NgClass, LongPressDirective]
 })
 export class MapViewerComponent implements OnInit {
   private readonly layerService = inject(LayerService);
 
-  @ViewChild('map', { static: true }) mapElement!: ElementRef<HTMLElement>;
-  @ViewChild('positionMarker', { static: true }) positionMarkerElement!: ElementRef;
+  readonly mapElement = viewChild<ElementRef<HTMLElement>>('map');
+  readonly positionMarkerElement = viewChild<ElementRef>('positionMarker');
 
-  @Input() markerDisabled = true;
-  @Output() mapMove = new EventEmitter<void>();
-  @Output() mapDblClick = new EventEmitter<void>();
-  @Output() viewRotate = new EventEmitter<number>();
-  @Output() context = new EventEmitter<number[]>();
-  @Output() terrainAvailable = new EventEmitter<boolean>();
+  readonly markerDisabled = input(true);
+  readonly mapMove = output<void>();
+  readonly mapDblClick = output<void>();
+  readonly viewRotate = output<number>();
+  readonly context = output<number[]>();
+  readonly terrainAvailable = output<boolean>();
 
   private marker: maplibregl.Marker | nil;
   private map: maplibregl.Map | nil;
@@ -40,10 +40,10 @@ export class MapViewerComponent implements OnInit {
   private readonly points: number[][] = [];
 
   ngOnInit() {
-    this.initializeMap(this.mapElement, this.positionMarkerElement);
+    this.initializeMap(this.mapElement()!, this.positionMarkerElement()!);
 
     this.resizeObserver = new ResizeObserver(() => this.resize());
-    this.resizeObserver.observe(this.mapElement.nativeElement);
+    this.resizeObserver.observe(this.mapElement()!.nativeElement);
   }
 
   initializeMap(mapElement: ElementRef<HTMLElement>, markerElement: ElementRef<HTMLElement>) {

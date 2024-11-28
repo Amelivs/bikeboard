@@ -15,8 +15,7 @@ import { DialogService } from '../../../core/services/dialog.service';
   templateUrl: './menu.component.html',
   styleUrl: './menu.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
-  imports: [FormsModule, NgFor, AsyncPipe, IonList, IonItemDivider, IonLabel, IonItemSliding, IonItem, IonCheckbox, IonRadio, IonRadioGroup, IonItemOptions, IonItemOption, IonIcon],
+  imports: [FormsModule, NgFor, AsyncPipe, IonList, IonItemDivider, IonLabel, IonItemSliding, IonItem, IonCheckbox, IonRadio, IonRadioGroup, IonItemOptions, IonItemOption, IonIcon]
 })
 export class MenuComponent implements OnInit {
   private readonly service = inject(DataCacheService);

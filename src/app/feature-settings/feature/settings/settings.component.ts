@@ -11,9 +11,8 @@ import { SettingsService } from './settings.service';
   templateUrl: './settings.component.html',
   styleUrl: './settings.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [IonContent, IonToolbar, IonButtons, IonHeader, IonButton, IonTitle, IonList, IonListHeader, IonLabel, IonItem, IonText],
-  providers: [SettingsService],
+  providers: [SettingsService]
 })
 export class SettingsComponent implements OnInit {
   private readonly modalCtrl = inject(ModalController);
