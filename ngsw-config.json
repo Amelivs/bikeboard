@@ -45,7 +45,7 @@
   "dataGroups": [
     {
       "name": "layers",
-      "version": 1,
+      "version": 2,
       "cacheConfig": {
         "maxAge": "90d",
         "maxSize": 40,
@@ -58,7 +58,7 @@
     },
     {
       "name": "tiles",
-      "version": 1,
+      "version": 2,
       "cacheConfig": {
         "maxAge": "120d",
         "maxSize": 8000,

@@ -1,18 +1,16 @@
-﻿{
+{
   "version": 8,
-  "name": "IGN Plan",
-  "glyphs": "https://wxs.ign.fr/static/vectorTiles/fonts/{fontstack}/{range}.pbf",
-  "sprite": "https://wxs.ign.fr/static/vectorTiles/styles/PLAN.IGN/sprite/PlanIgn",
+  "name": "PLAN IGN",
+  "glyphs": "https://data.geopf.fr/annexes/ressources/vectorTiles/fonts/{fontstack}/{range}.pbf",
+  "sprite": "https://data.geopf.fr/annexes/ressources/vectorTiles/styles/PLAN.IGN/sprite/PlanIgn",
   "sources": {
     "plan_ign": {
       "type": "vector",
       "tiles": [
-        "https://wxs.ign.fr/essentiels/geoportail/tms/1.0.0/PLAN.IGN/{z}/{x}/{y}.pbf"
+        "https://data.geopf.fr/tms/1.0.0/PLAN.IGN/{z}/{x}/{y}.pbf"
       ],
       "minzoom": 2,
-      "maxzoom": 19,
-      "scheme": "xyz",
-      "attribution": "© IGN 2022"
+      "maxzoom": 18
     }
   },
   "transition": {
@@ -30,7 +28,7 @@
         "visibility": "visible"
       },
       "paint": {
-        "fill-color": "#F1F3F4",
+        "fill-color": "#FFFFFF",
         "fill-opacity": 1
       }
     },
@@ -49,7 +47,7 @@
         "HYPSO_0"
       ],
       "paint": {
-        "fill-color": "#A9C96F",
+        "fill-color": "#D6E5BA",
         "fill-opacity": 1
       }
     },
@@ -68,7 +66,7 @@
         "HYPSO_100"
       ],
       "paint": {
-        "fill-color": "#E2D07A",
+        "fill-color": "#F7F2DA",
         "fill-opacity": 1
       }
     },
@@ -87,7 +85,7 @@
         "HYPSO_200"
       ],
       "paint": {
-        "fill-color": "#D2B46E",
+        "fill-color": "#EBDEBF",
         "fill-opacity": 1
       }
     },
@@ -106,7 +104,7 @@
         "HYPSO_1000"
       ],
       "paint": {
-        "fill-color": "#C29353",
+        "fill-color": "#DABE97",
         "fill-opacity": 1
       }
     },
@@ -125,7 +123,7 @@
         "HYPSO_3000"
       ],
       "paint": {
-        "fill-color": "#8E624E",
+        "fill-color": "#B28773",
         "fill-opacity": 1
       }
     },
@@ -144,7 +142,7 @@
         "HYPSO_4000"
       ],
       "paint": {
-        "fill-color": "#77503F",
+        "fill-color": "#9E6A54",
         "fill-opacity": 1
       }
     },
@@ -163,7 +161,7 @@
         "HYPSO_5000"
       ],
       "paint": {
-        "fill-color": "#592B20",
+        "fill-color": "#773A2B",
         "fill-opacity": 1
       }
     },
@@ -204,8 +202,8 @@
         "ZONE_PEUPLERAIE"
       ],
       "paint": {
-        "fill-color": "#A8C18D",
-        "fill-outline-color": "#A8C18D"
+        "fill-color": "#DFE8D5",
+        "fill-outline-color": "#DFE8D5"
       }
     },
     {
@@ -222,8 +220,8 @@
         "ZONE_FORET_OUVERTE"
       ],
       "paint": {
-        "fill-color": "#C4D584",
-        "fill-outline-color": "#C4D584"
+        "fill-color": "#EDF2D9",
+        "fill-outline-color": "#EDF2D9"
       }
     },
     {
@@ -240,7 +238,7 @@
         "ZONE_LANDE_LIGNEUSE"
       ],
       "paint": {
-        "fill-color": "#DBD074"
+        "fill-color": "#F2EECD"
       }
     },
     {
@@ -257,7 +255,7 @@
         "ZONE_VIGNE"
       ],
       "paint": {
-        "fill-color": "#FFB563"
+        "fill-color": "#FFEDD9"
       }
     },
     {
@@ -274,7 +272,7 @@
         "ZONE_VERGER"
       ],
       "paint": {
-        "fill-color": "#F1AF5E"
+        "fill-color": "#FAE2C5"
       }
     },
     {
@@ -291,7 +289,7 @@
         "ZONE_CANNE_BANANE"
       ],
       "paint": {
-        "fill-color": "#DF8EDF"
+        "fill-color": "#FAEDFA"
       }
     },
     {
@@ -308,8 +306,8 @@
         "ZONE_D_ESTRAN"
       ],
       "paint": {
-        "fill-color": "#75B0CC",
-        "fill-outline-color": "#75B0CC"
+        "fill-color": "#C3DDE9",
+        "fill-outline-color": "#C3DDE9"
       }
     },
     {
@@ -330,11 +328,11 @@
           "stops": [
             [
               9,
-              "#4BB2B1"
+              "#85CCCB"
             ],
             [
               10,
-              "#54B1AF"
+              "#90CCCB"
             ]
           ]
         }
@@ -405,7 +403,7 @@
         "ZONE_ROCHEUSE"
       ],
       "paint": {
-        "fill-color": "#9C9C9C",
+        "fill-color": "#D0D0D0",
         "fill-opacity": 0.3
       }
     },
@@ -525,6 +523,209 @@
       }
     },
     {
+      "id": "bati ZAI - Gris 14à18",
+      "type": "fill",
+      "source": "plan_ign",
+      "source-layer": "bati_zai",
+      "minzoom": 13,
+      "layout": {
+        "visibility": "visible"
+      },
+      "filter": [
+        "in",
+        "nature",
+        "Aérodrome",
+        "Aéroport"
+      ],
+      "paint": {
+        "fill-color": "#C8C8C8",
+        "fill-opacity": 0.3,
+        "fill-outline-color": "#787878"
+      }
+    },
+    {
+      "id": "bati ZAI - Gris 16à18",
+      "type": "fill",
+      "source": "plan_ign",
+      "source-layer": "bati_zai",
+      "minzoom": 15,
+      "layout": {
+        "visibility": "visible"
+      },
+      "filter": [
+        "in",
+        "nature",
+        "Aire de repos ou de service",
+        "Aire d'accueil des gens du voyage",
+        "Parc des expositions",
+        "Déchèterie",
+        "Carrière",
+        "Divers commercial",
+        "Marché",
+        "Divers industriel",
+        "Zone industrielle",
+        "Usine",
+        "Station d'épuration"
+      ],
+      "paint": {
+        "fill-color": "#C8C8C8",
+        "fill-opacity": 0.3,
+        "fill-outline-color": "#787878"
+      }
+    },
+    {
+      "id": "bati ZAI - Gris clair",
+      "type": "fill",
+      "source": "plan_ign",
+      "source-layer": "bati_zai",
+      "minzoom": 13,
+      "layout": {
+        "visibility": "visible"
+      },
+      "filter": [
+        "==",
+        "nature",
+        "Parking"
+      ],
+      "paint": {
+        "fill-color": "#EBEBF5",
+        "fill-opacity": 0.3,
+        "fill-outline-color": "#AAAAAA"
+      }
+    },
+    {
+      "id": "bati ZAI - Vert clair 14à18",
+      "type": "fill",
+      "source": "plan_ign",
+      "source-layer": "bati_zai",
+      "minzoom": 13,
+      "layout": {
+        "visibility": "visible"
+      },
+      "filter": [
+        "==",
+        "nature",
+        "Espace public Vert"
+      ],
+      "paint": {
+        "fill-color": "#C0EBD2",
+        "fill-opacity": 0.5,
+        "fill-outline-color": "#76D764"
+      }
+    },
+    {
+      "id": "bati ZAI - Vert clair 16à18",
+      "type": "fill",
+      "source": "plan_ign",
+      "source-layer": "bati_zai",
+      "minzoom": 15,
+      "layout": {
+        "visibility": "visible"
+      },
+      "filter": [
+        "in",
+        "nature",
+        "Aire de détente",
+        "Camping",
+        "Parc de loisirs",
+        "Parc zoologique"
+      ],
+      "paint": {
+        "fill-color": "#C0EBD2",
+        "fill-opacity": 0.5,
+        "fill-outline-color": "#76D764"
+      }
+    },
+    {
+      "id": "bati ZAI - Beige",
+      "type": "fill",
+      "source": "plan_ign",
+      "source-layer": "bati_zai",
+      "minzoom": 15,
+      "layout": {
+        "visibility": "visible"
+      },
+      "filter": [
+        "==",
+        "nature",
+        "Espace public Beige"
+      ],
+      "paint": {
+        "fill-color": "#FAE6A0",
+        "fill-opacity": 0.5,
+        "fill-outline-color": "#FAE6A0"
+      }
+    },
+    {
+      "id": "bati ZAI - Vert foncé",
+      "type": "fill",
+      "source": "plan_ign",
+      "source-layer": "bati_zai",
+      "minzoom": 15,
+      "layout": {
+        "visibility": "visible"
+      },
+      "filter": [
+        "in",
+        "nature",
+        "Golf",
+        "Hippodrome",
+        "Piscine",
+        "Sports mécaniques",
+        "Equipement de cyclisme",
+        "Autre équipement sportif",
+        "Centre équestre",
+        "Haras",
+        "Stade"
+      ],
+      "paint": {
+        "fill-color": "#99C12B",
+        "fill-opacity": 0.3,
+        "fill-outline-color": "#99C12B"
+      }
+    },
+    {
+      "id": "bati ZAI - Marron",
+      "type": "fill",
+      "source": "plan_ign",
+      "source-layer": "bati_zai",
+      "minzoom": 15,
+      "layout": {
+        "visibility": "visible"
+      },
+      "filter": [
+        "in",
+        "nature",
+        "Construction",
+        "Vestige archéologique"
+      ],
+      "paint": {
+        "fill-color": "#99642B",
+        "fill-opacity": 0.3,
+        "fill-outline-color": "#99642B"
+      }
+    },
+    {
+      "id": "bati ZAI - Gris Bleu Elec",
+      "type": "fill",
+      "source": "plan_ign",
+      "source-layer": "bati_zai",
+      "minzoom": 15,
+      "layout": {
+        "visibility": "visible"
+      },
+      "filter": [
+        "==",
+        "nature",
+        "Centrale électrique"
+      ],
+      "paint": {
+        "fill-color": "#7993B6",
+        "fill-opacity": 0.3,
+        "fill-outline-color": "#7993B6"
+      }
+    },
+    {
       "id": "zone batie",
       "type": "fill",
       "source": "plan_ign",
@@ -540,7 +741,7 @@
         "ZONE_BATI"
       ],
       "paint": {
-        "fill-color": "#C3B488",
+        "fill-color": "#E8E2D1",
         "fill-opacity": {
           "stops": [
             [
@@ -573,7 +774,7 @@
         "ZONE_INDUS_ACTI"
       ],
       "paint": {
-        "fill-color": "#A3A3A3"
+        "fill-color": "#D9D9D9"
       }
     },
     {
@@ -581,6 +782,7 @@
       "type": "line",
       "source": "plan_ign",
       "source-layer": "oro_courbe",
+      "minzoom": 11,
       "maxzoom": 16,
       "layout": {
         "visibility": "visible",
@@ -594,7 +796,7 @@
         "CUVETTE_MAITRESSE"
       ],
       "paint": {
-        "line-color": "#BB9D66",
+        "line-color": "#D9C8A9",
         "line-width": {
           "stops": [
             [
@@ -614,6 +816,7 @@
       "type": "line",
       "source": "plan_ign",
       "source-layer": "oro_courbe",
+      "minzoom": 11,
       "maxzoom": 16,
       "layout": {
         "visibility": "visible",
@@ -627,7 +830,7 @@
         "CUVETTE_NORMALE"
       ],
       "paint": {
-        "line-color": "#BB9D66",
+        "line-color": "#D9C8A9",
         "line-width": {
           "stops": [
             [
@@ -647,6 +850,7 @@
       "type": "line",
       "source": "plan_ign",
       "source-layer": "oro_courbe",
+      "minzoom": 11,
       "maxzoom": 16,
       "layout": {
         "visibility": "visible",
@@ -661,7 +865,7 @@
         "CNV_SS_INTERCALAIRE"
       ],
       "paint": {
-        "line-color": "#BB9D66",
+        "line-color": "#D9C8A9",
         "line-width": 0.7,
         "line-dasharray": [
           20,
@@ -674,6 +878,7 @@
       "type": "line",
       "source": "plan_ign",
       "source-layer": "oro_courbe",
+      "minzoom": 11,
       "maxzoom": 16,
       "layout": {
         "visibility": "visible",
@@ -687,7 +892,7 @@
         "CUV_GLACIER_MAITRESSE"
       ],
       "paint": {
-        "line-color": "#618FBD",
+        "line-color": "#A4BFD9",
         "line-width": {
           "stops": [
             [
@@ -707,6 +912,7 @@
       "type": "line",
       "source": "plan_ign",
       "source-layer": "oro_courbe",
+      "minzoom": 11,
       "maxzoom": 16,
       "layout": {
         "visibility": "visible",
@@ -720,7 +926,7 @@
         "CUV_GLACIER_NORMALE"
       ],
       "paint": {
-        "line-color": "#618FBD",
+        "line-color": "#A4BFD9",
         "line-width": {
           "stops": [
             [
@@ -740,6 +946,7 @@
       "type": "line",
       "source": "plan_ign",
       "source-layer": "oro_courbe",
+      "minzoom": 11,
       "maxzoom": 16,
       "layout": {
         "visibility": "visible",
@@ -753,7 +960,7 @@
         "CUV_GLACIER_INTERCAL"
       ],
       "paint": {
-        "line-color": "#618FBD",
+        "line-color": "#A4BFD9",
         "line-width": {
           "stops": [
             [
@@ -777,6 +984,7 @@
       "type": "line",
       "source": "plan_ign",
       "source-layer": "oro_courbe",
+      "minzoom": 11,
       "maxzoom": 16,
       "layout": {
         "visibility": "visible",
@@ -790,7 +998,7 @@
         "CUV_ROCHER_MAITRESSE"
       ],
       "paint": {
-        "line-color": "#808080",
+        "line-color": "#AAAAAA",
         "line-width": 1.7
       }
     },
@@ -799,6 +1007,7 @@
       "type": "line",
       "source": "plan_ign",
       "source-layer": "oro_courbe",
+      "minzoom": 11,
       "maxzoom": 16,
       "layout": {
         "visibility": "visible",
@@ -812,7 +1021,7 @@
         "CUV_ROCHER_NORMALE"
       ],
       "paint": {
-        "line-color": "#808080",
+        "line-color": "#AAAAAA",
         "line-width": 1
       }
     },
@@ -821,6 +1030,7 @@
       "type": "line",
       "source": "plan_ign",
       "source-layer": "oro_courbe",
+      "minzoom": 11,
       "maxzoom": 16,
       "layout": {
         "visibility": "visible",
@@ -834,7 +1044,7 @@
         "CUV_ROCHER_INTERCAL"
       ],
       "paint": {
-        "line-color": "#808080",
+        "line-color": "#AAAAAA",
         "line-width": {
           "stops": [
             [
@@ -858,6 +1068,7 @@
       "type": "line",
       "source": "plan_ign",
       "source-layer": "oro_courbe",
+      "minzoom": 11,
       "maxzoom": 16,
       "layout": {
         "visibility": "visible",
@@ -871,7 +1082,7 @@
         "CUV_BATHYMETRIQUE"
       ],
       "paint": {
-        "line-color": "#0000BF",
+        "line-color": "#0000FF",
         "line-width": 1
       }
     },
@@ -881,7 +1092,6 @@
       "source": "plan_ign",
       "source-layer": "oro_lin",
       "minzoom": 14,
-      "maxzoom": 18,
       "layout": {
         "visibility": "visible",
         "line-cap": "round",
@@ -893,7 +1103,7 @@
         "TALUS"
       ],
       "paint": {
-        "line-color": "#BB9D66",
+        "line-color": "#D9C8A9",
         "line-width": 1
       }
     },
@@ -903,7 +1113,6 @@
       "source": "plan_ign",
       "source-layer": "oro_lin",
       "minzoom": 14,
-      "maxzoom": 18,
       "layout": {
         "visibility": "visible",
         "line-cap": "butt",
@@ -915,7 +1124,7 @@
         "TALUS"
       ],
       "paint": {
-        "line-color": "#BB9D66",
+        "line-color": "#D9C8A9",
         "line-width": {
           "stops": [
             [
@@ -932,10 +1141,7 @@
           0.1,
           1
         ],
-        "line-translate": [
-          0,
-          4
-        ]
+        "line-offset": 4
       }
     },
     {
@@ -968,8 +1174,7 @@
         "text-max-width": 100,
         "text-font": [
           "Source Sans Pro Italic"
-        ],
-        "visibility": "visible"
+        ]
       },
       "filter": [
         "all",
@@ -991,7 +1196,7 @@
         ]
       ],
       "paint": {
-        "text-color": "#483723",
+        "text-color": "#604A2F",
         "text-halo-width": 0.5,
         "text-halo-color": "#FFFFFF"
       }
@@ -1026,8 +1231,7 @@
         "text-max-width": 100,
         "text-font": [
           "Source Sans Pro Italic"
-        ],
-        "visibility": "visible"
+        ]
       },
       "filter": [
         "all",
@@ -1049,7 +1253,7 @@
         ]
       ],
       "paint": {
-        "text-color": "#262626",
+        "text-color": "#333333",
         "text-halo-width": 0.5,
         "text-halo-color": "#FFFFFF"
       }
@@ -1084,8 +1288,7 @@
         "text-max-width": 100,
         "text-font": [
           "Source Sans Pro Italic"
-        ],
-        "visibility": "visible"
+        ]
       },
       "filter": [
         "all",
@@ -1107,7 +1310,7 @@
         ]
       ],
       "paint": {
-        "text-color": "#2E77BE",
+        "text-color": "#629FD9",
         "text-halo-width": 0.5,
         "text-halo-color": "#FFFFFF"
       }
@@ -1128,8 +1331,8 @@
         "ZONE_MARINE"
       ],
       "paint": {
-        "fill-color": "#5AADD4",
-        "fill-outline-color": "#5AADD4"
+        "fill-color": "#AAD5E9",
+        "fill-outline-color": "#AAD5E9"
       }
     },
     {
@@ -1146,7 +1349,7 @@
         "SURFACE_D_EAU_TEMP"
       ],
       "paint": {
-        "fill-color": "rgba(99, 161, 192, 0.5)"
+        "fill-color": "rgba(168, 203, 220, 0.5)"
       }
     },
     {
@@ -1154,7 +1357,7 @@
       "type": "line",
       "source": "plan_ign",
       "source-layer": "hydro_reseau_sou",
-      "maxzoom": 18,
+      "minzoom": 18,
       "layout": {
         "visibility": "visible",
         "line-cap": "butt",
@@ -1167,7 +1370,7 @@
         "COURS_D_EAU_MOY_SOU"
       ],
       "paint": {
-        "line-color": "#5AADD4",
+        "line-color": "#AAD5E9",
         "line-width": {
           "stops": [
             [
@@ -1191,8 +1394,7 @@
       "type": "line",
       "source": "plan_ign",
       "source-layer": "hydro_reseau_sou",
-      "minzoom": 12,
-      "maxzoom": 18,
+      "minzoom": 18,
       "layout": {
         "visibility": "visible",
         "line-cap": "butt",
@@ -1204,7 +1406,7 @@
         "AQUEDUC_SOU"
       ],
       "paint": {
-        "line-color": "#5AADD4",
+        "line-color": "#AAD5E9",
         "line-width": {
           "stops": [
             [
@@ -1232,7 +1434,7 @@
       "type": "line",
       "source": "plan_ign",
       "source-layer": "hydro_reseau_sou",
-      "minzoom": 12,
+      "minzoom": 18,
       "layout": {
         "visibility": "visible",
         "line-cap": "butt",
@@ -1244,7 +1446,7 @@
         "AQUEDUC_SOU"
       ],
       "paint": {
-        "line-color": "#5AADD4",
+        "line-color": "#AAD5E9",
         "line-width": {
           "stops": [
             [
@@ -1273,7 +1475,6 @@
       "source": "plan_ign",
       "source-layer": "ferre_sou",
       "minzoom": 10,
-      "maxzoom": 18,
       "layout": {
         "visibility": "visible",
         "line-cap": "round",
@@ -1293,7 +1494,7 @@
         "VF_FERRO_ROUTIER_SOU"
       ],
       "paint": {
-        "line-color": "#878787",
+        "line-color": "#B4B4B4",
         "line-width": {
           "stops": [
             [
@@ -1314,7 +1515,6 @@
       "source": "plan_ign",
       "source-layer": "ferre_sou",
       "minzoom": 10,
-      "maxzoom": 18,
       "layout": {
         "visibility": "visible",
         "line-cap": "butt",
@@ -1334,7 +1534,7 @@
         "VF_FERRO_ROUTIER_SOU"
       ],
       "paint": {
-        "line-color": "#878787",
+        "line-color": "#B4B4B4",
         "line-width": {
           "stops": [
             [
@@ -1359,7 +1559,6 @@
       "source": "plan_ign",
       "source-layer": "ferre_sou",
       "minzoom": 10,
-      "maxzoom": 18,
       "layout": {
         "visibility": "visible",
         "line-cap": "round",
@@ -1373,7 +1572,7 @@
         "VF_ETROITE_SOU"
       ],
       "paint": {
-        "line-color": "#878787",
+        "line-color": "#B4B4B4",
         "line-width": {
           "stops": [
             [
@@ -1394,7 +1593,6 @@
       "source": "plan_ign",
       "source-layer": "ferre_sou",
       "minzoom": 10,
-      "maxzoom": 18,
       "layout": {
         "visibility": "visible",
         "line-cap": "butt",
@@ -1408,7 +1606,7 @@
         "VF_ETROITE_SOU"
       ],
       "paint": {
-        "line-color": "#878787",
+        "line-color": "#B4B4B4",
         "line-width": {
           "stops": [
             [
@@ -1433,7 +1631,6 @@
       "source": "plan_ign",
       "source-layer": "ferre_sou",
       "minzoom": 14,
-      "maxzoom": 18,
       "layout": {
         "visibility": "visible",
         "line-cap": "round",
@@ -1446,7 +1643,7 @@
         "VF_NON_EXPLOITEE_SOU"
       ],
       "paint": {
-        "line-color": "#878787",
+        "line-color": "#B4B4B4",
         "line-width": {
           "stops": [
             [
@@ -1472,7 +1669,6 @@
       "type": "line",
       "source": "plan_ign",
       "source-layer": "ferre_sou",
-      "maxzoom": 18,
       "layout": {
         "visibility": "visible",
         "line-cap": "round",
@@ -1485,16 +1681,16 @@
         "TRANSPORT_URBAIN_SOU"
       ],
       "paint": {
-        "line-color": "#878787",
+        "line-color": "#B4B4B4",
         "line-width": {
           "stops": [
             [
               10,
-              0.3
+              0.2
             ],
             [
               17,
-              1.8
+              1.6
             ]
           ]
         }
@@ -1505,7 +1701,6 @@
       "type": "line",
       "source": "plan_ign",
       "source-layer": "ferre_sou",
-      "maxzoom": 18,
       "layout": {
         "visibility": "visible",
         "line-cap": "butt",
@@ -1518,7 +1713,7 @@
         "TRANSPORT_URBAIN_SOU"
       ],
       "paint": {
-        "line-color": "#878787",
+        "line-color": "#B4B4B4",
         "line-width": {
           "stops": [
             [
@@ -1545,19 +1740,19 @@
       "source": "plan_ign",
       "source-layer": "routier_chemin_sou",
       "minzoom": 13,
-      "maxzoom": 18,
       "layout": {
         "visibility": "visible",
         "line-cap": "round",
         "line-join": "round"
       },
       "filter": [
-        "==",
+        "in",
         "symbo",
-        "PISTE_CYCLABLE_SOU"
+        "PISTE_CYCLABLE_SOU",
+        "VOIE_VERTE_SOU"
       ],
       "paint": {
-        "line-color": "#8348B2",
+        "line-color": "#AB81CC",
         "line-width": {
           "stops": [
             [
@@ -1590,7 +1785,6 @@
       "source": "plan_ign",
       "source-layer": "routier_chemin_sou",
       "minzoom": 14,
-      "maxzoom": 18,
       "layout": {
         "visibility": "visible",
         "line-cap": "butt",
@@ -1602,7 +1796,7 @@
         "ESCALIER_SOU"
       ],
       "paint": {
-        "line-color": "#8F696C",
+        "line-color": "#B3989A",
         "line-width": {
           "stops": [
             [
@@ -1631,7 +1825,6 @@
       "source": "plan_ign",
       "source-layer": "routier_chemin_sou",
       "minzoom": 14,
-      "maxzoom": 18,
       "layout": {
         "visibility": "visible",
         "line-cap": "butt",
@@ -1676,7 +1869,6 @@
       "source": "plan_ign",
       "source-layer": "routier_chemin_sou",
       "minzoom": 14,
-      "maxzoom": 18,
       "layout": {
         "visibility": "visible",
         "line-cap": "round",
@@ -1688,7 +1880,7 @@
         "RUE_PIETONNE_SOU"
       ],
       "paint": {
-        "line-color": "#8F696C",
+        "line-color": "#B3989A",
         "line-width": {
           "stops": [
             [
@@ -1721,7 +1913,6 @@
       "source": "plan_ign",
       "source-layer": "routier_chemin_sou",
       "minzoom": 13,
-      "maxzoom": 18,
       "layout": {
         "visibility": "visible",
         "line-cap": "round",
@@ -1733,7 +1924,7 @@
         "SENTIER_SOU"
       ],
       "paint": {
-        "line-color": "#8F696C",
+        "line-color": "#B3989A",
         "line-width": {
           "stops": [
             [
@@ -1766,7 +1957,6 @@
       "source": "plan_ign",
       "source-layer": "routier_chemin_sou",
       "minzoom": 12,
-      "maxzoom": 18,
       "layout": {
         "visibility": "visible",
         "line-cap": "round",
@@ -1778,7 +1968,7 @@
         "CHEMIN_SOU"
       ],
       "paint": {
-        "line-color": "#8F696C",
+        "line-color": "#B3989A",
         "line-width": {
           "stops": [
             [
@@ -1802,11 +1992,53 @@
       }
     },
     {
+      "id": "Routier souterrain - filet extérieur - route non revetu carrosable restreint",
+      "type": "line",
+      "source": "plan_ign",
+      "source-layer": "routier_route_sou",
+      "layout": {
+        "visibility": "visible",
+        "line-cap": "round",
+        "line-join": "round"
+      },
+      "filter": [
+        "==",
+        "symbo",
+        "NON_REVETUE_CARRO_RESTREINT_SOU"
+      ],
+      "paint": {
+        "line-color": "#AFAFAF",
+        "line-width": {
+          "stops": [
+            [
+              14,
+              3.2
+            ],
+            [
+              15,
+              5.4
+            ],
+            [
+              16,
+              7.7
+            ],
+            [
+              17,
+              16.8
+            ]
+          ]
+        },
+        "line-dasharray": [
+          2,
+          2
+        ]
+      }
+    },
+    {
       "id": "Routier souterrain - filet extérieur - route non revetu carrosable",
       "type": "line",
       "source": "plan_ign",
       "source-layer": "routier_route_sou",
-      "maxzoom": 18,
       "layout": {
         "visibility": "visible",
         "line-cap": "round",
@@ -1818,7 +2050,7 @@
         "NON_REVETUE_CARRO_SOU"
       ],
       "paint": {
-        "line-color": "#838383",
+        "line-color": "#AFAFAF",
         "line-width": {
           "stops": [
             [
@@ -1851,7 +2083,6 @@
       "source": "plan_ign",
       "source-layer": "routier_route_sou",
       "minzoom": 12,
-      "maxzoom": 18,
       "layout": {
         "visibility": "visible",
         "line-cap": "round",
@@ -1868,7 +2099,7 @@
         "BRET_AUTO_LIBRE_1_SOU"
       ],
       "paint": {
-        "line-color": "rgba(167, 53, 10, 0.5)",
+        "line-color": "rgba(222, 70, 14, 0.5)",
         "line-width": {
           "stops": [
             [
@@ -1900,7 +2131,6 @@
       "type": "line",
       "source": "plan_ign",
       "source-layer": "routier_route_sou",
-      "maxzoom": 18,
       "layout": {
         "visibility": "visible",
         "line-cap": "round",
@@ -1912,7 +2142,7 @@
         "NON_CLASSEE_RESTREINT_SOU"
       ],
       "paint": {
-        "line-color": "#838383",
+        "line-color": "#AFAFAF",
         "line-width": {
           "stops": [
             [
@@ -1940,7 +2170,6 @@
       "type": "line",
       "source": "plan_ign",
       "source-layer": "routier_route_sou",
-      "maxzoom": 18,
       "layout": {
         "visibility": "visible",
         "line-cap": "round",
@@ -1953,7 +2182,7 @@
         "NON_CLASSEE_SOU"
       ],
       "paint": {
-        "line-color": "#838383",
+        "line-color": "#AFAFAF",
         "line-width": {
           "stops": [
             [
@@ -1981,7 +2210,6 @@
       "type": "line",
       "source": "plan_ign",
       "source-layer": "routier_route_sou",
-      "maxzoom": 18,
       "layout": {
         "visibility": "visible",
         "line-cap": "round",
@@ -1997,7 +2225,7 @@
         "LOCALE_1_SOU"
       ],
       "paint": {
-        "line-color": "rgba(97, 97, 97, 0.5)",
+        "line-color": "rgba(130, 130, 130, 0.5)",
         "line-width": {
           "stops": [
             [
@@ -2030,7 +2258,6 @@
       "source": "plan_ign",
       "source-layer": "routier_route_sou",
       "minzoom": 11,
-      "maxzoom": 18,
       "layout": {
         "visibility": "visible",
         "line-cap": "round",
@@ -2042,7 +2269,7 @@
         "LOCALE_CONSTR_SOU"
       ],
       "paint": {
-        "line-color": "#969696",
+        "line-color": "#C8C8C8",
         "line-width": {
           "stops": [
             [
@@ -2074,7 +2301,6 @@
       "type": "line",
       "source": "plan_ign",
       "source-layer": "routier_route_sou",
-      "maxzoom": 18,
       "layout": {
         "visibility": "visible",
         "line-cap": "round",
@@ -2090,7 +2316,7 @@
         "REGIONALE_1_SOU"
       ],
       "paint": {
-        "line-color": "rgba(97, 97, 97, 0.5)",
+        "line-color": "rgba(130, 130, 130, 0.5)",
         "line-width": {
           "stops": [
             [
@@ -2127,7 +2353,6 @@
       "source": "plan_ign",
       "source-layer": "routier_route_sou",
       "minzoom": 10,
-      "maxzoom": 18,
       "layout": {
         "visibility": "visible",
         "line-cap": "round",
@@ -2139,7 +2364,7 @@
         "REGIONALE_CONSTR_SOU"
       ],
       "paint": {
-        "line-color": "#969696",
+        "line-color": "#C8C8C8",
         "line-width": {
           "stops": [
             [
@@ -2176,7 +2401,6 @@
       "source": "plan_ign",
       "source-layer": "routier_route_sou",
       "minzoom": 7,
-      "maxzoom": 18,
       "layout": {
         "visibility": "visible",
         "line-cap": "round",
@@ -2192,7 +2416,7 @@
         "PRINCIPALE_1_SOU"
       ],
       "paint": {
-        "line-color": "rgba(167, 53, 10, 0.5)",
+        "line-color": "rgba(222, 70, 14, 0.5)",
         "line-width": {
           "stops": [
             [
@@ -2229,7 +2453,6 @@
       "source": "plan_ign",
       "source-layer": "routier_route_sou",
       "minzoom": 10,
-      "maxzoom": 18,
       "layout": {
         "visibility": "visible",
         "line-cap": "round",
@@ -2241,7 +2464,7 @@
         "PRINCIPALE_CONSTR_SOU"
       ],
       "paint": {
-        "line-color": "#969696",
+        "line-color": "#C8C8C8",
         "line-width": {
           "stops": [
             [
@@ -2278,7 +2501,6 @@
       "source": "plan_ign",
       "source-layer": "routier_route_sou",
       "minzoom": 7,
-      "maxzoom": 18,
       "layout": {
         "visibility": "visible",
         "line-cap": "round",
@@ -2291,7 +2513,7 @@
         "AUTOROU_LIBRE_SOU"
       ],
       "paint": {
-        "line-color": "rgba(167, 53, 10, 0.5)",
+        "line-color": "rgba(222, 70, 14, 0.5)",
         "line-width": {
           "stops": [
             [
@@ -2328,7 +2550,6 @@
       "source": "plan_ign",
       "source-layer": "routier_route_sou",
       "minzoom": 10,
-      "maxzoom": 18,
       "layout": {
         "visibility": "visible",
         "line-cap": "round",
@@ -2340,7 +2561,7 @@
         "AUTOROU_CONSTR_SOU"
       ],
       "paint": {
-        "line-color": "#969696",
+        "line-color": "#C8C8C8",
         "line-width": {
           "stops": [
             [
@@ -2372,11 +2593,49 @@
       }
     },
     {
+      "id": "Routier souterrain - filet interieur - route non revetu carrosable restreint",
+      "type": "line",
+      "source": "plan_ign",
+      "source-layer": "routier_route_sou",
+      "layout": {
+        "visibility": "visible",
+        "line-cap": "round",
+        "line-join": "round"
+      },
+      "filter": [
+        "==",
+        "symbo",
+        "NON_REVETUE_CARRO_RESTREINT_SOU"
+      ],
+      "paint": {
+        "line-color": "#F2F5FF",
+        "line-width": {
+          "stops": [
+            [
+              14,
+              2.3
+            ],
+            [
+              15,
+              4.1
+            ],
+            [
+              16,
+              6.3
+            ],
+            [
+              17,
+              13.5
+            ]
+          ]
+        }
+      }
+    },
+    {
       "id": "Routier souterrain - filet interieur - route non revetu carrosable",
       "type": "line",
       "source": "plan_ign",
       "source-layer": "routier_route_sou",
-      "maxzoom": 18,
       "layout": {
         "visibility": "visible",
         "line-cap": "round",
@@ -2388,7 +2647,7 @@
         "NON_REVETUE_CARRO_SOU"
       ],
       "paint": {
-        "line-color": "#A5A5A5",
+        "line-color": "#DCDCDC",
         "line-width": {
           "stops": [
             [
@@ -2417,7 +2676,6 @@
       "source": "plan_ign",
       "source-layer": "routier_route_sou",
       "minzoom": 12,
-      "maxzoom": 18,
       "layout": {
         "visibility": "visible",
         "line-cap": "round",
@@ -2466,7 +2724,6 @@
       "type": "line",
       "source": "plan_ign",
       "source-layer": "routier_route_sou",
-      "maxzoom": 18,
       "layout": {
         "visibility": "visible",
         "line-cap": "round",
@@ -2478,7 +2735,7 @@
         "NON_CLASSEE_RESTREINT_SOU"
       ],
       "paint": {
-        "line-color": "#7695FF",
+        "line-color": "#F2F5FF",
         "line-width": {
           "stops": [
             [
@@ -2506,7 +2763,6 @@
       "type": "line",
       "source": "plan_ign",
       "source-layer": "routier_route_sou",
-      "maxzoom": 18,
       "layout": {
         "visibility": "visible",
         "line-cap": "round",
@@ -2519,7 +2775,7 @@
         "NON_CLASSEE_SOU"
       ],
       "paint": {
-        "line-color": "#A5A5A5",
+        "line-color": "#DCDCDC",
         "line-width": {
           "stops": [
             [
@@ -2547,7 +2803,6 @@
       "type": "line",
       "source": "plan_ign",
       "source-layer": "routier_route_sou",
-      "maxzoom": 18,
       "layout": {
         "visibility": "visible",
         "line-cap": "round",
@@ -2596,7 +2851,6 @@
       "source": "plan_ign",
       "source-layer": "routier_route_sou",
       "minzoom": 11,
-      "maxzoom": 18,
       "layout": {
         "visibility": "visible",
         "line-cap": "butt",
@@ -2616,11 +2870,11 @@
             ],
             [
               13,
-              "#F9E742"
+              "#FCF4A8"
             ],
             [
               17,
-              "#F7E957"
+              "#FCF7C1"
             ]
           ]
         },
@@ -2659,7 +2913,6 @@
       "type": "line",
       "source": "plan_ign",
       "source-layer": "routier_route_sou",
-      "maxzoom": 18,
       "layout": {
         "visibility": "visible",
         "line-cap": "round",
@@ -2712,7 +2965,6 @@
       "source": "plan_ign",
       "source-layer": "routier_route_sou",
       "minzoom": 10,
-      "maxzoom": 18,
       "layout": {
         "visibility": "visible",
         "line-cap": "butt",
@@ -2732,11 +2984,11 @@
             ],
             [
               10,
-              "#FBE72B"
+              "#FDF28B"
             ],
             [
               17,
-              "#F7E854"
+              "#FCF6BD"
             ]
           ]
         },
@@ -2783,7 +3035,6 @@
       "type": "line",
       "source": "plan_ign",
       "source-layer": "routier_route_sou",
-      "maxzoom": 18,
       "layout": {
         "visibility": "visible",
         "line-cap": "round",
@@ -2840,7 +3091,6 @@
       "source": "plan_ign",
       "source-layer": "routier_route_sou",
       "minzoom": 10,
-      "maxzoom": 18,
       "layout": {
         "visibility": "visible",
         "line-cap": "butt",
@@ -2856,11 +3106,11 @@
           "stops": [
             [
               9,
-              "#ECA61C"
+              "#F3C66D"
             ],
             [
               17,
-              "#E3B559"
+              "#F2DDB3"
             ]
           ]
         },
@@ -2907,7 +3157,6 @@
       "type": "line",
       "source": "plan_ign",
       "source-layer": "routier_route_sou",
-      "maxzoom": 18,
       "layout": {
         "visibility": "visible",
         "line-cap": "round",
@@ -2961,7 +3210,6 @@
       "source": "plan_ign",
       "source-layer": "routier_route_sou",
       "minzoom": 13,
-      "maxzoom": 18,
       "layout": {
         "visibility": "visible",
         "line-cap": "round",
@@ -3007,7 +3255,6 @@
       "source": "plan_ign",
       "source-layer": "routier_route_sou",
       "minzoom": 10,
-      "maxzoom": 18,
       "layout": {
         "visibility": "visible",
         "line-cap": "butt",
@@ -3023,11 +3270,11 @@
           "stops": [
             [
               9,
-              "#E69912"
+              "#F2BA59"
             ],
             [
               17,
-              "#EBA413"
+              "#F2C261"
             ]
           ]
         },
@@ -3075,7 +3322,6 @@
       "source": "plan_ign",
       "source-layer": "routier_route_sou",
       "minzoom": 13,
-      "maxzoom": 18,
       "layout": {
         "visibility": "visible",
         "line-cap": "round",
@@ -3087,7 +3333,7 @@
         "AUTOROU_CONSTR_SOU"
       ],
       "paint": {
-        "line-color": "#606060",
+        "line-color": "#808080",
         "line-width": {
           "stops": [
             [
@@ -3131,7 +3377,7 @@
         "COURS_D_EAU_TEMP_MOY"
       ],
       "paint": {
-        "line-color": "#5AADD4",
+        "line-color": "#AAD5E9",
         "line-width": {
           "stops": [
             [
@@ -3167,7 +3413,7 @@
         "COURS_D_EAU"
       ],
       "paint": {
-        "line-color": "#5AADD4",
+        "line-color": "#AAD5E9",
         "line-width": {
           "stops": [
             [
@@ -3206,7 +3452,7 @@
         "CANAL"
       ],
       "paint": {
-        "line-color": "#5AADD4",
+        "line-color": "#AAD5E9",
         "line-width": {
           "stops": [
             [
@@ -3238,7 +3484,7 @@
         "AQUEDUC_AU_SOL"
       ],
       "paint": {
-        "line-color": "#5AADD4",
+        "line-color": "#AAD5E9",
         "line-width": {
           "stops": [
             [
@@ -3274,7 +3520,7 @@
         "AQUEDUC_AU_SOL"
       ],
       "paint": {
-        "line-color": "#5AADD4",
+        "line-color": "#AAD5E9",
         "line-width": {
           "stops": [
             [
@@ -3313,7 +3559,7 @@
         "COURS_D_EAU_MOY"
       ],
       "paint": {
-        "line-color": "#5AADD4",
+        "line-color": "#AAD5E9",
         "line-width": {
           "stops": [
             [
@@ -3344,7 +3590,7 @@
         "COURS_D_EAU_LAR"
       ],
       "paint": {
-        "line-color": "#5AADD4",
+        "line-color": "#AAD5E9",
         "line-width": {
           "stops": [
             [
@@ -3357,24 +3603,6 @@
             ]
           ]
         }
-      }
-    },
-    {
-      "id": "parcellaire - parcelle surface",
-      "type": "fill",
-      "source": "plan_ign",
-      "source-layer": "parcellaire_parcelle",
-      "layout": {
-        "visibility": "visible"
-      },
-      "filter": [
-        "==",
-        "symbo",
-        "PARCELLE"
-      ],
-      "paint": {
-        "fill-color": "#FFFF9C",
-        "fill-opacity": 0.7
       }
     },
     {
@@ -3393,9 +3621,9 @@
         "NECROPOLE_NATIONALE"
       ],
       "paint": {
-        "fill-color": "#B4B4B4",
+        "fill-color": "#F0F0F0",
         "fill-opacity": 0.5,
-        "fill-outline-color": "#616161"
+        "fill-outline-color": "#818181"
       }
     },
     {
@@ -3433,7 +3661,7 @@
         "MAIRIE_ANNEXE"
       ],
       "paint": {
-        "fill-color": "#FF3D3D"
+        "fill-color": "#FFA6A6"
       }
     },
     {
@@ -3456,15 +3684,15 @@
           "stops": [
             [
               14,
-              "#FF3D3D"
+              "#FFA6A6"
             ],
             [
               15,
-              "#FF4343"
+              "#FFAEAE"
             ]
           ]
         },
-        "fill-outline-color": "#FF1D1D"
+        "fill-outline-color": "#FF7C7C"
       }
     },
     {
@@ -3486,7 +3714,7 @@
         "HANGAR_INDUSTRIEL"
       ],
       "paint": {
-        "fill-color": "#969696"
+        "fill-color": "#C8C8C8"
       }
     },
     {
@@ -3512,15 +3740,15 @@
           "stops": [
             [
               15,
-              "#9D9D9D"
+              "#D1D1D1"
             ],
             [
               16,
-              "#ADADAD"
+              "#E6E6E6"
             ]
           ]
         },
-        "fill-outline-color": "#8A8A8A"
+        "fill-outline-color": "#B8B8B8"
       }
     },
     {
@@ -3539,7 +3767,7 @@
         "HANGAR_PUBLIC"
       ],
       "paint": {
-        "fill-color": "#7C77B2"
+        "fill-color": "#B9B6D6"
       }
     },
     {
@@ -3562,15 +3790,15 @@
           "stops": [
             [
               15,
-              "#9882B8"
+              "#CFC5DE"
             ],
             [
               16,
-              "#A483D7"
+              "#E4DAF3"
             ]
           ]
         },
-        "fill-outline-color": "#6860BA"
+        "fill-outline-color": "#A6A1D6"
       }
     },
     {
@@ -3590,7 +3818,7 @@
         "BATI_SPORTIF"
       ],
       "paint": {
-        "line-color": "#87BB68",
+        "line-color": "#BCD9AB",
         "line-width": 4
       }
     },
@@ -3613,11 +3841,11 @@
           "stops": [
             [
               14,
-              "#85BBB2"
+              "#C9E1DD"
             ],
             [
               15,
-              "#9AB7B1"
+              "#DCE6E4"
             ]
           ]
         }
@@ -3638,7 +3866,7 @@
         "BATI_GARE"
       ],
       "paint": {
-        "fill-color": "#5559E9"
+        "fill-color": "#B3B5F5"
       }
     },
     {
@@ -3660,15 +3888,15 @@
           "stops": [
             [
               15,
-              "#6165E6"
+              "#BFC1F5"
             ],
             [
               16,
-              "#6D72E3"
+              "#CBCDF5"
             ]
           ]
         },
-        "fill-outline-color": "#3F44EE"
+        "fill-outline-color": "#9B9EF6"
       }
     },
     {
@@ -3687,7 +3915,7 @@
         "BATI_QQUE"
       ],
       "paint": {
-        "fill-color": "#B29379"
+        "fill-color": "#D6C6B8"
       }
     },
     {
@@ -3709,15 +3937,15 @@
           "stops": [
             [
               15,
-              "#C1B287"
+              "#E6E0CF"
             ],
             [
               16,
-              "#D2BF85"
+              "#F1EBD9"
             ]
           ]
         },
-        "fill-outline-color": "#A58158"
+        "fill-outline-color": "#C3AA8E"
       }
     },
     {
@@ -3735,8 +3963,8 @@
         "RESERVOIR_EAU_SURF"
       ],
       "paint": {
-        "fill-color": "#6AA2BA",
-        "fill-outline-color": "#264C73"
+        "fill-color": "#ADCCD9",
+        "fill-outline-color": "#336699"
       }
     },
     {
@@ -3753,8 +3981,8 @@
         "PECHERIE_SURF"
       ],
       "paint": {
-        "fill-color": "#68BADC",
-        "fill-outline-color": "#1476DB"
+        "fill-color": "#BFE2F0",
+        "fill-outline-color": "#509FEF"
       }
     },
     {
@@ -3772,7 +4000,7 @@
       ],
       "paint": {
         "fill-color": "#FFFFFF",
-        "fill-outline-color": "#353535"
+        "fill-outline-color": "#464646"
       }
     },
     {
@@ -3780,6 +4008,7 @@
       "type": "fill",
       "source": "plan_ign",
       "source-layer": "bati_surf",
+      "minzoom": 14,
       "layout": {
         "visibility": "visible"
       },
@@ -3789,7 +4018,7 @@
         "CHATEAU_EAU_SURF"
       ],
       "paint": {
-        "fill-color": "#3479BD"
+        "fill-color": "#1466B2"
       }
     },
     {
@@ -3807,8 +4036,8 @@
         "SILO_SURF"
       ],
       "paint": {
-        "fill-color": "#A37173",
-        "fill-outline-color": "#4F4F4F"
+        "fill-color": "#C7A9AA",
+        "fill-outline-color": "#696969"
       }
     },
     {
@@ -3826,8 +4055,8 @@
         "RESERVOIR_INDUS_SURF"
       ],
       "paint": {
-        "fill-color": "#647686",
-        "fill-outline-color": "#353535"
+        "fill-color": "#8D9DAA",
+        "fill-outline-color": "#464646"
       }
     },
     {
@@ -3845,8 +4074,8 @@
         "SERRE_SURF"
       ],
       "paint": {
-        "fill-color": "#8DA7AD",
-        "fill-outline-color": "#696969"
+        "fill-color": "#D1DEE1",
+        "fill-outline-color": "#8C8C8C"
       }
     },
     {
@@ -3863,7 +4092,7 @@
         "POSTE_ELEC_SURF"
       ],
       "paint": {
-        "fill-color": "#506C93",
+        "fill-color": "#7993B6",
         "fill-opacity": 0.3
       }
     },
@@ -3888,7 +4117,7 @@
           "stops": [
             [
               12,
-              0.3
+              0.25
             ],
             [
               17,
@@ -3919,7 +4148,7 @@
         "RELIGIEUX_QQUE"
       ],
       "paint": {
-        "fill-color": "#E86A6A"
+        "fill-color": "#F7CBCB"
       }
     },
     {
@@ -3947,11 +4176,11 @@
           "stops": [
             [
               14,
-              "#E86A6A"
+              "#F7CBCB"
             ],
             [
               15,
-              "#DE8484"
+              "#F7E1E1"
             ]
           ]
         },
@@ -3959,11 +4188,11 @@
           "stops": [
             [
               14,
-              "#EE4949"
+              "#F7A8A8"
             ],
             [
               15,
-              "#EC5656"
+              "#F7B7B7"
             ]
           ]
         }
@@ -3989,8 +4218,8 @@
         "MONUMENT_SURF"
       ],
       "paint": {
-        "fill-color": "#747474",
-        "fill-outline-color": "#535353"
+        "fill-color": "#9B9B9B",
+        "fill-outline-color": "#6E6E6E"
       }
     },
     {
@@ -4012,8 +4241,8 @@
         "NATATION_SURF"
       ],
       "paint": {
-        "fill-color": "#FFFFFF",
-        "fill-outline-color": "#FFFFFF"
+        "fill-color": "#F1F5E7",
+        "fill-outline-color": "#F1F5E7"
       }
     },
     {
@@ -4037,7 +4266,7 @@
         "NATATION_SURF"
       ],
       "paint": {
-        "line-color": "#87BB68",
+        "line-color": "#BCD9AB",
         "line-width": 2
       }
     },
@@ -4056,8 +4285,8 @@
         "PISTE_HERBE"
       ],
       "paint": {
-        "fill-color": "#A4A4A4",
-        "fill-outline-color": "#606060"
+        "fill-color": "#DBDBDB",
+        "fill-outline-color": "#808080"
       }
     },
     {
@@ -4066,7 +4295,6 @@
       "source": "plan_ign",
       "source-layer": "bati_zai",
       "minzoom": 15,
-      "maxzoom": 18,
       "layout": {
         "visibility": "visible"
       },
@@ -4092,7 +4320,6 @@
         "Office de tourisme",
         "Hôpital",
         "Police",
-        "Piscine",
         "Enseignement supérieur",
         "Poste",
         "Caserne",
@@ -4101,12 +4328,15 @@
         "Science",
         "Structure d'accueil pour personnes handicapées",
         "Administration centrale de l'Etat",
-        "Caserne de pompiers"
+        "Caserne de pompiers",
+        "Centre de documentation",
+        "Salle de spectacle ou conférence",
+        "Ecomusée"
       ],
       "paint": {
-        "fill-color": "#C376C1",
+        "fill-color": "#E3BFE2",
         "fill-opacity": 0.5,
-        "fill-outline-color": "#CD54C9"
+        "fill-outline-color": "#E39FE1"
       }
     },
     {
@@ -4123,14 +4353,15 @@
         "nature",
         "Hôtel de département",
         "Hôtel de région",
+        "Hôtel de collectivité",
         "Préfecture de région",
         "Préfecture",
         "Sous-préfecture"
       ],
       "paint": {
-        "fill-color": "#BF0000",
+        "fill-color": "#FF0000",
         "fill-opacity": 0.3,
-        "fill-outline-color": "#870000"
+        "fill-outline-color": "#B40000"
       }
     },
     {
@@ -4149,7 +4380,7 @@
         "MUR"
       ],
       "paint": {
-        "line-color": "#696969",
+        "line-color": "#8C8C8C",
         "line-width": 0.3
       }
     },
@@ -4171,7 +4402,7 @@
         "FORTIF_LIN"
       ],
       "paint": {
-        "line-color": "#4B4B4B",
+        "line-color": "#646464",
         "line-width": 0.5
       }
     },
@@ -4192,7 +4423,7 @@
         "BARRAGE_LIN"
       ],
       "paint": {
-        "line-color": "#4B4B4B",
+        "line-color": "#646464",
         "line-width": {
           "stops": [
             [
@@ -4225,7 +4456,7 @@
         "DIGUE"
       ],
       "paint": {
-        "line-color": "#616161",
+        "line-color": "#828282",
         "line-width": {
           "stops": [
             [
@@ -4257,7 +4488,7 @@
         "PECHERIE_LIN"
       ],
       "paint": {
-        "line-color": "#004C99",
+        "line-color": "#0066CC",
         "line-width": {
           "stops": [
             [
@@ -4284,20 +4515,17 @@
         "line-join": "round"
       },
       "filter": [
-        "==",
+        "in",
         "symbo",
-        "PISTE_CYCLABLE"
+        "PISTE_CYCLABLE",
+        "VOIE_VERTE"
       ],
       "paint": {
         "line-color": {
           "stops": [
             [
               17,
-              "#7635A9"
-            ],
-            [
-              18,
-              "#FFFFFF"
+              "#9B5CCC"
             ]
           ]
         },
@@ -4352,11 +4580,7 @@
           "stops": [
             [
               17,
-              "#695657"
-            ],
-            [
-              18,
-              "#969696"
+              "#8C7274"
             ]
           ]
         },
@@ -4447,11 +4671,7 @@
           "stops": [
             [
               17,
-              "#695657"
-            ],
-            [
-              18,
-              "#E8A872"
+              "#8C7274"
             ]
           ]
         },
@@ -4506,11 +4726,7 @@
           "stops": [
             [
               17,
-              "#695657"
-            ],
-            [
-              18,
-              "#FFFFFF"
+              "#8C7274"
             ]
           ]
         },
@@ -4565,11 +4781,7 @@
           "stops": [
             [
               17,
-              "#695657"
-            ],
-            [
-              18,
-              "#FFFFFF"
+              "#8C7274"
             ]
           ]
         },
@@ -4600,11 +4812,10 @@
       }
     },
     {
-      "id": "Routier a niveau - filet extérieur - route non revetu carrosable",
+      "id": "Routier a niveau - filet extérieur - route non revetu carrosable restreint",
       "type": "line",
       "source": "plan_ign",
       "source-layer": "routier_route",
-      "maxzoom": 18,
       "layout": {
         "visibility": "visible",
         "line-cap": "round",
@@ -4613,18 +4824,18 @@
       "filter": [
         "==",
         "symbo",
-        "NON_REVETUE_CARRO"
+        "NON_REVETUE_CARRO_RESTREINT"
       ],
       "paint": {
         "line-color": {
           "stops": [
             [
               12,
-              "#4B4B4B"
+              "#646464"
             ],
             [
               17,
-              "#696969"
+              "#8C8C8C"
             ]
           ]
         },
@@ -4655,7 +4866,7 @@
       }
     },
     {
-      "id": "Routier a niveau - filet interieur - route non revetu carrosable",
+      "id": "Routier a niveau - filet extérieur - route non revetu carrosable",
       "type": "line",
       "source": "plan_ign",
       "source-layer": "routier_route",
@@ -4670,31 +4881,42 @@
         "NON_REVETUE_CARRO"
       ],
       "paint": {
-        "line-color": "#FFFFFF",
+        "line-color": {
+          "stops": [
+            [
+              12,
+              "#646464"
+            ],
+            [
+              17,
+              "#8C8C8C"
+            ]
+          ]
+        },
         "line-width": {
           "stops": [
             [
               14,
-              2.3
+              3.2
             ],
             [
               15,
-              4.1
+              5.4
             ],
             [
               16,
-              6.3
+              7.7
             ],
             [
               17,
-              13.5
-            ],
-            [
-              18,
               16.8
             ]
           ]
-        }
+        },
+        "line-dasharray": [
+          2,
+          2
+        ]
       }
     },
     {
@@ -4723,15 +4945,11 @@
           "stops": [
             [
               9,
-              "#A7350A"
+              "#DE460E"
             ],
             [
               17,
-              "#B56600"
-            ],
-            [
-              18,
-              "#FFFFFF"
+              "#F18800"
             ]
           ]
         },
@@ -4781,11 +4999,7 @@
           "stops": [
             [
               17,
-              "#717171"
-            ],
-            [
-              18,
-              "#FFFFFF"
+              "#969696"
             ]
           ]
         },
@@ -4832,11 +5046,7 @@
           "stops": [
             [
               17,
-              "#717171"
-            ],
-            [
-              18,
-              "#FFFFFF"
+              "#969696"
             ]
           ]
         },
@@ -4887,19 +5097,15 @@
           "stops": [
             [
               12,
-              "#696969"
+              "#8C8C8C"
             ],
             [
               13,
-              "#878787"
+              "#B4B4B4"
             ],
             [
               17,
-              "#878787"
-            ],
-            [
-              18,
-              "#FFFFFF"
+              "#B4B4B4"
             ]
           ]
         },
@@ -4935,7 +5141,6 @@
       "source": "plan_ign",
       "source-layer": "routier_route",
       "minzoom": 11,
-      "maxzoom": 18,
       "layout": {
         "visibility": "visible",
         "line-cap": "round",
@@ -4947,7 +5152,7 @@
         "LOCALE_CONSTR"
       ],
       "paint": {
-        "line-color": "#969696",
+        "line-color": "#C8C8C8",
         "line-width": {
           "stops": [
             [
@@ -4999,19 +5204,15 @@
           "stops": [
             [
               9,
-              "#616161"
+              "#828282"
             ],
             [
               10,
-              "#878787"
+              "#B4B4B4"
             ],
             [
               17,
-              "#878787"
-            ],
-            [
-              18,
-              "#FFFFFF"
+              "#B4B4B4"
             ]
           ]
         },
@@ -5051,7 +5252,6 @@
       "source": "plan_ign",
       "source-layer": "routier_route",
       "minzoom": 10,
-      "maxzoom": 18,
       "layout": {
         "visibility": "visible",
         "line-cap": "round",
@@ -5063,7 +5263,7 @@
         "REGIONALE_CONSTR"
       ],
       "paint": {
-        "line-color": "#969696",
+        "line-color": "#C8C8C8",
         "line-width": {
           "stops": [
             [
@@ -5119,11 +5319,7 @@
           "stops": [
             [
               17,
-              "#B17E18"
-            ],
-            [
-              18,
-              "#FFFFFF"
+              "#E2A52A"
             ]
           ]
         },
@@ -5163,7 +5359,6 @@
       "source": "plan_ign",
       "source-layer": "routier_route",
       "minzoom": 10,
-      "maxzoom": 18,
       "layout": {
         "visibility": "visible",
         "line-cap": "round",
@@ -5175,7 +5370,7 @@
         "PRINCIPALE_CONSTR"
       ],
       "paint": {
-        "line-color": "#969696",
+        "line-color": "#C8C8C8",
         "line-width": {
           "stops": [
             [
@@ -5228,15 +5423,11 @@
           "stops": [
             [
               9,
-              "#A7350A"
+              "#DE460E"
             ],
             [
               17,
-              "#B56600"
-            ],
-            [
-              18,
-              "#FFFFFF"
+              "#F18800"
             ]
           ]
         },
@@ -5276,7 +5467,6 @@
       "source": "plan_ign",
       "source-layer": "routier_route",
       "minzoom": 8,
-      "maxzoom": 18,
       "layout": {
         "visibility": "visible",
         "line-cap": "round",
@@ -5288,7 +5478,7 @@
         "AUTOROU_CONSTR"
       ],
       "paint": {
-        "line-color": "#969696",
+        "line-color": "#C8C8C8",
         "line-width": {
           "stops": [
             [
@@ -5320,12 +5510,89 @@
       }
     },
     {
+      "id": "Routier a niveau - filet interieur - route non revetu carrosable restreint",
+      "type": "line",
+      "source": "plan_ign",
+      "source-layer": "routier_route",
+      "layout": {
+        "visibility": "visible",
+        "line-cap": "round",
+        "line-join": "round"
+      },
+      "filter": [
+        "==",
+        "symbo",
+        "NON_REVETUE_CARRO_RESTREINT"
+      ],
+      "paint": {
+        "line-color": "#EDF1FF",
+        "line-width": {
+          "stops": [
+            [
+              14,
+              2.3
+            ],
+            [
+              15,
+              4.1
+            ],
+            [
+              16,
+              6.3
+            ],
+            [
+              17,
+              13.5
+            ]
+          ]
+        }
+      }
+    },
+    {
+      "id": "Routier a niveau - filet interieur - route non revetu carrosable",
+      "type": "line",
+      "source": "plan_ign",
+      "source-layer": "routier_route",
+      "layout": {
+        "visibility": "visible",
+        "line-cap": "round",
+        "line-join": "round"
+      },
+      "filter": [
+        "==",
+        "symbo",
+        "NON_REVETUE_CARRO"
+      ],
+      "paint": {
+        "line-color": "#FFFFFF",
+        "line-width": {
+          "stops": [
+            [
+              14,
+              2.3
+            ],
+            [
+              15,
+              4.1
+            ],
+            [
+              16,
+              6.3
+            ],
+            [
+              17,
+              13.5
+            ]
+          ]
+        }
+      }
+    },
+    {
       "id": "Routier a niveau - filet interieur - bretelle autoroute",
       "type": "line",
       "source": "plan_ign",
       "source-layer": "routier_route",
       "minzoom": 12,
-      "maxzoom": 18,
       "layout": {
         "visibility": "visible",
         "line-cap": "round",
@@ -5346,11 +5613,11 @@
           "stops": [
             [
               9,
-              "#B56600"
+              "#F18800"
             ],
             [
               17,
-              "#CD8D0D"
+              "#F2B230"
             ]
           ]
         },
@@ -5385,7 +5652,6 @@
       "type": "line",
       "source": "plan_ign",
       "source-layer": "routier_route",
-      "maxzoom": 18,
       "layout": {
         "visibility": "visible",
         "line-cap": "round",
@@ -5397,7 +5663,7 @@
         "NON_CLASSEE_RESTREINT"
       ],
       "paint": {
-        "line-color": "#D1DBFF",
+        "line-color": "#EDF1FF",
         "line-width": {
           "stops": [
             [
@@ -5425,7 +5691,6 @@
       "type": "line",
       "source": "plan_ign",
       "source-layer": "routier_route",
-      "maxzoom": 18,
       "layout": {
         "visibility": "visible",
         "line-cap": "round",
@@ -5466,7 +5731,6 @@
       "type": "line",
       "source": "plan_ign",
       "source-layer": "routier_route",
-      "maxzoom": 18,
       "layout": {
         "visibility": "visible",
         "line-cap": "round",
@@ -5486,7 +5750,7 @@
           "stops": [
             [
               6,
-              "#EB8D13"
+              "#F2B361"
             ],
             [
               7,
@@ -5498,11 +5762,11 @@
             ],
             [
               13,
-              "#F9E742"
+              "#FCF4A8"
             ],
             [
               17,
-              "#F7E957"
+              "#FCF7C1"
             ]
           ]
         },
@@ -5557,15 +5821,11 @@
             ],
             [
               13,
-              "#F9E742"
+              "#FCF4A8"
             ],
             [
               17,
-              "#F7E957"
-            ],
-            [
-              18,
-              "#B2B2B2"
+              "#FCF7C1"
             ]
           ]
         },
@@ -5604,7 +5864,6 @@
       "type": "line",
       "source": "plan_ign",
       "source-layer": "routier_route",
-      "maxzoom": 18,
       "layout": {
         "visibility": "visible",
         "line-cap": "round",
@@ -5624,7 +5883,7 @@
           "stops": [
             [
               6,
-              "#DC8410"
+              "#F2A949"
             ],
             [
               7,
@@ -5636,11 +5895,11 @@
             ],
             [
               10,
-              "#FBE72B"
+              "#FDF28B"
             ],
             [
               17,
-              "#F7E854"
+              "#FCF6BD"
             ]
           ]
         },
@@ -5703,15 +5962,11 @@
             ],
             [
               10,
-              "#FBE72B"
+              "#FDF28B"
             ],
             [
               17,
-              "#F7E854"
-            ],
-            [
-              18,
-              "#B2B2B2"
+              "#FCF6BD"
             ]
           ]
         },
@@ -5758,7 +6013,6 @@
       "type": "line",
       "source": "plan_ign",
       "source-layer": "routier_route",
-      "maxzoom": 18,
       "layout": {
         "visibility": "visible",
         "line-cap": "round",
@@ -5778,19 +6032,19 @@
           "stops": [
             [
               6,
-              "#C5750C"
+              "#F29924"
             ],
             [
               7,
-              "#ECA61C"
+              "#F3C66D"
             ],
             [
               9,
-              "#ECA61C"
+              "#F3C66D"
             ],
             [
               17,
-              "#E3B559"
+              "#F2DDB3"
             ]
           ]
         },
@@ -5849,15 +6103,11 @@
           "stops": [
             [
               9,
-              "#ECA61C"
+              "#F3C66D"
             ],
             [
               17,
-              "#E3B559"
-            ],
-            [
-              18,
-              "#B2B2B2"
+              "#F2DDB3"
             ]
           ]
         },
@@ -5904,7 +6154,6 @@
       "type": "line",
       "source": "plan_ign",
       "source-layer": "routier_route",
-      "maxzoom": 18,
       "layout": {
         "visibility": "visible",
         "line-cap": "round",
@@ -5921,11 +6170,11 @@
           "stops": [
             [
               9,
-              "#B56600"
+              "#F18800"
             ],
             [
               17,
-              "#CD8D0D"
+              "#F2B230"
             ]
           ]
         },
@@ -5969,7 +6218,6 @@
       "source": "plan_ign",
       "source-layer": "routier_route",
       "minzoom": 13,
-      "maxzoom": 18,
       "layout": {
         "visibility": "visible",
         "line-cap": "round",
@@ -6030,15 +6278,11 @@
           "stops": [
             [
               9,
-              "#B56600"
+              "#F18800"
             ],
             [
               17,
-              "#CD8D0D"
-            ],
-            [
-              18,
-              "#B2B2B2"
+              "#F2B230"
             ]
           ]
         },
@@ -6086,7 +6330,6 @@
       "source": "plan_ign",
       "source-layer": "routier_route",
       "minzoom": 13,
-      "maxzoom": 18,
       "layout": {
         "visibility": "visible",
         "line-cap": "round",
@@ -6098,7 +6341,7 @@
         "AUTOROU_CONSTR"
       ],
       "paint": {
-        "line-color": "#606060",
+        "line-color": "#808080",
         "line-width": {
           "stops": [
             [
@@ -6149,7 +6392,7 @@
         "VF_ELEC_4"
       ],
       "paint": {
-        "line-color": "#5A5A5A",
+        "line-color": "#787878",
         "line-width": {
           "stops": [
             [
@@ -6188,7 +6431,7 @@
         "VF_ELEC_4"
       ],
       "paint": {
-        "line-color": "#5A5A5A",
+        "line-color": "#787878",
         "line-width": {
           "stops": [
             [
@@ -6226,7 +6469,7 @@
         "VF_ETROITE"
       ],
       "paint": {
-        "line-color": "#5A5A5A",
+        "line-color": "#787878",
         "line-width": {
           "stops": [
             [
@@ -6260,7 +6503,7 @@
         "VF_ETROITE"
       ],
       "paint": {
-        "line-color": "#5A5A5A",
+        "line-color": "#787878",
         "line-width": {
           "stops": [
             [
@@ -6297,7 +6540,7 @@
         "VF_NON_EXPLOITEE"
       ],
       "paint": {
-        "line-color": "#5A5A5A",
+        "line-color": "#787878",
         "line-width": {
           "stops": [
             [
@@ -6324,7 +6567,6 @@
       "source": "plan_ign",
       "source-layer": "ferre",
       "minzoom": 10,
-      "maxzoom": 18,
       "layout": {
         "visibility": "visible",
         "line-cap": "round",
@@ -6336,7 +6578,7 @@
         "VF_EN_CONSTR"
       ],
       "paint": {
-        "line-color": "#5A5A5A",
+        "line-color": "#787878",
         "line-width": {
           "stops": [
             [
@@ -6361,7 +6603,6 @@
       "source": "plan_ign",
       "source-layer": "ferre",
       "minzoom": 10,
-      "maxzoom": 18,
       "layout": {
         "visibility": "visible",
         "line-cap": "butt",
@@ -6373,7 +6614,7 @@
         "VF_EN_CONSTR"
       ],
       "paint": {
-        "line-color": "#5A5A5A",
+        "line-color": "#787878",
         "line-width": {
           "stops": [
             [
@@ -6409,16 +6650,16 @@
         "TRANSPORT_URBAIN"
       ],
       "paint": {
-        "line-color": "#5A5A5A",
+        "line-color": "#787878",
         "line-width": {
           "stops": [
             [
               10,
-              0.3
+              0.2
             ],
             [
               17,
-              1.8
+              1.6
             ]
           ]
         }
@@ -6441,7 +6682,7 @@
         "TRANSPORT_URBAIN"
       ],
       "paint": {
-        "line-color": "#5A5A5A",
+        "line-color": "#787878",
         "line-width": {
           "stops": [
             [
@@ -6463,12 +6704,11 @@
       }
     },
     {
-      "id": "liaison routiere - Bac Liaison Maritime",
+      "id": "liaison routiere - Bac",
       "type": "line",
       "source": "plan_ign",
       "source-layer": "routier_liaison",
       "minzoom": 8,
-      "maxzoom": 18,
       "layout": {
         "visibility": "visible",
         "line-cap": "round",
@@ -6478,11 +6718,42 @@
         "in",
         "symbo",
         "BAC_AUTO",
-        "LIAISON_MARITIME",
-        "BAC_LIAISON_MARITIME"
+        "BAC"
       ],
       "paint": {
-        "line-color": "#386E9B",
+        "line-color": "#5792C2",
+        "line-width": {
+          "stops": [
+            [
+              8,
+              1
+            ],
+            [
+              13,
+              2.5
+            ]
+          ]
+        }
+      }
+    },
+    {
+      "id": "liaison routiere - Liaison Maritime",
+      "type": "line",
+      "source": "plan_ign",
+      "source-layer": "routier_liaison",
+      "minzoom": 12,
+      "layout": {
+        "visibility": "visible",
+        "line-cap": "round",
+        "line-join": "round"
+      },
+      "filter": [
+        "==",
+        "symbo",
+        "LIAISON_MARITIME"
+      ],
+      "paint": {
+        "line-color": "#5792C2",
         "line-width": {
           "stops": [
             [
@@ -6517,11 +6788,11 @@
           "stops": [
             [
               13,
-              "#8E8E8E"
+              "#BEBEBE"
             ],
             [
               17,
-              "#4B4B4B"
+              "#646464"
             ],
             [
               18,
@@ -6556,7 +6827,6 @@
       "type": "line",
       "source": "plan_ign",
       "source-layer": "routier_liaison",
-      "maxzoom": 18,
       "layout": {
         "visibility": "visible",
         "line-cap": "butt",
@@ -6572,11 +6842,11 @@
           "stops": [
             [
               13,
-              "#8E8E8E"
+              "#BEBEBE"
             ],
             [
               17,
-              "#4B4B4B"
+              "#646464"
             ]
           ]
         },
@@ -6624,7 +6894,7 @@
           "stops": [
             [
               17,
-              "#969696"
+              "#C8C8C8"
             ],
             [
               18,
@@ -6659,7 +6929,6 @@
       "type": "line",
       "source": "plan_ign",
       "source-layer": "routier_liaison",
-      "maxzoom": 18,
       "layout": {
         "visibility": "visible",
         "line-cap": "butt",
@@ -6722,7 +6991,6 @@
       "type": "fill",
       "source": "plan_ign",
       "source-layer": "routier_surf",
-      "maxzoom": 18,
       "layout": {
         "visibility": "visible"
       },
@@ -6732,7 +7000,7 @@
         "DALLE_DE_PROTECTION"
       ],
       "paint": {
-        "fill-opacity": 0.5,
+        "fill-opacity": 0.45,
         "fill-color": "#FFFFFF",
         "fill-outline-color": "#000000"
       }
@@ -6742,7 +7010,6 @@
       "type": "fill",
       "source": "plan_ign",
       "source-layer": "routier_surf",
-      "maxzoom": 18,
       "layout": {
         "visibility": "visible"
       },
@@ -6754,7 +7021,7 @@
       "paint": {
         "fill-opacity": 0.8,
         "fill-color": "#FFFFFF",
-        "fill-outline-color": "#6E5F6E"
+        "fill-outline-color": "#918091"
       }
     },
     {
@@ -6762,7 +7029,6 @@
       "type": "fill",
       "source": "plan_ign",
       "source-layer": "routier_surf",
-      "maxzoom": 18,
       "layout": {
         "visibility": "visible"
       },
@@ -6772,8 +7038,8 @@
         "SURF_PEAGE"
       ],
       "paint": {
-        "fill-color": "#E4B351",
-        "fill-outline-color": "#B17E18"
+        "fill-color": "#F2DAAA",
+        "fill-outline-color": "#E2A52A"
       }
     },
     {
@@ -6791,8 +7057,8 @@
         "BATI_PEAGE"
       ],
       "paint": {
-        "fill-color": "#A5A5A5",
-        "fill-outline-color": "#606060"
+        "fill-color": "#DCDCDC",
+        "fill-outline-color": "#808080"
       }
     },
     {
@@ -6812,7 +7078,7 @@
         "COURS_D_EAU_MOY_SUP"
       ],
       "paint": {
-        "line-color": "#5AADD4",
+        "line-color": "#AAD5E9",
         "line-width": {
           "stops": [
             [
@@ -6843,7 +7109,7 @@
         "CANAL_SUP"
       ],
       "paint": {
-        "line-color": "#5AADD4",
+        "line-color": "#AAD5E9",
         "line-width": {
           "stops": [
             [
@@ -6874,7 +7140,7 @@
         "AQUEDUC_SUP"
       ],
       "paint": {
-        "line-color": "#5AADD4",
+        "line-color": "#AAD5E9",
         "line-width": {
           "stops": [
             [
@@ -6909,7 +7175,7 @@
         "AQUEDUC_SUP"
       ],
       "paint": {
-        "line-color": "#5AADD4",
+        "line-color": "#AAD5E9",
         "line-width": {
           "stops": [
             [
@@ -6944,20 +7210,17 @@
         "line-join": "round"
       },
       "filter": [
-        "==",
+        "in",
         "symbo",
-        "PISTE_CYCLABLE_SUP"
+        "PISTE_CYCLABLE_SUP",
+        "VOIE_VERTE_SUP"
       ],
       "paint": {
         "line-color": {
           "stops": [
             [
               17,
-              "#7635A9"
-            ],
-            [
-              18,
-              "#FFFFFF"
+              "#9B5CCC"
             ]
           ]
         },
@@ -7012,11 +7275,7 @@
           "stops": [
             [
               17,
-              "#695657"
-            ],
-            [
-              18,
-              "#969696"
+              "#8C7274"
             ]
           ]
         },
@@ -7107,11 +7366,7 @@
           "stops": [
             [
               17,
-              "#695657"
-            ],
-            [
-              18,
-              "#B0B0B0"
+              "#8C7274"
             ]
           ]
         },
@@ -7166,11 +7421,7 @@
           "stops": [
             [
               17,
-              "#695657"
-            ],
-            [
-              18,
-              "#FFFFFF"
+              "#8C7274"
             ]
           ]
         },
@@ -7225,11 +7476,7 @@
           "stops": [
             [
               17,
-              "#695657"
-            ],
-            [
-              18,
-              "#FFFFFF"
+              "#8C7274"
             ]
           ]
         },
@@ -7260,11 +7507,64 @@
       }
     },
     {
+      "id": "Routier superieur - filet extérieur - route non revetu carrosable restreint",
+      "type": "line",
+      "source": "plan_ign",
+      "source-layer": "routier_route_sup",
+      "layout": {
+        "visibility": "visible",
+        "line-cap": "butt",
+        "line-join": "round"
+      },
+      "filter": [
+        "==",
+        "symbo",
+        "NON_REVETUE_CARRO_RESTREINT_SUP"
+      ],
+      "paint": {
+        "line-color": {
+          "stops": [
+            [
+              12,
+              "#646464"
+            ],
+            [
+              17,
+              "#8C8C8C"
+            ]
+          ]
+        },
+        "line-width": {
+          "stops": [
+            [
+              14,
+              3.2
+            ],
+            [
+              15,
+              5.4
+            ],
+            [
+              16,
+              7.7
+            ],
+            [
+              17,
+              16.8
+            ]
+          ]
+        },
+        "line-dasharray": [
+          2,
+          2
+        ]
+      }
+    },
+    {
       "id": "Routier superieur - filet extérieur - route non revetu carrosable",
       "type": "line",
       "source": "plan_ign",
       "source-layer": "routier_route_sup",
-      "maxzoom": 18,
       "layout": {
         "visibility": "visible",
         "line-cap": "butt",
@@ -7280,11 +7580,11 @@
           "stops": [
             [
               12,
-              "#4B4B4B"
+              "#646464"
             ],
             [
               17,
-              "#696969"
+              "#8C8C8C"
             ]
           ]
         },
@@ -7340,15 +7640,11 @@
           "stops": [
             [
               9,
-              "#A7350A"
+              "#DE460E"
             ],
             [
               17,
-              "#B56600"
-            ],
-            [
-              18,
-              "#FFFFFF"
+              "#F18800"
             ]
           ]
         },
@@ -7398,11 +7694,7 @@
           "stops": [
             [
               17,
-              "#717171"
-            ],
-            [
-              18,
-              "#FFFFFF"
+              "#969696"
             ]
           ]
         },
@@ -7449,11 +7741,7 @@
           "stops": [
             [
               17,
-              "#717171"
-            ],
-            [
-              18,
-              "#FFFFFF"
+              "#969696"
             ]
           ]
         },
@@ -7503,19 +7791,15 @@
           "stops": [
             [
               12,
-              "#696969"
+              "#8C8C8C"
             ],
             [
               13,
-              "#878787"
+              "#B4B4B4"
             ],
             [
               17,
-              "#878787"
-            ],
-            [
-              18,
-              "#FFFFFF"
+              "#B4B4B4"
             ]
           ]
         },
@@ -7551,7 +7835,6 @@
       "source": "plan_ign",
       "source-layer": "routier_route_sup",
       "minzoom": 11,
-      "maxzoom": 18,
       "layout": {
         "visibility": "visible",
         "line-cap": "butt",
@@ -7563,7 +7846,7 @@
         "LOCALE_CONSTR_SUP"
       ],
       "paint": {
-        "line-color": "#969696",
+        "line-color": "#C8C8C8",
         "line-width": {
           "stops": [
             [
@@ -7615,19 +7898,15 @@
           "stops": [
             [
               9,
-              "#616161"
+              "#828282"
             ],
             [
               10,
-              "#878787"
+              "#B4B4B4"
             ],
             [
               17,
-              "#878787"
-            ],
-            [
-              18,
-              "#FFFFFF"
+              "#B4B4B4"
             ]
           ]
         },
@@ -7667,7 +7946,6 @@
       "source": "plan_ign",
       "source-layer": "routier_route_sup",
       "minzoom": 10,
-      "maxzoom": 18,
       "layout": {
         "visibility": "visible",
         "line-cap": "butt",
@@ -7679,7 +7957,7 @@
         "REGIONALE_CONSTR_SUP"
       ],
       "paint": {
-        "line-color": "#969696",
+        "line-color": "#C8C8C8",
         "line-width": {
           "stops": [
             [
@@ -7735,11 +8013,7 @@
           "stops": [
             [
               17,
-              "#B17E18"
-            ],
-            [
-              18,
-              "#FFFFFF"
+              "#E2A52A"
             ]
           ]
         },
@@ -7779,7 +8053,6 @@
       "source": "plan_ign",
       "source-layer": "routier_route_sup",
       "minzoom": 10,
-      "maxzoom": 18,
       "layout": {
         "visibility": "visible",
         "line-cap": "butt",
@@ -7791,7 +8064,7 @@
         "PRINCIPALE_CONSTR_SUP"
       ],
       "paint": {
-        "line-color": "#969696",
+        "line-color": "#C8C8C8",
         "line-width": {
           "stops": [
             [
@@ -7844,15 +8117,11 @@
           "stops": [
             [
               9,
-              "#A7350A"
+              "#DE460E"
             ],
             [
               17,
-              "#B56600"
-            ],
-            [
-              18,
-              "#FFFFFF"
+              "#F18800"
             ]
           ]
         },
@@ -7892,7 +8161,6 @@
       "source": "plan_ign",
       "source-layer": "routier_route_sup",
       "minzoom": 10,
-      "maxzoom": 18,
       "layout": {
         "visibility": "visible",
         "line-cap": "butt",
@@ -7904,7 +8172,7 @@
         "AUTOROU_CONSTR_SUP"
       ],
       "paint": {
-        "line-color": "#969696",
+        "line-color": "#C8C8C8",
         "line-width": {
           "stops": [
             [
@@ -7930,6 +8198,45 @@
             [
               17,
               26
+            ]
+          ]
+        }
+      }
+    },
+    {
+      "id": "Routier superieur - filet interieur - route non revetu carrosable restreint",
+      "type": "line",
+      "source": "plan_ign",
+      "source-layer": "routier_route_sup",
+      "layout": {
+        "visibility": "visible",
+        "line-cap": "butt",
+        "line-join": "round"
+      },
+      "filter": [
+        "==",
+        "symbo",
+        "NON_REVETUE_CARRO_RESTREINT_SUP"
+      ],
+      "paint": {
+        "line-color": "#EDF1FF",
+        "line-width": {
+          "stops": [
+            [
+              14,
+              2.3
+            ],
+            [
+              15,
+              4.1
+            ],
+            [
+              16,
+              6.3
+            ],
+            [
+              17,
+              13.5
             ]
           ]
         }
@@ -7969,10 +8276,6 @@
             [
               17,
               13.5
-            ],
-            [
-              18,
-              16.8
             ]
           ]
         }
@@ -7984,7 +8287,6 @@
       "source": "plan_ign",
       "source-layer": "routier_route_sup",
       "minzoom": 12,
-      "maxzoom": 18,
       "layout": {
         "visibility": "visible",
         "line-cap": "butt",
@@ -8005,11 +8307,11 @@
           "stops": [
             [
               9,
-              "#B56600"
+              "#F18800"
             ],
             [
               17,
-              "#CD8D0D"
+              "#F2B230"
             ]
           ]
         },
@@ -8044,7 +8346,6 @@
       "type": "line",
       "source": "plan_ign",
       "source-layer": "routier_route_sup",
-      "maxzoom": 18,
       "layout": {
         "visibility": "visible",
         "line-cap": "butt",
@@ -8056,7 +8357,7 @@
         "NON_CLASSEE_RESTREINT_SUP"
       ],
       "paint": {
-        "line-color": "#D1DBFF",
+        "line-color": "#EDF1FF",
         "line-width": {
           "stops": [
             [
@@ -8084,7 +8385,6 @@
       "type": "line",
       "source": "plan_ign",
       "source-layer": "routier_route_sup",
-      "maxzoom": 18,
       "layout": {
         "visibility": "visible",
         "line-cap": "butt",
@@ -8125,7 +8425,6 @@
       "type": "line",
       "source": "plan_ign",
       "source-layer": "routier_route_sup",
-      "maxzoom": 18,
       "layout": {
         "visibility": "visible",
         "line-cap": "butt",
@@ -8149,11 +8448,11 @@
             ],
             [
               13,
-              "#F9E742"
+              "#FCF4A8"
             ],
             [
               17,
-              "#F7E957"
+              "#FCF7C1"
             ]
           ]
         },
@@ -8189,7 +8488,6 @@
       "source": "plan_ign",
       "source-layer": "routier_route_sup",
       "minzoom": 11,
-      "maxzoom": 18,
       "layout": {
         "visibility": "visible",
         "line-cap": "butt",
@@ -8209,11 +8507,11 @@
             ],
             [
               13,
-              "#F9E742"
+              "#FCF4A8"
             ],
             [
               17,
-              "#F7E957"
+              "#FCF7C1"
             ]
           ]
         },
@@ -8252,7 +8550,6 @@
       "type": "line",
       "source": "plan_ign",
       "source-layer": "routier_route_sup",
-      "maxzoom": 18,
       "layout": {
         "visibility": "visible",
         "line-cap": "butt",
@@ -8276,11 +8573,11 @@
             ],
             [
               10,
-              "#FBE72B"
+              "#FDF28B"
             ],
             [
               17,
-              "#F7E854"
+              "#FCF6BD"
             ]
           ]
         },
@@ -8320,7 +8617,6 @@
       "source": "plan_ign",
       "source-layer": "routier_route_sup",
       "minzoom": 10,
-      "maxzoom": 18,
       "layout": {
         "visibility": "visible",
         "line-cap": "butt",
@@ -8340,11 +8636,11 @@
             ],
             [
               10,
-              "#FBE72B"
+              "#FDF28B"
             ],
             [
               17,
-              "#F7E854"
+              "#FCF6BD"
             ]
           ]
         },
@@ -8387,7 +8683,6 @@
       "type": "line",
       "source": "plan_ign",
       "source-layer": "routier_route_sup",
-      "maxzoom": 18,
       "layout": {
         "visibility": "visible",
         "line-cap": "butt",
@@ -8407,11 +8702,11 @@
           "stops": [
             [
               9,
-              "#ECA61C"
+              "#F3C66D"
             ],
             [
               17,
-              "#E3B559"
+              "#F2DDB3"
             ]
           ]
         },
@@ -8455,7 +8750,6 @@
       "source": "plan_ign",
       "source-layer": "routier_route_sup",
       "minzoom": 10,
-      "maxzoom": 18,
       "layout": {
         "visibility": "visible",
         "line-cap": "butt",
@@ -8471,11 +8765,11 @@
           "stops": [
             [
               9,
-              "#ECA61C"
+              "#F3C66D"
             ],
             [
               17,
-              "#E3B559"
+              "#F2DDB3"
             ]
           ]
         },
@@ -8518,7 +8812,6 @@
       "type": "line",
       "source": "plan_ign",
       "source-layer": "routier_route_sup",
-      "maxzoom": 18,
       "layout": {
         "visibility": "visible",
         "line-cap": "butt",
@@ -8535,11 +8828,11 @@
           "stops": [
             [
               9,
-              "#B56600"
+              "#F18800"
             ],
             [
               17,
-              "#CD8D0D"
+              "#F2B230"
             ]
           ]
         },
@@ -8583,7 +8876,6 @@
       "source": "plan_ign",
       "source-layer": "routier_route_sup",
       "minzoom": 13,
-      "maxzoom": 18,
       "layout": {
         "visibility": "visible",
         "line-cap": "butt",
@@ -8629,7 +8921,6 @@
       "source": "plan_ign",
       "source-layer": "routier_route_sup",
       "minzoom": 10,
-      "maxzoom": 18,
       "layout": {
         "visibility": "visible",
         "line-cap": "butt",
@@ -8645,11 +8936,11 @@
           "stops": [
             [
               9,
-              "#B56600"
+              "#F18800"
             ],
             [
               17,
-              "#CD8D0D"
+              "#F2B230"
             ]
           ]
         },
@@ -8697,7 +8988,6 @@
       "source": "plan_ign",
       "source-layer": "routier_route_sup",
       "minzoom": 13,
-      "maxzoom": 18,
       "layout": {
         "visibility": "visible",
         "line-cap": "butt",
@@ -8709,7 +8999,7 @@
         "AUTOROU_CONSTR_SUP"
       ],
       "paint": {
-        "line-color": "#606060",
+        "line-color": "#808080",
         "line-width": {
           "stops": [
             [
@@ -8760,7 +9050,7 @@
         "VF_ELEC_4_SUP"
       ],
       "paint": {
-        "line-color": "#5A5A5A",
+        "line-color": "#787878",
         "line-width": {
           "stops": [
             [
@@ -8799,7 +9089,7 @@
         "VF_ELEC_4_SUP"
       ],
       "paint": {
-        "line-color": "#5A5A5A",
+        "line-color": "#787878",
         "line-width": {
           "stops": [
             [
@@ -8837,7 +9127,7 @@
         "VF_ETROITE_SUP"
       ],
       "paint": {
-        "line-color": "#5A5A5A",
+        "line-color": "#787878",
         "line-width": {
           "stops": [
             [
@@ -8871,7 +9161,7 @@
         "VF_ETROITE_SUP"
       ],
       "paint": {
-        "line-color": "#5A5A5A",
+        "line-color": "#787878",
         "line-width": {
           "stops": [
             [
@@ -8908,7 +9198,7 @@
         "VF_NON_EXPLOITEE_SUP"
       ],
       "paint": {
-        "line-color": "#5A5A5A",
+        "line-color": "#787878",
         "line-width": {
           "stops": [
             [
@@ -8935,7 +9225,6 @@
       "source": "plan_ign",
       "source-layer": "ferre_sup",
       "minzoom": 10,
-      "maxzoom": 18,
       "layout": {
         "visibility": "visible",
         "line-cap": "round",
@@ -8947,7 +9236,7 @@
         "VF_EN_CONSTR_SUP"
       ],
       "paint": {
-        "line-color": "#5A5A5A",
+        "line-color": "#787878",
         "line-width": {
           "stops": [
             [
@@ -8972,7 +9261,6 @@
       "source": "plan_ign",
       "source-layer": "ferre_sup",
       "minzoom": 10,
-      "maxzoom": 18,
       "layout": {
         "visibility": "visible",
         "line-cap": "butt",
@@ -8984,7 +9272,7 @@
         "VF_EN_CONSTR_SUP"
       ],
       "paint": {
-        "line-color": "#5A5A5A",
+        "line-color": "#787878",
         "line-width": {
           "stops": [
             [
@@ -9020,16 +9308,16 @@
         "TRANSPORT_URBAIN_SUP"
       ],
       "paint": {
-        "line-color": "#5A5A5A",
+        "line-color": "#787878",
         "line-width": {
           "stops": [
             [
               10,
-              0.3
+              0.2
             ],
             [
               17,
-              1.8
+              1.6
             ]
           ]
         }
@@ -9052,7 +9340,7 @@
         "TRANSPORT_URBAIN_SUP"
       ],
       "paint": {
-        "line-color": "#5A5A5A",
+        "line-color": "#787878",
         "line-width": {
           "stops": [
             [
@@ -9114,7 +9402,6 @@
       "source": "plan_ign",
       "source-layer": "limite_lin",
       "minzoom": 14,
-      "maxzoom": 18,
       "layout": {
         "visibility": "visible",
         "line-cap": "round",
@@ -9126,7 +9413,7 @@
         "LAYON"
       ],
       "paint": {
-        "line-color": "#8F696C",
+        "line-color": "#B3989A",
         "line-width": {
           "stops": [
             [
@@ -9172,7 +9459,7 @@
         "LIM_CHAMP_TIR"
       ],
       "paint": {
-        "line-color": "rgba(202, 83, 36, 0.8)",
+        "line-color": "rgba(226, 130, 92, 0.8)",
         "line-width": {
           "stops": [
             [
@@ -9198,7 +9485,6 @@
       "type": "line",
       "source": "plan_ign",
       "source-layer": "limite_lin",
-      "maxzoom": 18,
       "layout": {
         "visibility": "visible",
         "line-cap": "butt",
@@ -9212,7 +9498,7 @@
         "LIM_RESERVE_NATURELLE"
       ],
       "paint": {
-        "line-color": "#FF526A",
+        "line-color": "#FFC2CB",
         "line-width": {
           "stops": [
             [
@@ -9236,6 +9522,7 @@
       "type": "line",
       "source": "plan_ign",
       "source-layer": "limite_lin",
+      "minzoom": 8,
       "maxzoom": 10,
       "layout": {
         "visibility": "visible",
@@ -9249,7 +9536,7 @@
         "LIM_PARC_NATUREL_ILE"
       ],
       "paint": {
-        "line-color": "#327A4D",
+        "line-color": "#42A266",
         "line-width": {
           "stops": [
             [
@@ -9287,7 +9574,7 @@
         "LIM_PARC_NATUREL_ILE"
       ],
       "paint": {
-        "line-color": "#327A4D",
+        "line-color": "#42A266",
         "line-width": {
           "stops": [
             [
@@ -9325,7 +9612,7 @@
         "LIM_PARC_NATUREL_ILE"
       ],
       "paint": {
-        "line-color": "#327A4D",
+        "line-color": "#42A266",
         "line-width": {
           "stops": [
             [
@@ -9363,7 +9650,7 @@
         "LIM_PARC_NATUREL_ILE"
       ],
       "paint": {
-        "line-color": "#327A4D",
+        "line-color": "#42A266",
         "line-width": {
           "stops": [
             [
@@ -9388,7 +9675,6 @@
       "source": "plan_ign",
       "source-layer": "limite_lin",
       "minzoom": 13,
-      "maxzoom": 18,
       "layout": {
         "visibility": "visible",
         "line-cap": "butt",
@@ -9401,7 +9687,7 @@
         "LIM_PARC_NATUREL_ILE"
       ],
       "paint": {
-        "line-color": "rgba(47, 122, 77, 0.7)",
+        "line-color": "rgba(66, 162, 102, 0.7)",
         "line-width": {
           "stops": [
             [
@@ -9425,7 +9711,7 @@
       "type": "line",
       "source": "plan_ign",
       "source-layer": "limite_lin",
-      "maxzoom": 18,
+      "minzoom": 8,
       "layout": {
         "visibility": "visible",
         "line-cap": "butt",
@@ -9437,7 +9723,7 @@
         "LIM_PARC_NATUREL_MARIN"
       ],
       "paint": {
-        "line-color": "#20607A",
+        "line-color": "#2A81A2",
         "line-width": {
           "stops": [
             [
@@ -9454,109 +9740,6 @@
           2,
           1
         ]
-      }
-    },
-    {
-      "id": "parcellaire - parcelle bordure",
-      "type": "line",
-      "source": "plan_ign",
-      "source-layer": "parcellaire_parcelle",
-      "layout": {
-        "visibility": "visible",
-        "line-cap": "round",
-        "line-join": "round"
-      },
-      "filter": [
-        "==",
-        "symbo",
-        "PARCELLE"
-      ],
-      "paint": {
-        "line-color": "#7200E6",
-        "line-width": 1
-      }
-    },
-    {
-      "id": "parcellaire - section",
-      "type": "line",
-      "source": "plan_ign",
-      "source-layer": "parcellaire_section",
-      "layout": {
-        "visibility": "visible",
-        "line-cap": "butt",
-        "line-join": "round"
-      },
-      "filter": [
-        "==",
-        "symbo",
-        "SECTION"
-      ],
-      "paint": {
-        "line-color": "#1E5C00",
-        "line-width": 1.9,
-        "line-dasharray": [
-          2,
-          4,
-          2
-        ]
-      }
-    },
-    {
-      "id": "toponyme - parcellaire - section",
-      "type": "symbol",
-      "source": "plan_ign",
-      "source-layer": "toponyme_parcellaire_section",
-      "filter": [
-        "==",
-        "txt_typo",
-        "SECTION"
-      ],
-      "layout": {
-        "symbol-placement": "line",
-        "text-offset": [
-          0,
-          0
-        ],
-        "text-field": "{texte}",
-        "text-size": 15,
-        "text-anchor": "center",
-        "text-keep-upright": true,
-        "text-max-angle": 45,
-        "text-font": [
-          "Source Sans Pro Regular"
-        ],
-        "visibility": "visible"
-      },
-      "paint": {
-        "text-color": "#1E5C00"
-      }
-    },
-    {
-      "id": "toponyme - parcellaire - parcelle",
-      "type": "symbol",
-      "source": "plan_ign",
-      "source-layer": "toponyme_parcellaire_parcelle",
-      "filter": [
-        "==",
-        "txt_typo",
-        "PARCELLE"
-      ],
-      "layout": {
-        "symbol-placement": "point",
-        "text-field": "{texte}",
-        "text-size": 11,
-        "text-anchor": "center",
-        "text-keep-upright": true,
-        "text-max-angle": 45,
-        "text-font": [
-          "Source Sans Pro Bold"
-        ],
-        "visibility": "visible"
-      },
-      "paint": {
-        "text-color": "#7200E6",
-        "text-halo-width": 1,
-        "text-halo-color": "#FFFFFF"
       }
     },
     {
@@ -9588,11 +9771,10 @@
         "text-max-angle": 45,
         "text-font": [
           "Source Sans Pro Bold"
-        ],
-        "visibility": "visible"
+        ]
       },
       "paint": {
-        "text-color": "#4F4133",
+        "text-color": "#695744",
         "text-halo-width": 1,
         "text-halo-color": "#FFFFFF"
       }
@@ -9603,7 +9785,6 @@
       "source": "plan_ign",
       "source-layer": "limite_lin",
       "minzoom": 13,
-      "maxzoom": 18,
       "layout": {
         "visibility": "visible",
         "line-cap": "butt",
@@ -9617,7 +9798,7 @@
         "LIM_ARRONDISSEMENT"
       ],
       "paint": {
-        "line-color": "rgba(85, 78, 149, 0.5)",
+        "line-color": "rgba(126, 119, 184, 0.5)",
         "line-width": {
           "stops": [
             [
@@ -9660,7 +9841,7 @@
         "LIM_DEPARTEMENT"
       ],
       "paint": {
-        "line-color": "rgba(112, 107, 188, 0.4)",
+        "line-color": "rgba(178, 175, 219, 0.4)",
         "line-width": {
           "stops": [
             [
@@ -9681,7 +9862,6 @@
       "source": "plan_ign",
       "source-layer": "limite_lin",
       "minzoom": 13,
-      "maxzoom": 18,
       "layout": {
         "visibility": "visible",
         "line-cap": "butt",
@@ -9693,7 +9873,7 @@
         "LIM_DEPARTEMENT"
       ],
       "paint": {
-        "line-color": "rgba(85, 78, 149, 0.5)",
+        "line-color": "rgba(126, 119, 184, 0.5)",
         "line-width": {
           "stops": [
             [
@@ -9734,7 +9914,7 @@
         "LIM_REGION"
       ],
       "paint": {
-        "line-color": "rgba(112, 107, 188, 0.5)",
+        "line-color": "rgba(178, 175, 219, 0.5)",
         "line-width": {
           "stops": [
             [
@@ -9755,7 +9935,6 @@
       "source": "plan_ign",
       "source-layer": "limite_lin",
       "minzoom": 13,
-      "maxzoom": 18,
       "layout": {
         "visibility": "visible",
         "line-cap": "butt",
@@ -9767,7 +9946,7 @@
         "LIM_REGION"
       ],
       "paint": {
-        "line-color": "rgba(85, 78, 149, 0.5)",
+        "line-color": "rgba(126, 119, 184, 0.5)",
         "line-width": {
           "stops": [
             [
@@ -9806,7 +9985,7 @@
         "LIM_ETAT_ETRANGER"
       ],
       "paint": {
-        "line-color": "rgba(112, 107, 188, 0.6)",
+        "line-color": "rgba(178, 175, 219, 0.6)",
         "line-width": {
           "stops": [
             [
@@ -9859,7 +10038,7 @@
         "LIM_ETAT_ETRANGER"
       ],
       "paint": {
-        "line-color": "#6F6B95",
+        "line-color": "#9F9CB8",
         "line-width": {
           "stops": [
             [
@@ -9908,7 +10087,7 @@
         "LIM_COTE"
       ],
       "paint": {
-        "line-color": "#587E8F",
+        "line-color": "#82A3B2",
         "line-width": 1
       }
     },
@@ -9917,6 +10096,7 @@
       "type": "line",
       "source": "plan_ign",
       "source-layer": "bati_lin",
+      "minzoom": 13,
       "layout": {
         "visibility": "visible",
         "line-cap": "round",
@@ -9928,7 +10108,7 @@
         "LIGNE_ELECTRIQUE"
       ],
       "paint": {
-        "line-color": "#606060",
+        "line-color": "#808080",
         "line-width": {
           "stops": [
             [
@@ -9956,7 +10136,6 @@
       "filter": [
         "in",
         "symbo",
-        "CABLE",
         "REMONTEE_MEC",
         "HYDROCARBURES",
         "CONDUITE_MATIERES_P",
@@ -9966,7 +10145,28 @@
         "PISTE_AERO_LIN"
       ],
       "paint": {
-        "line-color": "#606060",
+        "line-color": "#808080",
+        "line-width": 1
+      }
+    },
+    {
+      "id": "autre construction linéaire - cable",
+      "type": "line",
+      "source": "plan_ign",
+      "source-layer": "bati_lin",
+      "minzoom": 14,
+      "layout": {
+        "visibility": "visible",
+        "line-cap": "round",
+        "line-join": "round"
+      },
+      "filter": [
+        "==",
+        "symbo",
+        "CABLE"
+      ],
+      "paint": {
+        "line-color": "#808080",
         "line-width": 1
       }
     },
@@ -9975,6 +10175,7 @@
       "type": "line",
       "source": "plan_ign",
       "source-layer": "bati_lin",
+      "minzoom": 14,
       "layout": {
         "visibility": "visible",
         "line-cap": "butt",
@@ -9986,7 +10187,7 @@
         "CABLE"
       ],
       "paint": {
-        "line-color": "#606060",
+        "line-color": "#808080",
         "line-width": 5,
         "line-dasharray": [
           0.5,
@@ -10010,7 +10211,7 @@
         "REMONTEE_MEC"
       ],
       "paint": {
-        "line-color": "#606060",
+        "line-color": "#808080",
         "line-width": 6,
         "line-dasharray": [
           1,
@@ -10034,7 +10235,7 @@
         "REMONTEE_MEC"
       ],
       "paint": {
-        "line-color": "#8E8E8E",
+        "line-color": "#BEBEBE",
         "line-width": 6,
         "line-dasharray": [
           0.3,
@@ -10061,7 +10262,7 @@
         "CONDUITE_MATIERES_P"
       ],
       "paint": {
-        "line-color": "#606060",
+        "line-color": "#808080",
         "line-width": 5,
         "line-dasharray": [
           1,
@@ -10070,43 +10271,11 @@
       }
     },
     {
-      "id": "routier ponctuel - peage ponctuel",
-      "type": "circle",
-      "source": "plan_ign",
-      "source-layer": "routier_ponc",
-      "minzoom": 8,
-      "layout": {
-        "visibility": "visible"
-      },
-      "filter": [
-        "==",
-        "symbo",
-        "PEAGE_PONC"
-      ],
-      "paint": {
-        "circle-radius": {
-          "stops": [
-            [
-              9,
-              3.5
-            ],
-            [
-              12,
-              6.5
-            ]
-          ]
-        },
-        "circle-color": "#B17E18",
-        "circle-stroke-width": 1,
-        "circle-stroke-color": "#606060"
-      }
-    },
-    {
       "id": "routier ponctuel - barriere",
       "type": "symbol",
       "source": "plan_ign",
       "source-layer": "routier_ponc",
-      "minzoom": 12,
+      "minzoom": 14,
       "layout": {
         "visibility": "visible",
         "icon-image": "Barriere",
@@ -10138,7 +10307,7 @@
         "BARRIERE"
       ],
       "paint": {
-        "icon-color": "#717171"
+        "icon-color": "#969696"
       }
     },
     {
@@ -10146,7 +10315,7 @@
       "type": "circle",
       "source": "plan_ign",
       "source-layer": "hydro_ponc",
-      "minzoom": 13,
+      "minzoom": 15,
       "layout": {
         "visibility": "visible"
       },
@@ -10189,7 +10358,7 @@
             ]
           ]
         },
-        "circle-stroke-color": "#3479BD"
+        "circle-stroke-color": "#1466B2"
       }
     },
     {
@@ -10226,7 +10395,7 @@
         ]
       },
       "paint": {
-        "text-color": "#3C3C3C"
+        "text-color": "#505050"
       }
     },
     {
@@ -10245,7 +10414,7 @@
         "HOPITAL_PONC"
       ],
       "paint": {
-        "icon-color": "#4B4B4B"
+        "icon-color": "#646464"
       }
     },
     {
@@ -10253,7 +10422,7 @@
       "type": "symbol",
       "source": "plan_ign",
       "source-layer": "bati_ponc",
-      "minzoom": 14,
+      "minzoom": 15,
       "layout": {
         "visibility": "visible",
         "icon-image": "Pompage",
@@ -10282,7 +10451,7 @@
         "USINE_ELEVATRICE"
       ],
       "paint": {
-        "icon-color": "#2C669F"
+        "icon-color": "#1C62A6"
       }
     },
     {
@@ -10290,7 +10459,7 @@
       "type": "circle",
       "source": "plan_ign",
       "source-layer": "bati_ponc",
-      "minzoom": 13,
+      "minzoom": 15,
       "layout": {
         "visibility": "visible"
       },
@@ -10327,7 +10496,7 @@
             ]
           ]
         },
-        "circle-stroke-color": "#3479BD"
+        "circle-stroke-color": "#1466B2"
       }
     },
     {
@@ -10358,7 +10527,7 @@
         "PHARE"
       ],
       "paint": {
-        "icon-color": "#4B4B4B"
+        "icon-color": "#646464"
       }
     },
     {
@@ -10366,7 +10535,7 @@
       "type": "symbol",
       "source": "plan_ign",
       "source-layer": "bati_ponc",
-      "minzoom": 13,
+      "minzoom": 14,
       "layout": {
         "visibility": "visible",
         "icon-image": "Feu",
@@ -10392,7 +10561,7 @@
         "TOURELLE_LUMINEUSE"
       ],
       "paint": {
-        "icon-color": "#4B4B4B"
+        "icon-color": "#646464"
       }
     },
     {
@@ -10400,7 +10569,7 @@
       "type": "symbol",
       "source": "plan_ign",
       "source-layer": "bati_ponc",
-      "minzoom": 13,
+      "minzoom": 14,
       "layout": {
         "visibility": "visible",
         "icon-image": "Balise",
@@ -10424,7 +10593,7 @@
         "TOURELLE"
       ],
       "paint": {
-        "icon-color": "#4B4B4B"
+        "icon-color": "#646464"
       }
     },
     {
@@ -10432,12 +10601,23 @@
       "type": "symbol",
       "source": "plan_ign",
       "source-layer": "bati_ponc",
-      "minzoom": 12,
-      "maxzoom": 15,
+      "minzoom": 14,
+      "maxzoom": 17,
       "layout": {
         "visibility": "visible",
         "icon-image": "Ecluse",
-        "icon-size": 0.2
+        "icon-size": {
+          "stops": [
+            [
+              15,
+              0.2
+            ],
+            [
+              17,
+              0.35
+            ]
+          ]
+        }
       },
       "filter": [
         "==",
@@ -10445,7 +10625,7 @@
         "ECLUSE_PONC"
       ],
       "paint": {
-        "icon-color": "#2C669F"
+        "icon-color": "#1C62A6"
       }
     },
     {
@@ -10453,12 +10633,23 @@
       "type": "symbol",
       "source": "plan_ign",
       "source-layer": "bati_ponc",
-      "minzoom": 12,
-      "maxzoom": 14,
+      "minzoom": 14,
+      "maxzoom": 17,
       "layout": {
         "visibility": "visible",
         "icon-image": "Barrage",
-        "icon-size": 0.25
+        "icon-size": {
+          "stops": [
+            [
+              15,
+              0.25
+            ],
+            [
+              17,
+              0.45
+            ]
+          ]
+        }
       },
       "filter": [
         "==",
@@ -10466,7 +10657,7 @@
         "BARRAGE_PONC"
       ],
       "paint": {
-        "icon-color": "#2C669F"
+        "icon-color": "#1C62A6"
       }
     },
     {
@@ -10474,6 +10665,7 @@
       "type": "circle",
       "source": "plan_ign",
       "source-layer": "bati_ponc",
+      "minzoom": 14,
       "layout": {
         "visibility": "visible"
       },
@@ -10495,51 +10687,7 @@
             ]
           ]
         },
-        "circle-color": "#3479BD"
-      }
-    },
-    {
-      "id": "bati ponctuel hydrographique - Réservoir d'eau",
-      "type": "circle",
-      "source": "plan_ign",
-      "source-layer": "bati_ponc",
-      "maxzoom": 15,
-      "layout": {
-        "visibility": "visible"
-      },
-      "filter": [
-        "==",
-        "symbo",
-        "RESERVOIR_EAU_PONC"
-      ],
-      "paint": {
-        "circle-radius": {
-          "stops": [
-            [
-              14,
-              3
-            ],
-            [
-              17,
-              8
-            ]
-          ]
-        },
-        "circle-color": "#5AADD4",
-        "circle-opacity": 1,
-        "circle-stroke-width": {
-          "stops": [
-            [
-              14,
-              1
-            ],
-            [
-              17,
-              2.5
-            ]
-          ]
-        },
-        "circle-stroke-color": "#3479BD"
+        "circle-color": "#1466B2"
       }
     },
     {
@@ -10547,6 +10695,7 @@
       "type": "symbol",
       "source": "plan_ign",
       "source-layer": "bati_ponc",
+      "minzoom": 16,
       "layout": {
         "visibility": "visible",
         "icon-image": "ConstrSpeciale",
@@ -10567,7 +10716,7 @@
         "in",
         "symbo",
         "ANTENNE",
-        "CONSTR_SPE_TECHNIQUE",
+        "TRANSFORMATEUR",
         "CONSTR_INDIF_PONC",
         "CHEMINEE",
         "CHEVALEMENT",
@@ -10579,38 +10728,7 @@
         "TOUR_HERTZIENNE"
       ],
       "paint": {
-        "icon-color": "#4B4B4B"
-      }
-    },
-    {
-      "id": "bati ponctuel infrastructure - Silo",
-      "type": "symbol",
-      "source": "plan_ign",
-      "source-layer": "bati_ponc",
-      "maxzoom": 15,
-      "layout": {
-        "visibility": "visible",
-        "icon-image": "Silo",
-        "icon-size": {
-          "stops": [
-            [
-              13,
-              0.22
-            ],
-            [
-              17,
-              0.5
-            ]
-          ]
-        }
-      },
-      "filter": [
-        "==",
-        "symbo",
-        "SILO_PONC"
-      ],
-      "paint": {
-        "icon-color": "#4B4B4B"
+        "icon-color": "#646464"
       }
     },
     {
@@ -10644,38 +10762,7 @@
         "EOLIENNE"
       ],
       "paint": {
-        "icon-color": "#4B4B4B"
-      }
-    },
-    {
-      "id": "bati ponctuel infrastructure - Reservoir",
-      "type": "symbol",
-      "source": "plan_ign",
-      "source-layer": "bati_ponc",
-      "maxzoom": 15,
-      "layout": {
-        "visibility": "visible",
-        "icon-image": "Reservoir",
-        "icon-size": {
-          "stops": [
-            [
-              13,
-              0.26
-            ],
-            [
-              17,
-              0.5
-            ]
-          ]
-        }
-      },
-      "filter": [
-        "==",
-        "symbo",
-        "RESERVOIR_PONC"
-      ],
-      "paint": {
-        "icon-color": "#4B4B4B"
+        "icon-color": "#646464"
       }
     },
     {
@@ -10738,7 +10825,7 @@
         "ABRI"
       ],
       "paint": {
-        "icon-color": "#1B492A"
+        "icon-color": "#246138"
       }
     },
     {
@@ -10772,7 +10859,7 @@
         "REFUGE_GARDE"
       ],
       "paint": {
-        "icon-color": "#1B492A"
+        "icon-color": "#246138"
       }
     },
     {
@@ -10806,7 +10893,7 @@
         "REFUGE"
       ],
       "paint": {
-        "icon-color": "#1B492A"
+        "icon-color": "#246138"
       }
     },
     {
@@ -10814,6 +10901,7 @@
       "type": "symbol",
       "source": "plan_ign",
       "source-layer": "bati_ponc",
+      "minzoom": 8,
       "layout": {
         "visibility": "visible",
         "icon-image": "Aeroport",
@@ -10833,7 +10921,7 @@
         ]
       ],
       "paint": {
-        "icon-color": "#4B4B4B"
+        "icon-color": "#646464"
       }
     },
     {
@@ -10841,6 +10929,7 @@
       "type": "symbol",
       "source": "plan_ign",
       "source-layer": "bati_ponc",
+      "minzoom": 8,
       "layout": {
         "visibility": "visible",
         "icon-image": "Aerodrome",
@@ -10861,7 +10950,7 @@
         ]
       ],
       "paint": {
-        "icon-color": "#4B4B4B"
+        "icon-color": "#646464"
       }
     },
     {
@@ -10889,7 +10978,7 @@
         ]
       ],
       "paint": {
-        "icon-color": "#4B4B4B"
+        "icon-color": "#646464"
       }
     },
     {
@@ -10917,7 +11006,7 @@
         ]
       ],
       "paint": {
-        "icon-color": "#4B4B4B"
+        "icon-color": "#646464"
       }
     },
     {
@@ -10936,7 +11025,7 @@
         "GARE_VOYAGEURS"
       ],
       "paint": {
-        "icon-color": "#5A5A5A"
+        "icon-color": "#4E4E4E"
       }
     },
     {
@@ -10955,6 +11044,9 @@
         "PISTE_CYCLABLE",
         "PISTE_CYCLABLE_SOU",
         "PISTE_CYCLABLE_SUP",
+        "VOIE_VERTE",
+        "VOIE_VERTE_SOU",
+        "VOIE_VERTE_SUP",
         "RUE_PIETONNE",
         "RUE_PIETONNE_SOU",
         "RUE_PIETONNE_SUP",
@@ -10976,11 +11068,10 @@
         ],
         "text-font": [
           "Source Sans Pro Regular"
-        ],
-        "visibility": "visible"
+        ]
       },
       "paint": {
-        "text-color": "#5B4C3B",
+        "text-color": "#79654F",
         "text-halo-width": 1,
         "text-halo-color": "#FFFFFF"
       }
@@ -11017,11 +11108,10 @@
         ],
         "text-font": [
           "Source Sans Pro Regular"
-        ],
-        "visibility": "visible"
+        ]
       },
       "paint": {
-        "text-color": "#5B4C3B",
+        "text-color": "#79654F",
         "text-halo-width": 1,
         "text-halo-color": "#FFFFFF"
       }
@@ -11063,11 +11153,10 @@
         ],
         "text-font": [
           "Source Sans Pro Regular"
-        ],
-        "visibility": "visible"
+        ]
       },
       "paint": {
-        "text-color": "#5B4C3B",
+        "text-color": "#79654F",
         "text-halo-width": 1,
         "text-halo-color": "#FFFFFF"
       }
@@ -11107,11 +11196,10 @@
         ],
         "text-font": [
           "Source Sans Pro Regular"
-        ],
-        "visibility": "visible"
+        ]
       },
       "paint": {
-        "text-color": "#5B4C3B",
+        "text-color": "#79654F",
         "text-halo-width": 1,
         "text-halo-color": "#FFFFFF"
       }
@@ -11152,11 +11240,10 @@
         ],
         "text-font": [
           "Source Sans Pro Regular"
-        ],
-        "visibility": "visible"
+        ]
       },
       "paint": {
-        "text-color": "#5B4C3B",
+        "text-color": "#79654F",
         "text-halo-width": 1,
         "text-halo-color": "#FFFFFF"
       }
@@ -11177,6 +11264,9 @@
         "PISTE_CYCLABLE",
         "PISTE_CYCLABLE_SOU",
         "PISTE_CYCLABLE_SUP",
+        "VOIE_VERTE",
+        "VOIE_VERTE_SOU",
+        "VOIE_VERTE_SUP",
         "RUE_PIETONNE",
         "RUE_PIETONNE_SOU",
         "RUE_PIETONNE_SUP",
@@ -11198,11 +11288,10 @@
         ],
         "text-font": [
           "Source Sans Pro Regular"
-        ],
-        "visibility": "visible"
+        ]
       },
       "paint": {
-        "text-color": "#5B4C3B",
+        "text-color": "#79654F",
         "text-halo-width": 1,
         "text-halo-color": "#FFFFFF"
       }
@@ -11239,11 +11328,10 @@
         ],
         "text-font": [
           "Source Sans Pro Regular"
-        ],
-        "visibility": "visible"
+        ]
       },
       "paint": {
-        "text-color": "#5B4C3B",
+        "text-color": "#79654F",
         "text-halo-width": 1,
         "text-halo-color": "#FFFFFF"
       }
@@ -11285,11 +11373,10 @@
         ],
         "text-font": [
           "Source Sans Pro Regular"
-        ],
-        "visibility": "visible"
+        ]
       },
       "paint": {
-        "text-color": "#5B4C3B",
+        "text-color": "#79654F",
         "text-halo-width": 1,
         "text-halo-color": "#FFFFFF"
       }
@@ -11329,11 +11416,10 @@
         ],
         "text-font": [
           "Source Sans Pro Regular"
-        ],
-        "visibility": "visible"
+        ]
       },
       "paint": {
-        "text-color": "#5B4C3B",
+        "text-color": "#79654F",
         "text-halo-width": 1,
         "text-halo-color": "#FFFFFF"
       }
@@ -11374,11 +11460,10 @@
         ],
         "text-font": [
           "Source Sans Pro Regular"
-        ],
-        "visibility": "visible"
+        ]
       },
       "paint": {
-        "text-color": "#5B4C3B",
+        "text-color": "#79654F",
         "text-halo-width": 1,
         "text-halo-color": "#FFFFFF"
       }
@@ -11409,7 +11494,7 @@
         ]
       },
       "paint": {
-        "text-color": "#262626",
+        "text-color": "#333333",
         "text-halo-color": "rgba(255, 255, 255, 0.5)",
         "text-halo-width": 1
       }
@@ -11440,7 +11525,7 @@
         ]
       },
       "paint": {
-        "text-color": "#2E77BE",
+        "text-color": "#629FD9",
         "text-halo-color": "rgba(255, 255, 255, 0.5)",
         "text-halo-width": 1
       }
@@ -11471,7 +11556,7 @@
         ]
       },
       "paint": {
-        "text-color": "#483723",
+        "text-color": "#604A2F",
         "text-halo-color": "rgba(255, 255, 255, 0.5)",
         "text-halo-width": 1
       }
@@ -11481,7 +11566,7 @@
       "type": "symbol",
       "source": "plan_ign",
       "source-layer": "toponyme_routier_liaison_lin",
-      "minzoom": 8,
+      "minzoom": 12,
       "maxzoom": 18,
       "filter": [
         "in",
@@ -11499,13 +11584,12 @@
         "text-padding": 10,
         "text-font": [
           "Source Sans Pro Italic"
-        ],
-        "visibility": "visible"
+        ]
       },
       "paint": {
-        "text-color": "#386E9B",
+        "text-color": "#5792C2",
         "text-halo-width": 5,
-        "text-halo-color": "#5AADD4"
+        "text-halo-color": "#AAD5E9"
       }
     },
     {
@@ -11519,7 +11603,7 @@
         [
           "==",
           "txt_typo",
-          "TYPO_E_1"
+          "TYPO_E_GE"
         ],
         [
           "==",
@@ -11534,7 +11618,7 @@
         "text-size": 11,
         "text-allow-overlap": false,
         "text-offset": [
-          0.3,
+          0.30,
           -0.25
         ],
         "text-padding": 3,
@@ -11557,8 +11641,8 @@
         }
       },
       "paint": {
-        "text-color": "#2D2D2D",
-        "icon-color": "#4B4B4B"
+        "text-color": "#3C3C3C",
+        "icon-color": "#646464"
       }
     },
     {
@@ -11584,8 +11668,7 @@
         ],
         "text-font": [
           "Source Sans Pro Regular"
-        ],
-        "visibility": "visible"
+        ]
       },
       "paint": {
         "text-color": "#000000",
@@ -11630,6 +11713,32 @@
         "==",
         "txt_typo",
         "religieux"
+      ],
+      "layout": {
+        "visibility": "visible",
+        "symbol-placement": "point",
+        "text-field": "{texte}",
+        "text-size": 11,
+        "text-allow-overlap": false,
+        "text-padding": 1,
+        "text-font": [
+          "Source Sans Pro Italic"
+        ]
+      },
+      "paint": {
+        "text-color": "#000000"
+      }
+    },
+    {
+      "id": "toponyme religieux ge zoom 18 à 19",
+      "type": "symbol",
+      "source": "plan_ign",
+      "source-layer": "toponyme_bati_ponc",
+      "minzoom": 17,
+      "filter": [
+        "==",
+        "txt_typo",
+        "religieux_ge"
       ],
       "layout": {
         "visibility": "visible",
@@ -11693,6 +11802,40 @@
           "==",
           "txt_typo",
           "divers_bati"
+        ],
+        [
+          "==",
+          "symbo",
+          "PARC_ATTRACTIONS"
+        ]
+      ],
+      "layout": {
+        "visibility": "visible",
+        "symbol-placement": "point",
+        "text-field": "{texte}",
+        "text-size": 11,
+        "text-allow-overlap": false,
+        "text-padding": 1,
+        "text-font": [
+          "Source Sans Pro Italic"
+        ]
+      },
+      "paint": {
+        "text-color": "#000000"
+      }
+    },
+    {
+      "id": "toponyme parc d'attractions ge zoom 18 à 19",
+      "type": "symbol",
+      "source": "plan_ign",
+      "source-layer": "toponyme_bati_ponc",
+      "minzoom": 17,
+      "filter": [
+        "all",
+        [
+          "==",
+          "txt_typo",
+          "divers_bati_ge"
         ],
         [
           "==",
@@ -11789,6 +11932,77 @@
       }
     },
     {
+      "id": "toponyme Hippodrome ge zoom 15 a 17",
+      "type": "symbol",
+      "source": "plan_ign",
+      "source-layer": "toponyme_bati_ponc",
+      "minzoom": 14,
+      "maxzoom": 17,
+      "filter": [
+        "all",
+        [
+          "==",
+          "txt_typo",
+          "divers_bati_ge"
+        ],
+        [
+          "==",
+          "symbo",
+          "HIPPODROME"
+        ]
+      ],
+      "layout": {
+        "visibility": "visible",
+        "symbol-placement": "point",
+        "text-field": "{designation}",
+        "text-size": 11,
+        "text-allow-overlap": false,
+        "text-padding": 1,
+        "text-font": [
+          "Source Sans Pro Italic"
+        ]
+      },
+      "paint": {
+        "text-color": "#000000"
+      }
+    },
+    {
+      "id": "toponyme bati divers ge zoom 18 à 19",
+      "type": "symbol",
+      "source": "plan_ign",
+      "source-layer": "toponyme_bati_ponc",
+      "minzoom": 17,
+      "filter": [
+        "all",
+        [
+          "==",
+          "txt_typo",
+          "divers_bati_ge"
+        ],
+        [
+          "in",
+          "symbo",
+          "CENTRALE_ELECTRIQUE",
+          "HIPPODROME",
+          "STADE"
+        ]
+      ],
+      "layout": {
+        "visibility": "visible",
+        "symbol-placement": "point",
+        "text-field": "{texte}",
+        "text-size": 11,
+        "text-allow-overlap": false,
+        "text-padding": 1,
+        "text-font": [
+          "Source Sans Pro Italic"
+        ]
+      },
+      "paint": {
+        "text-color": "#000000"
+      }
+    },
+    {
       "id": "toponyme chateau zoom 16",
       "type": "symbol",
       "source": "plan_ign",
@@ -11860,11 +12074,80 @@
       }
     },
     {
+      "id": "toponyme chateau ge zoom 16 a 17",
+      "type": "symbol",
+      "source": "plan_ign",
+      "source-layer": "toponyme_bati_ponc",
+      "minzoom": 15,
+      "maxzoom": 17,
+      "filter": [
+        "all",
+        [
+          "==",
+          "txt_typo",
+          "divers_bati_ge"
+        ],
+        [
+          "==",
+          "symbo",
+          "CHATEAU"
+        ]
+      ],
+      "layout": {
+        "visibility": "visible",
+        "symbol-placement": "point",
+        "text-field": "{designation}",
+        "text-size": 11,
+        "text-allow-overlap": false,
+        "text-padding": 1,
+        "text-font": [
+          "Source Sans Pro Italic"
+        ]
+      },
+      "paint": {
+        "text-color": "#000000"
+      }
+    },
+    {
+      "id": "toponyme chateau ge zoom 18 à 19",
+      "type": "symbol",
+      "source": "plan_ign",
+      "source-layer": "toponyme_bati_ponc",
+      "minzoom": 17,
+      "filter": [
+        "all",
+        [
+          "==",
+          "txt_typo",
+          "divers_bati_ge"
+        ],
+        [
+          "==",
+          "symbo",
+          "CHATEAU"
+        ]
+      ],
+      "layout": {
+        "visibility": "visible",
+        "symbol-placement": "point",
+        "text-field": "{texte}",
+        "text-size": 11,
+        "text-allow-overlap": false,
+        "text-padding": 1,
+        "text-font": [
+          "Source Sans Pro Italic"
+        ]
+      },
+      "paint": {
+        "text-color": "#000000"
+      }
+    },
+    {
       "id": "toponyme station epuration, de pompage, usine de production eau",
       "type": "symbol",
       "source": "plan_ign",
       "source-layer": "toponyme_bati_ponc",
-      "minzoom": 14,
+      "minzoom": 15,
       "filter": [
         "==",
         "txt_typo",
@@ -11887,7 +12170,7 @@
         ]
       },
       "paint": {
-        "text-color": "#335F86"
+        "text-color": "#447FB3"
       }
     },
     {
@@ -11944,7 +12227,7 @@
         ]
       },
       "paint": {
-        "text-color": "#335F86"
+        "text-color": "#447FB3"
       }
     },
     {
@@ -11971,7 +12254,7 @@
         ]
       },
       "paint": {
-        "text-color": "#3E1F1F"
+        "text-color": "#532A2A"
       }
     },
     {
@@ -12015,16 +12298,17 @@
         },
         "text-allow-overlap": false,
         "text-offset": [
-          -2,
+          -2.00,
           0
         ],
         "text-padding": 3,
+        "text-anchor": "right",
         "text-font": [
           "Source Sans Pro"
         ]
       },
       "paint": {
-        "text-color": "#3E1F1F"
+        "text-color": "#532A2A"
       }
     },
     {
@@ -12053,7 +12337,7 @@
         ]
       },
       "paint": {
-        "text-color": "#3E1F1F"
+        "text-color": "#532A2A"
       }
     },
     {
@@ -12100,7 +12384,7 @@
         ]
       },
       "paint": {
-        "text-color": "#0D0037",
+        "text-color": "#120049",
         "text-halo-color": "rgba(255, 255, 255, 0.5)",
         "text-halo-width": 1
       }
@@ -12134,7 +12418,7 @@
         ]
       },
       "paint": {
-        "text-color": "#0D0037",
+        "text-color": "#120049",
         "text-halo-color": "rgba(255, 255, 255, 0.5)",
         "text-halo-width": 2
       }
@@ -12168,7 +12452,7 @@
         ]
       },
       "paint": {
-        "text-color": "#0D0037",
+        "text-color": "#120049",
         "text-halo-color": "rgba(255, 255, 255, 0.5)",
         "text-halo-width": 2
       }
@@ -12217,7 +12501,7 @@
         ]
       },
       "paint": {
-        "text-color": "#0D0037",
+        "text-color": "#120049",
         "text-halo-color": "rgba(255, 255, 255, 0.5)",
         "text-halo-width": 2
       }
@@ -12251,7 +12535,7 @@
         ]
       },
       "paint": {
-        "text-color": "#0D0037",
+        "text-color": "#120049",
         "text-halo-color": "rgba(255, 255, 255, 0.5)",
         "text-halo-width": 2
       }
@@ -12286,7 +12570,7 @@
         ]
       },
       "paint": {
-        "text-color": "#0D0037",
+        "text-color": "#120049",
         "text-halo-color": "rgba(255, 255, 255, 0.5)",
         "text-halo-width": 2
       }
@@ -12335,7 +12619,7 @@
         ]
       },
       "paint": {
-        "text-color": "#0D0037",
+        "text-color": "#120049",
         "text-halo-color": "rgba(255, 255, 255, 0.5)",
         "text-halo-width": 2
       }
@@ -12375,7 +12659,7 @@
         ]
       },
       "paint": {
-        "text-color": "#335F86",
+        "text-color": "#447FB3",
         "text-halo-color": "#FFFFFF",
         "text-halo-width": 1
       }
@@ -12399,11 +12683,10 @@
         "text-padding": 1,
         "text-font": [
           "Source Sans Pro Italic"
-        ],
-        "visibility": "visible"
+        ]
       },
       "paint": {
-        "text-color": "#335F86",
+        "text-color": "#447FB3",
         "text-halo-width": 2,
         "text-halo-color": "rgba(255, 255, 255, 0.5)"
       }
@@ -12431,7 +12714,7 @@
         ]
       },
       "paint": {
-        "text-color": "#0A1800",
+        "text-color": "#0D2000",
         "text-halo-color": "rgba(255, 255, 255, 0.5)",
         "text-halo-width": 1
       }
@@ -12460,7 +12743,7 @@
         ]
       },
       "paint": {
-        "text-color": "#1E5C00",
+        "text-color": "#287B00",
         "text-halo-color": "rgba(255, 255, 255, 0.5)",
         "text-halo-width": 1
       }
@@ -12491,7 +12774,7 @@
         "text-rotation-alignment": "viewport"
       },
       "paint": {
-        "text-color": "#3A3A3A",
+        "text-color": "#4D4D4D",
         "text-halo-color": "rgba(255, 255, 255, 0.5)",
         "text-halo-width": 4
       }
@@ -12526,9 +12809,9 @@
         "icon-size": 0
       },
       "paint": {
-        "text-color": "#B4B4B4",
-        "icon-color": "#4B4B4B",
-        "text-halo-color": "rgba(60, 60, 60, 0.5)",
+        "text-color": "#F0F0F0",
+        "icon-color": "#646464",
+        "text-halo-color": "rgba(80, 80, 80, 0.5)",
         "text-halo-width": 4
       }
     },
@@ -12562,9 +12845,9 @@
         "icon-size": 0
       },
       "paint": {
-        "text-color": "#B4B4B4",
-        "icon-color": "#4B4B4B",
-        "text-halo-color": "rgba(60, 60, 60, 0.5)",
+        "text-color": "#F0F0F0",
+        "icon-color": "#646464",
+        "text-halo-color": "rgba(80, 80, 80, 0.5)",
         "text-halo-width": 5
       }
     },
@@ -12583,8 +12866,7 @@
         "text-max-angle": 30,
         "text-font": [
           "Source Sans Pro Regular"
-        ],
-        "visibility": "visible"
+        ]
       },
       "paint": {
         "text-color": "#000000",
@@ -12606,8 +12888,7 @@
         "text-max-angle": 30,
         "text-font": [
           "Source Sans Pro Regular"
-        ],
-        "visibility": "visible"
+        ]
       },
       "paint": {
         "text-color": "#000000",
@@ -12666,8 +12947,8 @@
         [
           "in",
           "txt_typo",
-          "TYPO_F_10",
-          "TYPO_F_11"
+          "TYPO_F_9",
+          "TYPO_F_10"
         ]
       ],
       "layout": {
@@ -12682,7 +12963,7 @@
         ]
       },
       "paint": {
-        "text-color": "#1E5C00",
+        "text-color": "#287B00",
         "text-halo-color": "rgba(255, 255, 255, 0.5)",
         "text-halo-width": 1
       }
@@ -12708,11 +12989,10 @@
         "text-padding": 1,
         "text-font": [
           "Source Sans Pro Italic"
-        ],
-        "visibility": "visible"
+        ]
       },
       "paint": {
-        "text-color": "#652A25",
+        "text-color": "#863831",
         "text-halo-width": 1.5,
         "text-halo-color": "rgba(255, 255, 255, 0.5)"
       }
@@ -12729,8 +13009,8 @@
         "ORO_GORGE_2",
         "GROTTE",
         "GORGE",
-        "TYPO_G_9",
-        "TYPO_G_10"
+        "TYPO_G_8",
+        "TYPO_G_9"
       ],
       "layout": {
         "visibility": "visible",
@@ -12755,7 +13035,7 @@
         ]
       },
       "paint": {
-        "text-color": "#652A25",
+        "text-color": "#863831",
         "text-halo-color": "rgba(255, 255, 255, 0.5)",
         "text-halo-width": 1.5
       }
@@ -12798,7 +13078,7 @@
         ]
       },
       "paint": {
-        "text-color": "#335F86",
+        "text-color": "#447FB3",
         "text-halo-color": "#FFFFFF",
         "text-halo-width": 1
       }
@@ -12823,6 +13103,104 @@
         "text-padding": 1,
         "text-font": [
           "Source Sans Pro Italic"
+        ]
+      },
+      "paint": {
+        "text-color": "#000000",
+        "text-halo-color": "rgba(255, 255, 255, 0.5)",
+        "text-halo-width": 2
+      }
+    },
+    {
+      "id": "toponyme localite n0 typo_E_GE Quartier",
+      "type": "symbol",
+      "source": "plan_ign",
+      "source-layer": "toponyme_localite_ponc",
+      "minzoom": 17,
+      "maxzoom": 18,
+      "filter": [
+        "all",
+        [
+          "==",
+          "symbo",
+          "QUARTIER"
+        ],
+        [
+          "==",
+          "txt_typo",
+          "TYPO_E_GE"
+        ]
+      ],
+      "layout": {
+        "visibility": "visible",
+        "symbol-placement": "point",
+        "text-field": "{texte}",
+        "text-size": {
+          "stops": [
+            [
+              15,
+              11
+            ],
+            [
+              17,
+              13.5
+            ]
+          ]
+        },
+        "text-allow-overlap": true,
+        "text-anchor": "center",
+        "text-padding": 1,
+        "text-font": [
+          "Source Sans Pro Regular"
+        ]
+      },
+      "paint": {
+        "text-color": "#000000",
+        "text-halo-color": "rgba(255, 255, 255, 0.5)",
+        "text-halo-width": 2
+      }
+    },
+    {
+      "id": "toponyme localite n0 typo_E_GE Lieu-dit",
+      "type": "symbol",
+      "source": "plan_ign",
+      "source-layer": "toponyme_localite_ponc",
+      "minzoom": 16,
+      "maxzoom": 18,
+      "filter": [
+        "all",
+        [
+          "==",
+          "symbo",
+          "LIEU-DIT-HABITE"
+        ],
+        [
+          "==",
+          "txt_typo",
+          "TYPO_E_GE"
+        ]
+      ],
+      "layout": {
+        "visibility": "visible",
+        "symbol-placement": "point",
+        "text-field": "{texte}",
+        "text-size": {
+          "stops": [
+            [
+              15,
+              11
+            ],
+            [
+              17,
+              13.5
+            ]
+          ]
+        },
+        "text-allow-overlap": true,
+        "text-anchor": "center",
+        "text-padding": 1,
+        "text-font": [
+          "Source Sans Pro Regular"
         ]
       },
       "paint": {
@@ -12923,9 +13301,9 @@
         [
           "in",
           "txt_typo",
+          "TYPO_F_6",
           "TYPO_F_7",
-          "TYPO_F_8",
-          "TYPO_F_9"
+          "TYPO_F_8"
         ]
       ],
       "layout": {
@@ -12940,7 +13318,7 @@
         ]
       },
       "paint": {
-        "text-color": "#1E5C00",
+        "text-color": "#287B00",
         "text-halo-color": "rgba(255, 255, 255, 0.5)",
         "text-halo-width": 2
       }
@@ -12968,8 +13346,45 @@
         "text-allow-overlap": false,
         "text-anchor": "bottom-left",
         "text-offset": [
-          0.3,
-          0.1
+          0.30,
+          0.10
+        ],
+        "text-padding": 1,
+        "text-font": [
+          "Source Sans Pro Regular"
+        ]
+      },
+      "paint": {
+        "text-color": "#000000",
+        "text-halo-color": "rgba(255, 255, 255, 0.5)",
+        "text-halo-width": 2
+      }
+    },
+    {
+      "id": "toponyme localite importance 6et7 - Special DOM",
+      "type": "symbol",
+      "source": "plan_ign",
+      "source-layer": "toponyme_localite_ponc",
+      "minzoom": 7,
+      "maxzoom": 13,
+      "filter": [
+        "in",
+        "txt_typo",
+        "TYPO_A_6",
+        "TYPO_A_7"
+      ],
+      "layout": {
+        "visibility": "visible",
+        "symbol-placement": "point",
+        "icon-image": "Localite",
+        "icon-size": 0.21,
+        "text-field": "{texte}",
+        "text-size": 12.5,
+        "text-allow-overlap": false,
+        "text-anchor": "bottom-left",
+        "text-offset": [
+          0.30,
+          0.10
         ],
         "text-padding": 1,
         "text-font": [
@@ -13014,8 +13429,8 @@
         "text-allow-overlap": false,
         "text-anchor": "bottom-left",
         "text-offset": [
-          0.3,
-          0.1
+          0.30,
+          0.10
         ],
         "text-padding": 1,
         "text-font": [
@@ -13059,11 +13474,10 @@
         "text-padding": 1,
         "text-font": [
           "Source Sans Pro Italic"
-        ],
-        "visibility": "visible"
+        ]
       },
       "paint": {
-        "text-color": "#1E5C00",
+        "text-color": "#287B00",
         "text-halo-width": 1,
         "text-halo-color": "rgba(255, 255, 255, 0.5)"
       }
@@ -13135,7 +13549,7 @@
         ]
       },
       "paint": {
-        "text-color": "#1E5C00",
+        "text-color": "#287B00",
         "text-halo-color": "rgba(255, 255, 255, 0.5)",
         "text-halo-width": 2
       }
@@ -13171,7 +13585,7 @@
         ]
       },
       "paint": {
-        "text-color": "#1E5C00",
+        "text-color": "#287B00",
         "text-halo-color": "rgba(255, 255, 255, 0.5)",
         "text-halo-width": 2
       }
@@ -13210,7 +13624,7 @@
         ]
       },
       "paint": {
-        "text-color": "#1E5C00",
+        "text-color": "#287B00",
         "text-halo-color": "rgba(255, 255, 255, 0.5)",
         "text-halo-width": 1
       }
@@ -13245,11 +13659,10 @@
         "text-padding": 10,
         "text-font": [
           "Source Sans Pro Italic"
-        ],
-        "visibility": "visible"
+        ]
       },
       "paint": {
-        "text-color": "#652A25",
+        "text-color": "#863831",
         "text-halo-width": 1.5,
         "text-halo-color": "rgba(255, 255, 255, 0.5)"
       }
@@ -13273,8 +13686,8 @@
         "ORO_COL_2",
         "ORO_GORGE_1",
         "ORO_GORGE-1",
-        "TYPO_G_7",
-        "TYPO_G_8"
+        "TYPO_G_6",
+        "TYPO_G_7"
       ],
       "layout": {
         "visibility": "visible",
@@ -13299,7 +13712,7 @@
         ]
       },
       "paint": {
-        "text-color": "#652A25",
+        "text-color": "#863831",
         "text-halo-color": "#FFFFFF",
         "text-halo-width": 1.5
       }
@@ -13323,8 +13736,8 @@
         "HYD_SURF_4_T",
         "HYD_SURF_5",
         "HYD_SURF_5_T",
-        "TYPO_D_4",
-        "TYPO_D_5"
+        "TYPO_D_5",
+        "TYPO_D_7"
       ],
       "layout": {
         "symbol-placement": "line",
@@ -13347,11 +13760,10 @@
         "text-padding": 10,
         "text-font": [
           "Source Sans Pro Regular"
-        ],
-        "visibility": "visible"
+        ]
       },
       "paint": {
-        "text-color": "#335F86",
+        "text-color": "#447FB3",
         "text-halo-width": 1.5,
         "text-halo-color": "rgba(255, 255, 255, 0.7)"
       }
@@ -13391,11 +13803,10 @@
         "text-padding": 10,
         "text-font": [
           "Source Sans Pro Regular"
-        ],
-        "visibility": "visible"
+        ]
       },
       "paint": {
-        "text-color": "#335F86",
+        "text-color": "#447FB3",
         "text-halo-width": 1.5,
         "text-halo-color": "rgba(255, 255, 255, 0.7)"
       }
@@ -13405,6 +13816,7 @@
       "type": "symbol",
       "source": "plan_ign",
       "source-layer": "toponyme_hydro_ponc",
+      "minzoom": 9,
       "filter": [
         "in",
         "txt_typo",
@@ -13444,7 +13856,7 @@
         ]
       },
       "paint": {
-        "text-color": "#335F86",
+        "text-color": "#447FB3",
         "text-halo-color": "#FFFFFF",
         "text-halo-width": 2
       }
@@ -13477,7 +13889,7 @@
       }
     },
     {
-      "id": "toponyme bati ponc zai zoom 17 et 18",
+      "id": "toponyme bati ponc zai zoom 17 a 19",
       "type": "symbol",
       "source": "plan_ign",
       "source-layer": "toponyme_bati_ponc",
@@ -13500,6 +13912,216 @@
       },
       "paint": {
         "text-color": "#000000"
+      }
+    },
+    {
+      "id": "toponyme bati ponc zai_15 zoom 15",
+      "type": "symbol",
+      "source": "plan_ign",
+      "source-layer": "toponyme_bati_ponc",
+      "minzoom": 14,
+      "maxzoom": 15,
+      "filter": [
+        "==",
+        "txt_typo",
+        "zai_15"
+      ],
+      "layout": {
+        "visibility": "visible",
+        "symbol-placement": "point",
+        "text-field": "{designation}",
+        "text-size": 11,
+        "text-allow-overlap": false,
+        "text-padding": 1,
+        "text-font": [
+          "Source Sans Pro Italic"
+        ]
+      },
+      "paint": {
+        "text-color": "#000000"
+      }
+    },
+    {
+      "id": "toponyme bati ponc zai_15 zoom 16 a 19",
+      "type": "symbol",
+      "source": "plan_ign",
+      "source-layer": "toponyme_bati_ponc",
+      "minzoom": 15,
+      "filter": [
+        "==",
+        "txt_typo",
+        "zai_15"
+      ],
+      "layout": {
+        "visibility": "visible",
+        "symbol-placement": "point",
+        "text-field": "{texte}",
+        "text-size": 11,
+        "text-allow-overlap": false,
+        "text-padding": 1,
+        "text-font": [
+          "Source Sans Pro Italic"
+        ]
+      },
+      "paint": {
+        "text-color": "#000000"
+      }
+    },
+    {
+      "id": "toponyme bati ponc zai zoom 16 vert",
+      "type": "symbol",
+      "source": "plan_ign",
+      "source-layer": "toponyme_bati_ponc",
+      "minzoom": 15,
+      "maxzoom": 16,
+      "filter": [
+        "==",
+        "txt_typo",
+        "zai_vert"
+      ],
+      "layout": {
+        "visibility": "visible",
+        "symbol-placement": "point",
+        "text-field": "{designation}",
+        "text-size": 11,
+        "text-allow-overlap": false,
+        "text-padding": 1,
+        "text-font": [
+          "Source Sans Pro Italic"
+        ]
+      },
+      "paint": {
+        "text-color": "#287B00",
+        "text-halo-color": "rgba(255, 255, 255, 0.5)",
+        "text-halo-width": 1
+      }
+    },
+    {
+      "id": "toponyme bati ponc zai zoom 17 a 19 vert",
+      "type": "symbol",
+      "source": "plan_ign",
+      "source-layer": "toponyme_bati_ponc",
+      "minzoom": 16,
+      "filter": [
+        "==",
+        "txt_typo",
+        "zai_vert"
+      ],
+      "layout": {
+        "visibility": "visible",
+        "symbol-placement": "point",
+        "text-field": "{texte}",
+        "text-size": 11,
+        "text-allow-overlap": false,
+        "text-padding": 1,
+        "text-font": [
+          "Source Sans Pro Italic"
+        ]
+      },
+      "paint": {
+        "text-color": "#287B00",
+        "text-halo-color": "rgba(255, 255, 255, 0.5)",
+        "text-halo-width": 1
+      }
+    },
+    {
+      "id": "toponyme bati ponc zai zoom 17 a 19 beige",
+      "type": "symbol",
+      "source": "plan_ign",
+      "source-layer": "toponyme_bati_ponc",
+      "minzoom": 16,
+      "filter": [
+        "==",
+        "txt_typo",
+        "zai_beige"
+      ],
+      "layout": {
+        "visibility": "visible",
+        "symbol-placement": "point",
+        "text-field": "{texte}",
+        "text-size": 11,
+        "text-allow-overlap": false,
+        "text-padding": 1,
+        "text-font": [
+          "Source Sans Pro Italic"
+        ]
+      },
+      "paint": {
+        "text-color": "#686042",
+        "text-halo-color": "rgba(255, 255, 255, 0.5)",
+        "text-halo-width": 1
+      }
+    },
+    {
+      "id": "toponyme bati ponc monuments zoom 15 à 19",
+      "type": "symbol",
+      "source": "plan_ign",
+      "source-layer": "toponyme_bati_ponc",
+      "minzoom": 14,
+      "filter": [
+        "all",
+        [
+          "==",
+          "txt_typo",
+          "divers_bati"
+        ],
+        [
+          "==",
+          "symbo",
+          "MONUMENT"
+        ]
+      ],
+      "layout": {
+        "visibility": "visible",
+        "symbol-placement": "point",
+        "text-field": "{texte}",
+        "text-size": 11,
+        "text-allow-overlap": false,
+        "text-padding": 1,
+        "text-font": [
+          "Source Sans Pro Italic"
+        ]
+      },
+      "paint": {
+        "text-color": "#000000",
+        "text-halo-color": "rgba(255, 255, 255, 0.5)",
+        "text-halo-width": 1
+      }
+    },
+    {
+      "id": "toponyme bati ponc monuments ge zoom 18 à 19",
+      "type": "symbol",
+      "source": "plan_ign",
+      "source-layer": "toponyme_bati_ponc",
+      "minzoom": 17,
+      "filter": [
+        "all",
+        [
+          "==",
+          "txt_typo",
+          "divers_bati_ge"
+        ],
+        [
+          "==",
+          "symbo",
+          "MONUMENT"
+        ]
+      ],
+      "layout": {
+        "visibility": "visible",
+        "symbol-placement": "point",
+        "text-field": "{texte}",
+        "text-size": 11,
+        "text-allow-overlap": false,
+        "text-padding": 1,
+        "text-font": [
+          "Source Sans Pro Italic"
+        ]
+      },
+      "paint": {
+        "text-color": "#000000",
+        "text-halo-color": "rgba(255, 255, 255, 0.5)",
+        "text-halo-width": 1
       }
     },
     {
@@ -13526,8 +14148,8 @@
         "text-allow-overlap": false,
         "text-anchor": "bottom-left",
         "text-offset": [
-          0.3,
-          0.1
+          0.30,
+          0.10
         ],
         "text-padding": 1,
         "text-font": [
@@ -13581,15 +14203,29 @@
       }
     },
     {
-      "id": "toponyme localite n0 typoA8",
+      "id": "toponyme localite n0 typoA8 non commune",
       "type": "symbol",
       "source": "plan_ign",
       "source-layer": "toponyme_localite_ponc",
+      "minzoom": 13,
       "maxzoom": 18,
       "filter": [
-        "==",
-        "txt_typo",
-        "TYPO_A_8"
+        "all",
+        [
+          "!=",
+          "symbo",
+          "COMMUNE_FUSIONNEE"
+        ],
+        [
+          "!=",
+          "symbo",
+          "COMMUNE_CHEF_LIEU"
+        ],
+        [
+          "==",
+          "txt_typo",
+          "TYPO_A_8"
+        ]
       ],
       "layout": {
         "visibility": "visible",
@@ -13643,7 +14279,7 @@
         ]
       },
       "paint": {
-        "text-color": "#0A1800",
+        "text-color": "#0D2000",
         "text-halo-color": "rgba(255, 255, 255, 0.5)",
         "text-halo-width": 2
       }
@@ -13673,7 +14309,7 @@
         ]
       },
       "paint": {
-        "text-color": "#20607A",
+        "text-color": "#2A81A2",
         "text-halo-color": "rgba(255, 255, 255, 0.5)",
         "text-halo-width": 2
       }
@@ -13705,7 +14341,7 @@
         ]
       },
       "paint": {
-        "text-color": "#1E5C00",
+        "text-color": "#287B00",
         "text-halo-color": "rgba(255, 255, 255, 0.5)",
         "text-halo-width": 2
       }
@@ -13741,11 +14377,10 @@
         "text-padding": 1,
         "text-font": [
           "Source Sans Pro Regular"
-        ],
-        "visibility": "visible"
+        ]
       },
       "paint": {
-        "text-color": "#1E5C00",
+        "text-color": "#287B00",
         "text-halo-width": 2,
         "text-halo-color": "rgba(255, 255, 255, 0.5)"
       }
@@ -13784,7 +14419,7 @@
         ]
       },
       "paint": {
-        "text-color": "#1E5C00",
+        "text-color": "#287B00",
         "text-halo-color": "rgba(255, 255, 255, 0.5)",
         "text-halo-width": 2
       }
@@ -13813,11 +14448,10 @@
         "text-max-angle": 45,
         "text-font": [
           "Source Sans Pro Regular"
-        ],
-        "visibility": "visible"
+        ]
       },
       "paint": {
-        "text-color": "#652A25",
+        "text-color": "#863831",
         "text-halo-width": 2,
         "text-halo-color": "rgba(255, 255, 255, 0.5)"
       }
@@ -13837,8 +14471,7 @@
         "ORO_CAP_1",
         "ORO_COL_1",
         "TYPO_G_5",
-        "ORO_SOMMET_1",
-        "TYPO_G_6"
+        "ORO_SOMMET_1"
       ],
       "layout": {
         "visibility": "visible",
@@ -13871,7 +14504,7 @@
         ]
       },
       "paint": {
-        "text-color": "#652A25",
+        "text-color": "#863831",
         "text-halo-color": "rgba(255, 255, 255, 0.5)",
         "text-halo-width": 2
       }
@@ -13910,7 +14543,7 @@
         ]
       },
       "paint": {
-        "text-color": "#652A25",
+        "text-color": "#863831",
         "text-halo-color": "rgba(255, 255, 255, 0.5)",
         "text-halo-width": 2
       }
@@ -13927,7 +14560,7 @@
         "TYPO_D_LIN_2",
         "HYD_SURF_2",
         "HYD_SURF_2_T",
-        "TYPO_D_3"
+        "TYPO_D_4"
       ],
       "layout": {
         "symbol-placement": "line",
@@ -13950,11 +14583,10 @@
         "text-padding": 10,
         "text-font": [
           "Source Sans Pro Regular"
-        ],
-        "visibility": "visible"
+        ]
       },
       "paint": {
-        "text-color": "#335F86",
+        "text-color": "#447FB3",
         "text-halo-width": 2,
         "text-halo-color": "rgba(255, 255, 255, 0.5)"
       }
@@ -14003,7 +14635,7 @@
         ]
       },
       "paint": {
-        "text-color": "#335F86",
+        "text-color": "#447FB3",
         "text-halo-color": "#FFFFFF",
         "text-halo-width": 2
       }
@@ -14046,7 +14678,7 @@
         ]
       },
       "paint": {
-        "text-color": "#335F86",
+        "text-color": "#447FB3",
         "text-halo-color": "#FFFFFF",
         "text-halo-width": 2
       }
@@ -14087,8 +14719,8 @@
         "text-allow-overlap": false,
         "text-anchor": "bottom-left",
         "text-offset": [
-          0.3,
-          0.1
+          0.30,
+          0.10
         ],
         "text-padding": 1,
         "text-font": [
@@ -14106,6 +14738,7 @@
       "type": "symbol",
       "source": "plan_ign",
       "source-layer": "toponyme_localite_ponc",
+      "minzoom": 13,
       "maxzoom": 18,
       "filter": [
         "all",
@@ -14155,10 +14788,11 @@
       }
     },
     {
-      "id": "toponyme localite n0 typoA6 non commune",
+      "id": "toponyme localite n0 typoA5etA6 non commune",
       "type": "symbol",
       "source": "plan_ign",
       "source-layer": "toponyme_localite_ponc",
+      "minzoom": 13,
       "maxzoom": 18,
       "filter": [
         "all",
@@ -14173,8 +14807,9 @@
           "COMMUNE_CHEF_LIEU"
         ],
         [
-          "==",
+          "in",
           "txt_typo",
+          "TYPO_A_5",
           "TYPO_A_6"
         ]
       ],
@@ -14229,11 +14864,10 @@
         "text-max-angle": 45,
         "text-font": [
           "Source Sans Pro Regular"
-        ],
-        "visibility": "visible"
+        ]
       },
       "paint": {
-        "text-color": "#652A25",
+        "text-color": "#863831",
         "text-halo-width": 2,
         "text-halo-color": "rgba(255, 255, 255, 0.5)"
       }
@@ -14276,7 +14910,7 @@
         ]
       },
       "paint": {
-        "text-color": "#652A25",
+        "text-color": "#863831",
         "text-halo-color": "rgba(255, 255, 255, 0.5)",
         "text-halo-width": 2
       }
@@ -14355,11 +14989,10 @@
         "text-max-angle": 45,
         "text-font": [
           "Source Sans Pro Regular"
-        ],
-        "visibility": "visible"
+        ]
       },
       "paint": {
-        "text-color": "#1E5C00",
+        "text-color": "#287B00",
         "text-halo-width": 2,
         "text-halo-color": "rgba(255, 255, 255, 0.5)"
       }
@@ -14397,7 +15030,7 @@
         ]
       },
       "paint": {
-        "text-color": "#1E5C00",
+        "text-color": "#287B00",
         "text-halo-color": "rgba(255, 255, 255, 0.5)",
         "text-halo-width": 2
       }
@@ -14428,7 +15061,7 @@
         ]
       },
       "paint": {
-        "text-color": "#652A25",
+        "text-color": "#863831",
         "text-halo-color": "rgba(255, 255, 255, 0.5)",
         "text-halo-width": 2
       }
@@ -14468,7 +15101,7 @@
         ]
       },
       "paint": {
-        "text-color": "#652A25",
+        "text-color": "#863831",
         "text-halo-color": "rgba(255, 255, 255, 0.5)",
         "text-halo-width": 2
       }
@@ -14493,11 +15126,10 @@
         "text-max-angle": 45,
         "text-font": [
           "Source Sans Pro Italic"
-        ],
-        "visibility": "visible"
+        ]
       },
       "paint": {
-        "text-color": "#335F86",
+        "text-color": "#447FB3",
         "text-halo-width": 2,
         "text-halo-color": "rgba(255, 255, 255, 0.5)"
       }
@@ -14530,11 +15162,10 @@
         "text-padding": 10,
         "text-font": [
           "Source Sans Pro Regular"
-        ],
-        "visibility": "visible"
+        ]
       },
       "paint": {
-        "text-color": "#335F86",
+        "text-color": "#447FB3",
         "text-halo-width": 2,
         "text-halo-color": "rgba(255, 255, 255, 0.5)"
       }
@@ -14559,11 +15190,10 @@
         "text-padding": 10,
         "text-font": [
           "Source Sans Pro Regular"
-        ],
-        "visibility": "visible"
+        ]
       },
       "paint": {
-        "text-color": "#335F86",
+        "text-color": "#447FB3",
         "text-halo-width": 4,
         "text-halo-color": "rgba(255, 255, 255, 0.5)"
       }
@@ -14609,7 +15239,7 @@
         ]
       },
       "paint": {
-        "text-color": "#335F86",
+        "text-color": "#447FB3",
         "text-halo-color": "rgba(255, 255, 255, 0.5)",
         "text-halo-width": 4
       }
@@ -14651,7 +15281,7 @@
         "text-allow-overlap": true,
         "text-anchor": "bottom-left",
         "text-offset": [
-          0.3,
+          0.30,
           0.2
         ],
         "text-padding": 1,
@@ -14772,10 +15402,62 @@
       }
     },
     {
+      "id": "toponyme localite n0 typoA8 commune",
+      "type": "symbol",
+      "source": "plan_ign",
+      "source-layer": "toponyme_localite_ponc",
+      "minzoom": 13,
+      "maxzoom": 18,
+      "filter": [
+        "all",
+        [
+          "in",
+          "symbo",
+          "COMMUNE_FUSIONNEE",
+          "COMMUNE_CHEF_LIEU"
+        ],
+        [
+          "==",
+          "txt_typo",
+          "TYPO_A_8"
+        ]
+      ],
+      "layout": {
+        "visibility": "visible",
+        "symbol-placement": "point",
+        "text-field": "{texte}",
+        "text-size": {
+          "stops": [
+            [
+              15,
+              12
+            ],
+            [
+              17,
+              15
+            ]
+          ]
+        },
+        "text-allow-overlap": true,
+        "text-anchor": "center",
+        "text-padding": 1,
+        "text-transform": "uppercase",
+        "text-font": [
+          "Source Sans Pro Regular"
+        ]
+      },
+      "paint": {
+        "text-color": "#000000",
+        "text-halo-color": "rgba(255, 255, 255, 0.5)",
+        "text-halo-width": 2
+      }
+    },
+    {
       "id": "toponyme localite n0 typoA7 commune",
       "type": "symbol",
       "source": "plan_ign",
       "source-layer": "toponyme_localite_ponc",
+      "minzoom": 13,
       "maxzoom": 18,
       "filter": [
         "all",
@@ -14822,10 +15504,11 @@
       }
     },
     {
-      "id": "toponyme localite n0 typoA6 commune",
+      "id": "toponyme localite n0 typoA5etA6 commune",
       "type": "symbol",
       "source": "plan_ign",
       "source-layer": "toponyme_localite_ponc",
+      "minzoom": 13,
       "maxzoom": 18,
       "filter": [
         "all",
@@ -14836,8 +15519,9 @@
           "COMMUNE_CHEF_LIEU"
         ],
         [
-          "==",
+          "in",
           "txt_typo",
+          "TYPO_A_5",
           "TYPO_A_6"
         ]
       ],
@@ -15071,7 +15755,7 @@
         "text-anchor": "bottom-left",
         "text-offset": [
           0.25,
-          -0.1
+          -0.10
         ],
         "text-padding": 1,
         "text-transform": "uppercase",
@@ -15179,7 +15863,7 @@
         ]
       },
       "paint": {
-        "text-color": "#335F86",
+        "text-color": "#447FB3",
         "text-halo-color": "rgba(255, 255, 255, 0.5)",
         "text-halo-width": 4
       }
@@ -15209,7 +15893,7 @@
         ]
       },
       "paint": {
-        "text-color": "#5A5A5A",
+        "text-color": "#787878",
         "text-halo-color": "rgba(255, 255, 255, 0.5)",
         "text-halo-width": 4
       }
@@ -15239,7 +15923,7 @@
         ]
       },
       "paint": {
-        "text-color": "#5A5A5A",
+        "text-color": "#787878",
         "text-halo-color": "rgba(255, 255, 255, 0.5)",
         "text-halo-width": 4
       }
@@ -15269,7 +15953,7 @@
         ]
       },
       "paint": {
-        "text-color": "#5A5A5A",
+        "text-color": "#787878",
         "text-halo-color": "rgba(255, 255, 255, 0.5)",
         "text-halo-width": 4
       }
@@ -15298,7 +15982,7 @@
         ]
       },
       "paint": {
-        "text-color": "#5A5A5A",
+        "text-color": "#787878",
         "text-halo-color": "rgba(255, 255, 255, 0.5)",
         "text-halo-width": 4
       }
