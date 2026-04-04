@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, ElementRef, inject, viewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { FormControl, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { IonInput, ModalController, IonContent, IonHeader, IonToolbar, IonButton, IonButtons, IonTitle, IonItem } from '@ionic/angular/standalone';
 import { StyleSpecification } from 'maplibre-gl';
@@ -19,21 +19,14 @@ export class ImportMapComponent {
   private readonly modalCtrl = inject(ModalController);
   private readonly dataCache = inject(DataCacheService);
 
-  readonly fileInput = viewChild<ElementRef<HTMLInputElement>>('fileInput');
-
   readonly form = new FormGroup({
-    fileName: new FormControl<string | null>(null, [Validators.required]),
     file: new FormControl<File | null>(null, [Validators.required]),
     name: new FormControl<string | null>(null, [Validators.required])
   });
 
-  browse() {
-    this.fileInput()?.nativeElement.click();
-  }
-
-  async onFileChange(event: any) {
-    if (event.target.files.length > 0) {
-      const file = event.target.files[0] as File;
+  async onFileChange(target: HTMLInputElement) {
+    const file = target.files?.[0]
+    if (file) {
       let name = file.name?.split('.')[0];
 
       try {
@@ -44,11 +37,7 @@ export class ImportMapComponent {
       }
       catch { }
 
-      this.form.patchValue({
-        fileName: file.name,
-        file,
-        name
-      });
+      this.form.patchValue({ file, name });
     }
   }
 
